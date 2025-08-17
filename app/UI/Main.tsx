@@ -7,8 +7,8 @@ type MainProps = {
 
 const Main = ({children}: MainProps) => {
   return (
-      <div className="lg:ml-64 p-4">
-        <div className="min-h-screen bg-gray-100 rounded-xs p-2">
+      <div className="lg:ml-64">
+        <div className="min-h-screen bg-gray-100 rounded-xs">
             {children}
         </div>
       </div>

@@ -4,6 +4,7 @@ import "./globals.css";
 import SideNavBar from "./UI/Sidenavbar";
 import Footer from "./UI/Footer";
 import Main from "./UI/Main";
+import { ThemeProvider } from "./Context/ThemeContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,7 +14,7 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-});
+})
 
 export const metadata: Metadata = {
   title: "UTE-IC Portfolio",
@@ -30,9 +31,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SideNavBar />
-        <Main>{children}</Main>
-        <Footer />
+        <ThemeProvider>
+          <SideNavBar />
+            <Main>
+              {children}
+          <Footer />
+
+            </Main>
+        </ThemeProvider>
       </body>
     </html>
   );

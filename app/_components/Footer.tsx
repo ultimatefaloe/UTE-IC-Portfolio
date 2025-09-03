@@ -40,31 +40,31 @@ const Footer = () => {
           <div className="flex space-x-4">
             <Link
               href="#"
-              className="p-2 rounded-full transition-colors hover:bg-primary hover:text-white"
+              className="p-2 rounded-full transition-colors hover:bg-primary hover:text-red-600"
             >
               <Facebook className="h-5 w-5" />
             </Link>
             <Link
               href="#"
-              className="p-2 rounded-full transition-colors hover:bg-primary hover:text-white"
+              className="p-2 rounded-full transition-colors hover:bg-primary hover:text-red-600"
             >
               <Twitter className="h-5 w-5" />
             </Link>
             <Link
               href="#"
-              className="p-2 rounded-full transition-colors hover:bg-primary hover:text-white"
+              className="p-2 rounded-full transition-colors hover:bg-primary hover:text-red-600"
             >
               <Dribbble className="h-5 w-5" />
             </Link>
             <Link
               href="#"
-              className="p-2 rounded-full transition-colors hover:bg-primary hover:text-white"
+              className="p-2 rounded-full transition-colors hover:bg-primary hover:text-red-600"
             >
               <Instagram className="h-5 w-5" />
             </Link>
             <Link
               href="#"
-              className="p-2 rounded-full transition-colors hover:bg-primary hover:text-white"
+              className="p-2 rounded-full transition-colors hover:bg-primary hover:text-red-600"
             >
               <Youtube className="h-5 w-5" />
             </Link>
@@ -75,7 +75,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* About */}
           <div>
-            <h5 className="text-xl font-bold mb-4">About Us</h5>
+            <h5 className="text-xl font-bold mb-4 text-red-600">About Us</h5>
             <p className="text-gray-500 dark:text-gray-400 mb-4">
               Formed in 2006, Videoprah is an award-winning, full-service
               production company specializing in storytelling and branding.
@@ -90,7 +90,7 @@ const Footer = () => {
 
           {/* Who We Are */}
           <div>
-            <h5 className="text-xl font-bold mb-4">Who We Are</h5>
+            <h5 className="text-xl font-bold mb-4 text-red-600">Who We Are</h5>
             <ul className="space-y-2">
               <li>
                 <Link
@@ -129,7 +129,7 @@ const Footer = () => {
 
           {/* Our Work */}
           <div>
-            <h5 className="text-xl font-bold mb-4">Our Work</h5>
+            <h5 className="text-xl font-bold mb-4 text-red-600">Our Work</h5>
             <ul className="space-y-2">
               <li>
                 <Link
@@ -168,7 +168,7 @@ const Footer = () => {
 
           {/* Newsletter */}
           <div>
-            <h5 className="text-xl font-bold mb-4">Newsletter</h5>
+            <h5 className="text-xl font-bold mb-4 text-red-600">Newsletter</h5>
             <p className="text-gray-500 dark:text-gray-400 mb-4">
               Stay updated with the latest news, projects, and exclusive
               insights.
@@ -177,7 +177,7 @@ const Footer = () => {
               <input
                 type="email"
                 placeholder="Your Email"
-                className={`px-4 py-2 w-full rounded-l-md focus:outline-none ${
+                className={`px-4 py-2 w-full rounded-l-md focus:outline-none focus:border-red-600 ${
                   theme === "light"
                     ? "bg-white text-gray-900 border border-gray-300"
                     : "bg-gray-800 text-gray-100 border border-gray-700"
@@ -185,7 +185,7 @@ const Footer = () => {
               />
               <button
                 type="submit"
-                className="bg-primary hover:bg-primary/90 px-4 py-2 rounded-r-md text-white transition-colors flex items-center"
+                className="bg-primary hover:bg-primary/90 px-4 py-2 rounded-r-md text-red-600 transition-colors flex items-center"
               >
                 <Send className="h-5 w-5" />
               </button>
@@ -194,7 +194,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom */}
-        <div className="border-t border-gray-800 pt-8 text-center">
+        <div className="border-t border-red-600 pt-8 text-center">
           <p className="text-gray-500 dark:text-gray-400">
             Copyright &copy; {new Date().getFullYear()} All rights reserved | 
             <Link href="#"> {" "}

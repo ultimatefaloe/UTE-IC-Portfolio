@@ -28,7 +28,7 @@ const SideNavBar = () => {
       {/* Mobile Menu Button */}
       {isMobileMenuOpen && (
         <div
-          className={`lg:hidden bg-transparent blur-sm w-screen h-screen`}
+          className={`lg:hidden bg-transparent blur-sm w-screen h-screen fixed top-0 left-0 right-0 bottom-0 z-10`}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         ></div>
       )}
@@ -45,7 +45,7 @@ const SideNavBar = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed inset-y-0 left-0 w-64 transition-all duration-300 transform border-r-1
+        className={`fixed inset-y-0 left-0 w-64 transition-all duration-300 transform border-r-1 border-red-600
         ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0 z-40
@@ -107,13 +107,13 @@ const SideNavBar = () => {
                       className={`flex items-center px-4 py-3 rounded-md transition-colors ${
                         item.active
                           ? theme === "light"
-                            ? "bg-gray-200 text-gray-900"
-                            : "bg-gray-800 text-white"
+                            ? "bg-red-600/10 text-red-600"
+                            : "bg-red-600/10 text-red-600"
                           : theme === "light"
-                          ? "text-gray-600 hover:bg-gray-200 hover:text-gray-900"
-                          : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                          ? "text-gray-600 hover:bg-red-600/10 hover:text-red-600"
+                          : "text-gray-400 hover:bg-red-600/10 hover:text-red-600"
                       }`}
-                      onClick={()=>setIsMobileMenuOpen(!isMobileMenuOpen)}
+                      onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     >
                       <Icon className="h-5 w-5 mr-3" />
                       <span>{item.text}</span>
@@ -127,8 +127,8 @@ const SideNavBar = () => {
                 <button
                   className={`flex items-center justify-between w-full px-4 py-3 rounded-md transition-colors ${
                     theme === "light"
-                      ? "text-gray-600 hover:bg-gray-200 hover:text-gray-900"
-                      : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                      ? "text-gray-600 hover:bg-red-600/10 hover:text-red-600"
+                      : "text-gray-400 hover:bg-red-600/10 hover:text-red-600"
                   }`}
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 >
@@ -144,7 +144,7 @@ const SideNavBar = () => {
                 </button>
                 {isDropdownOpen && (
                   <ul
-                    className={`ml-8 mt-2 space-y-2 pl-2 border-l ${
+                    className={`ml-8 mt-2 space-y-2 pl-2 border-l border-red-600 ${
                       theme === "light" ? "border-gray-300" : "border-gray-700"
                     }`}
                   >
@@ -153,12 +153,14 @@ const SideNavBar = () => {
                         <li key={item}>
                           <Link
                             href={`/${item.toLowerCase()}`}
-                            className={`block px-3 py-2 transition-colors ${
+                            className={`block px-3 py-2 transition-colors rounded-md ${
                               theme === "light"
-                                ? "text-gray-600 hover:text-gray-900"
-                                : "text-gray-400 hover:text-white"
+                                ? "text-gray-600 hover:bg-red-600/10 hover:text-red-600"
+                                : "text-gray-400 hover:bg-red-600/10 hover:text-red-600"
                             }`}
-                            onClick={()=>setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            onClick={() =>
+                              setIsMobileMenuOpen(!isMobileMenuOpen)
+                            }
                           >
                             {item}
                           </Link>
@@ -173,56 +175,56 @@ const SideNavBar = () => {
 
           {/* Social Links */}
           <div
-            className={`flex justify-center space-x-4 py-4 border-t absolute bottom-0 right-0 left-0 ${
+            className={`flex justify-center space-x-4 py-4  absolute bottom-0 right-0 left-0 bg-transparent backdrop-blur-2xl ${
               theme === "light" ? "border-gray-300" : "border-gray-800"
             }`}
           >
             <Link
               href="https://x.com/faloeUltimate/"
-              className={`transition-colors ${
+              className={`transition-colors rounded-full p-2 ${
                 theme === "light"
-                  ? "text-gray-600 hover:text-gray-900"
-                  : "text-gray-400 hover:text-white"
+                  ? "text-gray-600 hover:text-red-600 hover:bg-red-600/10"
+                  : "text-gray-400 hover:text-red-600 hover:bg-red-600/10"
               }`}
             >
               <Twitter className="h-5 w-5" />
             </Link>
             <Link
               href="https://web.facebook.com/faloeultimate/"
-              className={`transition-colors ${
+              className={`transition-colors rounded-full p-2 ${
                 theme === "light"
-                  ? "text-gray-600 hover:text-gray-900"
-                  : "text-gray-400 hover:text-white"
+                  ? "text-gray-600 hover:text-red-600 hover:bg-red-600/10"
+                  : "text-gray-400 hover:text-red-600 hover:bg-red-600/10"
               }`}
             >
               <Facebook className="h-5 w-5" />
             </Link>
             <Link
               href="https://www.instagram.com/ultimatefaloe/"
-              className={`transition-colors ${
+              className={`transition-colors rounded-full p-2 ${
                 theme === "light"
-                  ? "text-gray-600 hover:text-gray-900"
-                  : "text-gray-400 hover:text-white"
+                  ? "text-gray-600 hover:text-red-600 hover:bg-red-600/10"
+                  : "text-gray-400 hover:text-red-600 hover:bg-red-600/10"
               }`}
             >
               <Instagram className="h-5 w-5" />
             </Link>
             <Link
               href="#"
-              className={`transition-colors ${
+              className={`transition-colors rounded-full p-2 ${
                 theme === "light"
-                  ? "text-gray-600 hover:text-gray-900"
-                  : "text-gray-400 hover:text-white"
+                  ? "text-gray-600 hover:text-red-600 hover:bg-red-600/10"
+                  : "text-gray-400 hover:text-red-600 hover:bg-red-600/10"
               }`}
             >
               <MessageCircleDashed className="h-5 w-5" />
             </Link>
             <Link
               href="https://www.linkedin.com/in/tunmise-falodun-1894b22a2/"
-              className={`transition-colors ${
+              className={`transition-colors rounded-full p-2 ${
                 theme === "light"
-                  ? "text-gray-600 hover:text-gray-900"
-                  : "text-gray-400 hover:text-white"
+                  ? "text-gray-600 hover:text-red-600 hover:bg-red-600/10"
+                  : "text-gray-400 hover:text-red-600 hover:bg-red-600/10"
               }`}
             >
               <Linkedin className="h-5 w-5" />

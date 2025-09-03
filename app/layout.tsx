@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import SideNavBar from "./UI/Sidenavbar";
-import Footer from "./UI/Footer";
-import Main from "./UI/Main";
-import { ThemeProvider } from "./Context/ThemeContext";
+import { ThemeProvider } from "./_context/ThemeContext";
+import SideNavBar from "./_components/Sidenavbar";
+import Footer from "./_components/Footer";
+import Main from "./_components/Main";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +14,7 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-})
+});
 
 export const metadata: Metadata = {
   title: "UTE-IC Portfolio",
@@ -33,11 +33,10 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <SideNavBar />
-            <Main>
-              {children}
-          <Footer />
-
-            </Main>
+          <div className="lg:ml-64">
+            <Main>{children}</Main>
+            <Footer />
+          </div>
         </ThemeProvider>
       </body>
     </html>

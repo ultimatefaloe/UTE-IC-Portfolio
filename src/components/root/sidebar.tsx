@@ -14,16 +14,16 @@ import {
   Twitter,
   Instagram,
   MessageCircleDashed,
-  Image as ImageIcon
+  Image as ImageIcon,
 } from "lucide-react";
 import Image from "next/image";
-import { useTheme } from "@/_context/themeContext";
+import { Button } from "../UI/button";
+import ThemeToggle from "../UI/themeToggle";
 
 const SideNavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
-
+ 
   return (
     <header>
       {/* Mobile Menu Button */}
@@ -33,36 +33,26 @@ const SideNavBar = () => {
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         ></div>
       )}
-      <button
-        className={`fixed top-4 right-4 z-50 p-2 rounded-md lg:hidden transition-all duration-300 ${
-          theme === "light"
-            ? "bg-gray-200 text-gray-900 hover:bg-gray-300"
-            : "bg-gray-800 text-gray-100 hover:bg-gray-700"
-        }`}
+      <Button
+        className="fixed top-4 right-4 z-50 p-2 rounded-md lg:hidden transition-all duration-300 bg-gray-200 text-gray-900 hover:bg-gray-300 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
       >
         <Menu className="h-6 w-6" />
-      </button>
+      </Button>
 
       {/* Sidebar */}
       <div
-        className={`fixed inset-y-0 left-0 w-64 transition-all duration-300 transform border-r-1 border-sky-600
+        className={`bg-ute-primary text-ute-neutral dark:bg-ute-secondary dark:text-ute-accent fixed inset-y-0 left-0 w-64 transition-all duration-300 transform border-r border-sky-600
         ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0 z-40
-        ${
-          theme === "light"
-            ? "bg-gray-100 text-gray-900"
-            : "bg-gray-900 text-whit"
         }`}
       >
         <div className="flex flex-col h-full p-4">
           {/* Profile Section */}
           <div className="flex flex-col items-center py-6">
             <div
-              className={`w-24 h-24 rounded-full overflow-hidden border-4 mb-4 ${
-                theme === "light" ? "border-gray-300" : "border-gray-700"
-              }`}
+              className={`w-24 h-24 rounded-full overflow-hidden border-4 mb-4 border-gray-300 dark:border-gray-700`}
             >
               <Image
                 src="/images/Profile.jpg"
@@ -77,19 +67,7 @@ const SideNavBar = () => {
             </Link>
           </div>
 
-          {/* Theme Toggle */}
-          <button
-            onClick={toggleTheme}
-            className={`mb-4 flex items-center gap-2 px-4 py-2 rounded-full 
-              transition-all duration-300 shadow-md border
-              ${
-                theme === "light"
-                  ? "bg-gray-200 text-gray-900 hover:bg-gray-300 border-gray-300"
-                  : "bg-gray-800 text-gray-100 hover:bg-gray-700 border-gray-700"
-              }`}
-          >
-            {theme === "light" ? "🌙 Dark Mode" : "☀️ Light Mode"}
-          </button>
+         <ThemeToggle />
 
           {/* Navigation */}
           <nav className="flex-1 py-4 overflow-y-auto">
@@ -107,15 +85,14 @@ const SideNavBar = () => {
                   <li key={item.text}>
                     <Link
                       href={item.href}
-                      className={`flex items-center px-4 py-3 rounded-md transition-colors ${
-                        item.active
-                          ? theme === "light"
+                      className={`
+                        flex items-center px-4 py-3 rounded-md transition-colors
+                        ${
+                          item.active
                             ? "bg-sky-600/10 text-sky-600"
-                            : "bg-sky-600/10 text-sky-600"
-                          : theme === "light"
-                          ? "text-gray-600 hover:bg-sky-600/10 hover:text-sky-600"
-                          : "text-gray-400 hover:bg-sky-600/10 hover:text-sky-600"
-                      }`}
+                            : "text-gray-600 dark:text-gray-400 hover:bg-sky-600/10 hover:text-sky-600"
+                        }
+                      `}
                       onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     >
                       <Icon className="h-5 w-5 mr-3" />
@@ -127,12 +104,8 @@ const SideNavBar = () => {
 
               {/* Dropdown */}
               <li className="relative">
-                <button
-                  className={`flex items-center justify-between w-full px-4 py-3 rounded-md transition-colors ${
-                    theme === "light"
-                      ? "text-gray-600 hover:bg-sky-600/10 hover:text-sky-600"
-                      : "text-gray-400 hover:bg-sky-600/10 hover:text-sky-600"
-                  }`}
+                <Button
+                  className="flex items-center justify-between w-full px-4 py-3 rounded-md transition-colors text-gray-600 hover:bg-sky-600/10 hover:text-sky-600 dark:text-gray-400 hdark:over:bg-sky-600/10 dark:hover:text-sky-600"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 >
                   <div className="flex items-center">
@@ -144,23 +117,15 @@ const SideNavBar = () => {
                       isDropdownOpen ? "rotate-180" : ""
                     }`}
                   />
-                </button>
+                </Button>
                 {isDropdownOpen && (
-                  <ul
-                    className={`ml-8 mt-2 space-y-2 pl-2 border-l border-sky-600 ${
-                      theme === "light" ? "border-gray-300" : "border-gray-700"
-                    }`}
-                  >
+                  <ul className="ml-8 mt-2 space-y-2 pl-2 border-l border-sky-600 dark:border-gray-700">
                     {["Skills", "Projects", "Blog", "Experiences"].map(
                       (item) => (
                         <li key={item}>
                           <Link
                             href={`/${item.toLowerCase()}`}
-                            className={`block px-3 py-2 transition-colors rounded-md ${
-                              theme === "light"
-                                ? "text-gray-600 hover:bg-sky-600/10 hover:text-sky-600"
-                                : "text-gray-400 hover:bg-sky-600/10 hover:text-sky-600"
-                            }`}
+                            className="block px-3 py-2 transition-colors rounded-md text-gray-600 hover:bg-sky-600/10 hover:text-sky-600 dark:text-gray-400 dark:hover:bg-sky-600/10 dark:hover:text-sky-600"
                             onClick={() =>
                               setIsMobileMenuOpen(!isMobileMenuOpen)
                             }
@@ -177,58 +142,34 @@ const SideNavBar = () => {
           </nav>
 
           {/* Social Links */}
-          <div
-            className={`flex justify-center space-x-4 py-4  absolute bottom-0 right-0 left-0 bg-transparent backdrop-blur-2xl ${
-              theme === "light" ? "border-gray-300" : "border-gray-800"
-            }`}
-          >
+          <div className="flex justify-center space-x-4 py-4  absolute bottom-0 right-0 left-0 bg-transparent backdrop-blur-2xl border-gray-300 dark:border-gray-800">
             <Link
               href="https://x.com/faloeUltimate/"
-              className={`transition-colors rounded-full p-2 ${
-                theme === "light"
-                  ? "text-gray-600 hover:text-sky-600 hover:bg-sky-600/10"
-                  : "text-gray-400 hover:text-sky-600 hover:bg-sky-600/10"
-              }`}
+              className="transition-colors rounded-full p-2 text-gray-600 hover:text-sky-600 hover:bg-sky-600/10 dark:text-gray-400 dark:hover:text-sky-600 dark:hover:bg-sky-600/10"
             >
               <Twitter className="h-5 w-5" />
             </Link>
             <Link
               href="https://web.facebook.com/faloeultimate/"
-              className={`transition-colors rounded-full p-2 ${
-                theme === "light"
-                  ? "text-gray-600 hover:text-sky-600 hover:bg-sky-600/10"
-                  : "text-gray-400 hover:text-sky-600 hover:bg-sky-600/10"
-              }`}
+              className="transition-colors rounded-full p-2 text-gray-600 hover:text-sky-600 hover:bg-sky-600/10 dark:text-gray-400 dark:hover:text-sky-600 dark:hover:bg-sky-600/10"
             >
               <Facebook className="h-5 w-5" />
             </Link>
             <Link
               href="https://www.instagram.com/ultimatefaloe/"
-              className={`transition-colors rounded-full p-2 ${
-                theme === "light"
-                  ? "text-gray-600 hover:text-sky-600 hover:bg-sky-600/10"
-                  : "text-gray-400 hover:text-sky-600 hover:bg-sky-600/10"
-              }`}
+              className="transition-colors rounded-full p-2 text-gray-600 hover:text-sky-600 hover:bg-sky-600/10 dark:text-gray-400 dark:hover:text-sky-600 dark:hover:bg-sky-600/10"
             >
               <Instagram className="h-5 w-5" />
             </Link>
             <Link
               href="#"
-              className={`transition-colors rounded-full p-2 ${
-                theme === "light"
-                  ? "text-gray-600 hover:text-sky-600 hover:bg-sky-600/10"
-                  : "text-gray-400 hover:text-sky-600 hover:bg-sky-600/10"
-              }`}
+              className="transition-colors rounded-full p-2 text-gray-600 hover:text-sky-600 hover:bg-sky-600/10 dark:text-gray-400 dark:hover:text-sky-600 dark:hover:bg-sky-600/10"
             >
               <MessageCircleDashed className="h-5 w-5" />
             </Link>
             <Link
               href="https://www.linkedin.com/in/tunmise-falodun-1894b22a2/"
-              className={`transition-colors rounded-full p-2 ${
-                theme === "light"
-                  ? "text-gray-600 hover:text-sky-600 hover:bg-sky-600/10"
-                  : "text-gray-400 hover:text-sky-600 hover:bg-sky-600/10"
-              }`}
+              className="transition-colors rounded-full p-2 text-gray-600 hover:text-sky-600 hover:bg-sky-600/10 dark:text-gray-400 dark:hover:text-sky-600 dark:hover:bg-sky-600/10"
             >
               <Linkedin className="h-5 w-5" />
             </Link>

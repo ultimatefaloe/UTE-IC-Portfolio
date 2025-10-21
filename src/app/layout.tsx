@@ -1,12 +1,11 @@
-import SideNavBar from "@/components/root/sidebar";
-import "./globals.css"
-import type { Metadata } from "next";
+import "./globals.css";
+import { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import SideNavBar from "@/components/root/sidebar";
 import Main from "@/components/root/main";
 import Footer from "@/components/root/footer";
-import { ThemeProvider } from "@/_context/themeContext";
 
-
+// Load Google fonts
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -17,28 +16,36 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// ✅ Proper Metadata setup for title and favicon
 export const metadata: Metadata = {
-  title: "UTE-IC Portfolio",
+  title: {
+    default: "UTE-IC Portfolio",
+    template: "%s | UTE-IC",
+  },
   description: "Tunmise Falodun's Portfolio",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
+      {/* ✅ No manual <head> tag needed here */}
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={` bg-background text-foreground ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider>
-          <SideNavBar />
-          <div className="lg:ml-64">
-            <Main>{children}</Main>
-            <Footer />
-          </div>
-        </ThemeProvider>
+        <SideNavBar />
+        <div className="lg:ml-64">
+          <Main>{children}</Main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { Users, CheckCircle, Lightbulb, HandHeart } from "lucide-react";
-import { useTheme } from "@/_context/themeContext";
 
 // Counter animation hook
 const useCounterAnimation = (
@@ -61,7 +60,6 @@ const useIntersectionObserver = (threshold = 0.1) => {
 };
 
 const StatsSection = () => {
-  const { theme } = useTheme();
   const [sectionRef, isInView] = useIntersectionObserver(0.3);
 
   const stats = [
@@ -108,17 +106,13 @@ const StatsSection = () => {
       <div className="absolute inset-0 overflow-hidden">
         {/* Diamond grid pattern */}
         <div
-          className={`absolute inset-0 opacity-10 ${
-            theme === "dark" ? "text-sky-600" : "text-sky-300"
-          }`}
+          className="absolute inset-0 opacity-10 text-sky-600 dark:text-sky-300"
         >
           {/* Vertical lines */}
           {[...Array(8)].map((_, i) => (
             <div
               key={`v-${i}`}
-              className={`absolute w-px h-full ${
-                theme === "dark" ? "bg-sky-600/20" : "bg-sky-300/30"
-              }`}
+              className="absolute w-px h-full bg-sky-600/20 dark:bg-sky-300/30"
               style={{
                 left: `${12.5 + i * 12.5}%`,
                 transform: "rotate(45deg)",
@@ -130,9 +124,7 @@ const StatsSection = () => {
           {[...Array(6)].map((_, i) => (
             <div
               key={`h-${i}`}
-              className={`absolute w-full h-px ${
-                theme === "dark" ? "bg-sky-600/20" : "bg-sky-300/30"
-              }`}
+              className="absolute w-px h-full bg-sky-600/20 dark:bg-sky-300/30"
               style={{
                 top: `${16.6 + i * 16.6}%`,
                 transform: "rotate(45deg)",
@@ -162,38 +154,24 @@ const StatsSection = () => {
                     style={{ animationDelay: `${index * 200}ms` }}
                   >
                     <div
-                      className={`relative w-48 h-48 mx-auto transform rotate-45 ${
-                        theme === "dark" ? "bg-gray-800" : "bg-white"
-                      } shadow-2xl group-hover:shadow-3xl transition-all duration-500 ${
-                        theme === "dark"
-                          ? "hover:shadow-sky-600/20 border border-gray-700 group-hover:border-sky-600/50"
-                          : "hover:shadow-sky-500/20 border border-gray-200 group-hover:border-sky-500/50"
-                      }`}
+                      className="relative w-48 h-48 mx-auto transform rotate-45 bg-gray-800 dark:bg-white shadow-2xl group-hover:shadow-3xl transition-all duration-500 hover:shadow-sky-600/20 border-gray-700 group-hover:border-sky-600/50 dark:hover:shadow-sky-500/20 border dark:border-gray-200 dark:group-hover:border-sky-500/50"
                     >
                       <div className="absolute inset-0 transform -rotate-45 flex flex-col items-center justify-center p-6">
                         <div
-                          className={`mb-4 p-4 rounded-full ${
-                            theme === "dark"
-                              ? "bg-sky-600/20 text-sky-500 group-hover:bg-sky-600/30"
-                              : "bg-sky-100 text-sky-600 group-hover:bg-sky-200"
-                          } transition-all duration-300`}
+                          className="mb-4 p-4 rounded-full bg-sky-600/20 text-sky-500 group-hover:bg-sky-600/30 dark:bg-sky-100 dark:text-sky-600 dark:group-hover:bg-sky-200 transition-all duration-300"
                         >
                           <IconComponent className="w-8 h-8" />
                         </div>
 
                         {/* ✅ animatedNumber now works safely */}
                         <div
-                          className={`text-4xl lg:text-5xl font-bold mb-2 ${
-                            theme === "dark" ? "text-white" : "text-gray-900"
-                          } transition-colors duration-300`}
+                          className="text-4xl lg:text-5xl font-bold mb-2 text-white dark:text-gray-900 transition-colors duration-300"
                         >
                           {isInView ? animatedNumber.toLocaleString() : "0"}
                         </div>
 
                         <p
-                          className={`text-sm lg:text-base text-center font-medium ${
-                            theme === "dark" ? "text-gray-300" : "text-gray-600"
-                          } transition-colors duration-300 leading-tight`}
+                          className="text-sm lg:text-base text-center font-medium text-gray-300 dark:text-gray-600 transition-colors duration-300 leading-tight"
                         >
                           {stat.label}
                         </p>

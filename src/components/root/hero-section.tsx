@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
+import { Button } from "../UI/button";
 
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -118,7 +119,7 @@ const HeroSection = () => {
       {/* Navigation Dots */}
       <div className="hero__dots absolute bottom-12 left-1/2 transform -translate-x-1/2 flex space-x-4 z-10">
         {slides.map((_, index) => (
-          <button
+          <Button
             key={index}
             onClick={() => goToSlide(index)}
             className={`relative text-lg font-medium transition-colors duration-300 ${
@@ -134,7 +135,7 @@ const HeroSection = () => {
                   : "h-px bg-white bg-opacity-30"
               }`}
             ></span>
-          </button>
+          </Button>
         ))}
       </div>
     </section>

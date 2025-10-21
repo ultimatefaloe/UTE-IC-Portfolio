@@ -8,19 +8,14 @@ import {
   Dribbble,
   Send,
 } from "lucide-react";
-import { useTheme } from "@/_context/themeContext";
 import Image from "next/image";
+import { Button } from "../UI/button";
 
 const Footer = () => {
-  const { theme } = useTheme();
 
   return (
     <footer
-      className={`py-12 transition-colors duration-300 ${
-        theme === "light"
-          ? "bg-gray-100 text-gray-900"
-          : "bg-gray-900 text-gray-100"
-      }`}
+      className="py-12 transition-colors duration-300 bg-ute-primary text-ute-neutral dark:bg-ute-secondary dark:text-ute-accent"
     >
       <div className="container mx-auto px-4">
         {/* Top Section */}
@@ -179,18 +174,14 @@ const Footer = () => {
               <input
                 type="email"
                 placeholder="Your Email"
-                className={`px-4 py-2 w-full rounded-l-md focus:outline-none focus:border-sky-600 ${
-                  theme === "light"
-                    ? "bg-white text-gray-900 border border-gray-300"
-                    : "bg-gray-800 text-gray-100 border border-gray-700"
-                }`}
+                className="px-4 py-2 w-full rounded-l-md focus:outline-none border focus:border-sky-600 bg-white text-gray-900  border-gray-300 dark:bg-gray-800 dark:text-gray-100  dark:border-gray-700"
               />
-              <button
+              <Button
                 type="submit"
                 className="bg-primary hover:bg-primary/90 px-4 py-2 rounded-r-md text-sky-600 transition-colors flex items-center"
               >
                 <Send className="h-5 w-5" />
-              </button>
+              </Button>
             </form>
           </div>
         </div>

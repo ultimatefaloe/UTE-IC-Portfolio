@@ -2,8 +2,7 @@
 
 import React, { useState } from "react";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import { useTheme } from "@/_context/themeContext";
-
+import { Button } from "../UI/button";
 const testimonials = [
   {
     id: 1,
@@ -48,12 +47,10 @@ const testimonials = [
 ];
 
 const TestimonialsSection = () => {
-  const { theme } = useTheme();
   const [currentIndex, setCurrentIndex] = useState(0);
   // const [visibleTestimonials, setVisibleTestimonials] = useState(3);
 
-  const isDark = theme === "dark";
-  const visibleTestimonials = 3
+  const visibleTestimonials = 3;
 
   const nextSlide = () => {
     setCurrentIndex((prev) =>
@@ -89,19 +86,11 @@ const TestimonialsSection = () => {
       <div className="container mx-auto px-4 py-16">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2
-            className={`text-4xl font-bold mb-4 ${
-              isDark ? "text-white" : "text-gray-900"
-            }`}
-          >
+          <h2 className="text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">
             Testimonials
           </h2>
           <div className="w-16 h-1 bg-sky-600 mx-auto mb-6"></div>
-          <p
-            className={`text-lg max-w-2xl mx-auto ${
-              isDark ? "text-gray-300" : "text-gray-600"
-            }`}
-          >
+          <p className="text-lg max-w-2xl mx-auto  text-gray-600 dark:text-gray-300">
             Here’s what collaborators, clients, and teammates have to say about
             my work and leadership. Their words reflect my focus on building
             scalable systems, leading teams, and delivering user-friendly
@@ -111,38 +100,26 @@ const TestimonialsSection = () => {
 
         {/* Navigation Arrows */}
         <div className="relative">
-          <button
+          <Button
             onClick={prevSlide}
-            className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full shadow-lg transition-all hover:scale-110 ${
-              isDark
-                ? "bg-gray-800 hover:bg-sky-600 text-white"
-                : "bg-white hover:bg-sky-600 text-gray-900 hover:text-white"
-            }`}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full shadow-lg transition-all hover:scale-110 text-sky-900 dark:text-sky-200 dark:hover:text-white"
           >
             <ChevronLeft size={24} />
-          </button>
+          </Button>
 
-          <button
+          <Button
             onClick={nextSlide}
-            className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full shadow-lg transition-all hover:scale-110 ${
-              isDark
-                ? "bg-gray-800 hover:bg-sky-600 text-white"
-                : "bg-white hover:bg-sky-600 text-gray-900 hover:text-white"
-            }`}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full shadow-lg transition-all hover:scale-110 text-sky-900 dark:text-sky-200 dark:hover:text-white"
           >
             <ChevronRight size={24} />
-          </button>
+          </Button>
 
           {/* Testimonials Grid */}
           <div className="grid md:grid-cols-3 gap-8 px-16">
             {getVisibleTestimonials().map((testimonial) => (
               <div
                 key={`${testimonial.id}-${currentIndex}`}
-                className={`relative p-8 rounded-2xl shadow-xl transition-all duration-500 hover:scale-105 ${
-                  isDark
-                    ? "bg-gray-800 hover:bg-gray-750"
-                    : "bg-gray-50 hover:bg-gray-100"
-                }`}
+                className="relative p-8 rounded-2xl shadow-xl transition-all duration-500 hover:scale-105 bg-gray-800 hover:bg-gray-750 dark:bg-gray-50 dark:hover:bg-gray-100"
               >
                 {/* Quote Icon */}
                 <div className="absolute top-6 left-6">
@@ -151,35 +128,23 @@ const TestimonialsSection = () => {
 
                 {/* Content */}
                 <div className="pt-6">
-                  <p
-                    className={`text-sm leading-relaxed italic mb-8 ${
-                      isDark ? "text-gray-300" : "text-gray-600"
-                    }`}
-                  >
+                  <p className="text-sm leading-relaxed italic mb-8  text-gray-300 dark:text-gray-600">
                     &quot{testimonial.content}&quot
                   </p>
 
                   {/* Avatar and Info */}
                   <div className="flex items-center">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-sky-400 to-sky-600 flex items-center justify-center text-white font-bold text-lg mr-4 shadow-lg">
+                    <div className="w-16 h-16 rounded-full bg-linear-to-br from-sky-400 to-sky-600 flex items-center justify-center text-white font-bold text-lg mr-4 shadow-lg">
                       {testimonial.name
                         .split(" ")
                         .map((n) => n[0])
                         .join("")}
                     </div>
                     <div>
-                      <h4
-                        className={`font-bold text-lg ${
-                          isDark ? "text-white" : "text-gray-900"
-                        }`}
-                      >
+                      <h4 className="font-bold text-lg text-white dark:text-gray-900">
                         {testimonial.name}
                       </h4>
-                      <p
-                        className={`text-sm ${
-                          isDark ? "text-gray-400" : "text-gray-500"
-                        }`}
-                      >
+                      <p className="text-sm text-gray-400 dark:text-gray-500">
                         {testimonial.role}
                       </p>
                     </div>
@@ -198,16 +163,16 @@ const TestimonialsSection = () => {
         {/* Pagination Dots */}
         <div className="flex justify-center mt-12 space-x-2">
           {Array.from({ length: totalSlides }).map((_, index) => (
-            <button
+            <Button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                Math.floor(currentIndex / visibleTestimonials) === index
-                  ? "bg-sky-600 scale-125"
-                  : isDark
-                  ? "bg-gray-600 hover:bg-gray-500"
-                  : "bg-gray-300 hover:bg-gray-400"
-              }`}
+              className={`w-3 h-3 rounded-full transition-all duration-300
+                  ${
+                    Math.floor(currentIndex / visibleTestimonials) === index
+                      ? "bg-sky-600 scale-125"
+                      : "bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500"
+                  }
+                `}
             />
           ))}
         </div>
@@ -215,45 +180,21 @@ const TestimonialsSection = () => {
         {/* Additional Features */}
         <div className="mt-16 text-center">
           <div className="flex justify-center space-x-8 mb-8">
-            <div
-              className={`px-6 py-3 rounded-full ${
-                isDark ? "bg-gray-800" : "bg-gray-100"
-              }`}
-            >
+            <div className="px-6 py-3 rounded-full bg-gray-800 dark:bg-gray-100">
               <span className="text-2xl font-bold text-sky-600">500+</span>
-              <p
-                className={`text-sm ${
-                  isDark ? "text-gray-400" : "text-gray-600"
-                }`}
-              >
+              <p className="text-sm text-gray-400 dark:text-gray-600">
                 Happy Clients
               </p>
             </div>
-            <div
-              className={`px-6 py-3 rounded-full ${
-                isDark ? "bg-gray-800" : "bg-gray-100"
-              }`}
-            >
+            <div className="px-6 py-3 rounded-full bg-gray-800 dark:bg-gray-100">
               <span className="text-2xl font-bold text-sky-600">4.9</span>
-              <p
-                className={`text-sm ${
-                  isDark ? "text-gray-400" : "text-gray-600"
-                }`}
-              >
+              <p className="text-sm text-gray-400 dark:text-gray-600">
                 Average Rating
               </p>
             </div>
-            <div
-              className={`px-6 py-3 rounded-full ${
-                isDark ? "bg-gray-800" : "bg-gray-100"
-              }`}
-            >
+            <div className="px-6 py-3 rounded-full bg-gray-800 dark:bg-gray-100">
               <span className="text-2xl font-bold text-sky-600">99%</span>
-              <p
-                className={`text-sm ${
-                  isDark ? "text-gray-400" : "text-gray-600"
-                }`}
-              >
+              <p className="text-sm text-gray-400 dark:text-gray-600">
                 Satisfaction
               </p>
             </div>

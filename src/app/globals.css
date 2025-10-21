@@ -1,26 +1,62 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Declare custom theme variant */
+@custom-variant dark (&:is(.dark *));
 
+/* Inline theme tokens for Tailwind to reference */
 @theme inline {
+  --color-ute-primary: #f7fafc; /* gray-900 */
+  --color-ute-secondary: #1a202c; /* gray-100 */
+  --color-ute-accent: #f7fafc; /* gray-100 */
+  --color-ute-neutral: #1a202c; /* gray-900 */
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-inter: 'Inter', sans-serif;
+  --font-josefin: 'Josefin Sans', sans-serif;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.75rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Base theme (light) */
+:root {
+  --background: oklch(0.98 0.02 220); /* very light sky */
+  --foreground: oklch(0.18 0.05 220); /* near-black navy */
+  --card: oklch(1 0 0);
+  --border: oklch(0.89 0.03 210);
+  --ring: oklch(0.7 0.1 210);
+}
+
+/* Dark theme overrides */
+.dark {
+  --background: oklch(0.18 0.03 220); /* deep sky-900 navy */
+  --foreground: oklch(0.95 0.02 220); /* bright off-white */
+  --card: oklch(0.23 0.04 220);
+  --border: oklch(0.35 0.03 220);
+  --ring: oklch(0.65 0.1 220);
+}
+
+/* Apply global styles */
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased transition-colors duration-500;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ute-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-ute-secondary);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ute-accent);
 }

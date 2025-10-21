@@ -43,11 +43,11 @@ const techStack = [
     icon: <SiExpress className="text-gray-600 dark:text-gray-200" />,
   },
   { name: "Nest.js", icon: <SiNestjs className="text-red-600" /> },
-  { name: "Laravel", icon: <SiLaravel className="text-red-500" /> }
+  { name: "Laravel", icon: <SiLaravel className="text-red-500" /> },
 ];
 
 const devops = [
-    { name: "MongoDB", icon: <SiMongodb className="text-green-500" /> },
+  { name: "MongoDB", icon: <SiMongodb className="text-green-500" /> },
   { name: "Postgres", icon: <SiPostgresql className="text-blue-500" /> },
   { name: "MySQL", icon: <SiMysql className="text-sky-600" /> },
   { name: "Docker", icon: <FaDocker className="text-blue-400" /> },
@@ -101,10 +101,10 @@ export default function BouncingCarousel() {
           {techStack.map((tech, i) => (
             <div
               key={i}
-              className="flex flex-col items-center justify-center min-w-[80px] p-4 rounded-lg bg-gray-100 dark:bg-gray-800 shadow-md"
+              className="flex flex-col items-center justify-center min-w-[80px] p-4 rounded-lg shadow-md bg-sky-900 dark:bg-sky-100"
             >
               <div className="text-4xl mb-2">{tech.icon}</div>
-              <span className="text-sm text-gray-700 dark:text-gray-300">
+              <span className="text-sm text-gray-100 dark:text-gray-900">
                 {tech.name}
               </span>
             </div>
@@ -119,10 +119,10 @@ export default function BouncingCarousel() {
           {devops.map((tech, i) => (
             <div
               key={i}
-              className="flex flex-col items-center justify-center min-w-[80px] p-4 rounded-lg bg-gray-100 dark:bg-gray-800 shadow-md"
+              className="flex flex-col items-center justify-center min-w-[80px] p-4 rounded-lg shadow-md bg-sky-900 dark:bg-sky-100"
             >
               <div className="text-4xl mb-2">{tech.icon}</div>
-              <span className="text-sm text-gray-700 dark:text-gray-300">
+              <span className={`text-sm text-gray-100 dark:text-gray-900`}>
                 {tech.name}
               </span>
             </div>

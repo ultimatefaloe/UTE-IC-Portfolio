@@ -4,6 +4,7 @@ interface ButtonProps {
   children?: React.ReactNode;
   className?: string;
   onClick?: () => void;
+  disabled?: boolean;
   type?: "button" | "submit" | "reset";
   style?: React.CSSProperties;
 }
@@ -13,12 +14,14 @@ export const Button: React.FC<ButtonProps> = ({
   className = "",
   onClick,
   type = "button",
-  style = {}
+  style = {},
+  disabled
 }) => {
   return (
     <button
       type={type}
       onClick={onClick}
+      disabled={disabled}
       className={`cursor-pointer px-4 py-2 rounded-md ${className}`}
       style={style}
     >

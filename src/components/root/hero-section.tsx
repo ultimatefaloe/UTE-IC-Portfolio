@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { Button } from "../UI/button";
+import LinkButton from "../UI/LinkButton";
 
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -95,9 +95,9 @@ const HeroSection = () => {
                       {slide.title}
                     </h2>
 
-                    <Link
+                    <LinkButton
                       href="#"
-                      className={`primary-btn inline-block bg-sky-600 hover:bg-sky-700 text-white font-semibold py-3 px-8 rounded-sm uppercase tracking-wide transition-all duration-300 transform hover:scale-105 ${
+                      className={`flex bg-sky-400 hover:bg-sky-500${ 
                         index === currentSlide
                           ? "translate-y-0 opacity-100"
                           : "translate-y-8 opacity-0"
@@ -107,7 +107,7 @@ const HeroSection = () => {
                       }}
                     >
                       {slide.buttonText}
-                    </Link>
+                    </LinkButton>
                   </div>
                 </div>
               </div>

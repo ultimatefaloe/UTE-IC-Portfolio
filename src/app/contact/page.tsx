@@ -1,12 +1,13 @@
+import ContactPage from "@/components/contact/contactPage";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact"
+  title: "Contact Me"
 }
 
 const  Contact = () => {
   return (
-    <h1>Contact</h1>
+    <ContactPage />
   )
 };
 

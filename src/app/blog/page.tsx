@@ -1,3 +1,4 @@
+import BlogPage from "@/components/blog/blogPage";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,7 +7,7 @@ export const metadata: Metadata = {
 
 const  Blogs = () => {
   return (
-    <h1>Blogs</h1>
+    <BlogPage />
   )
 };
 

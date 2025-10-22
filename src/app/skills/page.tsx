@@ -1,3 +1,4 @@
+import SkillType from "@/components/skills/skillType";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,7 +7,9 @@ export const metadata: Metadata = {
 
 const  Skills = () => {
   return (
-    <h1>Skills</h1>
+   <>
+    <SkillType />
+   </>
   )
 };
 

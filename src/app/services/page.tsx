@@ -1,3 +1,4 @@
+import ServicesPage from "@/components/service/servicePage";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,7 +7,7 @@ export const metadata: Metadata = {
 
 const  Services = () => {
   return (
-    <h1>Services</h1>
+    <ServicesPage />
   )
 };
 

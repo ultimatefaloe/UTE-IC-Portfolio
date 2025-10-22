@@ -1,12 +1,13 @@
+import AboutMe from "@/components/about/aboutme";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About"
+  title: "About Tunmise"
 }
 
 const  About = () => {
   return (
-    <h1>About</h1>
+    <AboutMe />
   )
 };
 

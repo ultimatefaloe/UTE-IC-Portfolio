@@ -119,7 +119,7 @@ const TestimonialsSection = () => {
             {getVisibleTestimonials().map((testimonial) => (
               <div
                 key={`${testimonial.id}-${currentIndex}`}
-                className="relative p-8 rounded-2xl shadow-xl transition-all duration-500 hover:scale-105 bg-gray-800 hover:bg-gray-750 dark:bg-gray-50 dark:hover:bg-gray-100"
+                className="relative p-8 rounded-2xl shadow-xl transition-all duration-500 hover:scale-105 bg-gray-100 hover:bg-gray-500 dark:bg-gray-700 dark:hover:bg-gray-800"
               >
                 {/* Quote Icon */}
                 <div className="absolute top-6 left-6">
@@ -128,8 +128,8 @@ const TestimonialsSection = () => {
 
                 {/* Content */}
                 <div className="pt-6">
-                  <p className="text-sm leading-relaxed italic mb-8  text-gray-300 dark:text-gray-600">
-                    &quot{testimonial.content}&quot
+                  <p className="text-sm leading-relaxed italic mb-8  text-gray-800 dark:text-gray-200">
+                    {`${testimonial.content}`}
                   </p>
 
                   {/* Avatar and Info */}
@@ -141,10 +141,10 @@ const TestimonialsSection = () => {
                         .join("")}
                     </div>
                     <div>
-                      <h4 className="font-bold text-lg text-white dark:text-gray-900">
+                      <h4 className="font-bold text-lg text-sky-900 dark:text-white">
                         {testimonial.name}
                       </h4>
-                      <p className="text-sm text-gray-400 dark:text-gray-500">
+                      <p className="text-sm text-gray-800 dark:text-gray-200">
                         {testimonial.role}
                       </p>
                     </div>
@@ -180,21 +180,21 @@ const TestimonialsSection = () => {
         {/* Additional Features */}
         <div className="mt-16 text-center">
           <div className="flex justify-center space-x-8 mb-8">
-            <div className="px-6 py-3 rounded-full bg-gray-800 dark:bg-gray-100">
+            <div className="px-6 py-3 rounded-full bg-gray-100 dark:bg-gray-800">
               <span className="text-2xl font-bold text-sky-600">500+</span>
-              <p className="text-sm text-gray-400 dark:text-gray-600">
+              <p className="text-sm text-gray-700 dark:text-gray-300">
                 Happy Clients
               </p>
             </div>
-            <div className="px-6 py-3 rounded-full bg-gray-800 dark:bg-gray-100">
+            <div className="px-6 py-3 rounded-full bg-gray-100 dark:bg-gray-800">
               <span className="text-2xl font-bold text-sky-600">4.9</span>
-              <p className="text-sm text-gray-400 dark:text-gray-600">
+              <p className="text-sm text-gray-700 dark:text-gray-300">
                 Average Rating
               </p>
             </div>
-            <div className="px-6 py-3 rounded-full bg-gray-800 dark:bg-gray-100">
+            <div className="px-6 py-3 rounded-full bg-gray-100 dark:bg-gray-800">
               <span className="text-2xl font-bold text-sky-600">99%</span>
-              <p className="text-sm text-gray-400 dark:text-gray-600">
+              <p className="text-sm text-gray-700 dark:text-gray-300">
                 Satisfaction
               </p>
             </div>

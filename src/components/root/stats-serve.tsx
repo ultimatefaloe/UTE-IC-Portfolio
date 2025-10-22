@@ -154,7 +154,7 @@ const StatsSection = () => {
                     style={{ animationDelay: `${index * 200}ms` }}
                   >
                     <div
-                      className="relative w-48 h-48 mx-auto transform rotate-45 bg-gray-800 dark:bg-white shadow-2xl group-hover:shadow-3xl transition-all duration-500 hover:shadow-sky-600/20 border-gray-700 group-hover:border-sky-600/50 dark:hover:shadow-sky-500/20 border dark:border-gray-200 dark:group-hover:border-sky-500/50"
+                      className="relative w-48 h-48 mx-auto transform rotate-45 bg-white dark:bg-gray-800 shadow-2xl group-hover:shadow-3xl transition-all duration-500 hover:shadow-sky-600/20 border-gray-700 group-hover:border-sky-600/50 dark:hover:shadow-sky-500/20 border dark:border-gray-200 dark:group-hover:border-sky-500/50"
                     >
                       <div className="absolute inset-0 transform -rotate-45 flex flex-col items-center justify-center p-6">
                         <div
@@ -165,13 +165,13 @@ const StatsSection = () => {
 
                         {/* ✅ animatedNumber now works safely */}
                         <div
-                          className="text-4xl lg:text-5xl font-bold mb-2 text-white dark:text-gray-900 transition-colors duration-300"
+                          className="text-4xl lg:text-5xl font-bold mb-2 text-sky-800 dark:text-sky-600 transition-colors duration-300"
                         >
                           {isInView ? animatedNumber.toLocaleString() : "0"}
                         </div>
 
                         <p
-                          className="text-sm lg:text-base text-center font-medium text-gray-300 dark:text-gray-600 transition-colors duration-300 leading-tight"
+                          className="text-sm lg:text-base text-center font-medium text-gray-600 dark:text-gray-200 transition-colors duration-300 leading-tight"
                         >
                           {stat.label}
                         </p>

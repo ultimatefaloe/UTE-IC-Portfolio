@@ -4,7 +4,6 @@ import { useState } from "react";
 import {
   Home,
   User,
-  FileText,
   HardDrive,
   Mail,
   Menu,
@@ -14,7 +13,7 @@ import {
   Twitter,
   Instagram,
   MessageCircleDashed,
-  Image as ImageIcon,
+  // Image as ImageIcon,
 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "../UI/button";
@@ -34,7 +33,7 @@ const SideNavBar = () => {
         ></div>
       )}
       <Button
-        className="fixed top-4 right-4 z-50 p-2 rounded-md lg:hidden transition-all duration-300 bg-gray-200 text-gray-900 hover:bg-gray-300 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
+        className="fixed top-4 right-4 z-50 p-2 rounded-md lg:hidden transition-all duration-300 bg-gray-200/30 text-black hover:bg-gray-300 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
       >
         <Menu className="h-6 w-6" />
@@ -70,13 +69,26 @@ const SideNavBar = () => {
          <ThemeToggle />
 
           {/* Navigation */}
-          <nav className="flex-1 py-4 overflow-y-auto">
-            <ul className="space-y-2">
+           {/* Navigation - Scrollable Area */}
+          <nav className="flex-1 py-4 min-h-0" style={{
+            overflowY: 'auto',
+            overflowX: 'hidden',
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none'
+          }}>
+            <style dangerouslySetInnerHTML={{
+              __html: `
+                nav::-webkit-scrollbar {
+                  display: none;
+                }
+              `
+            }} />
+            
+            <ul className="space-y-2 pb-4">
               {[
                 { href: "/", icon: Home, text: "Home", active: true },
                 { href: "/about", icon: User, text: "About" },
-                { href: "/resume", icon: FileText, text: "Resume" },
-                { href: "/portfolio", icon: ImageIcon, text: "Portfolio" },
+                // { href: "/portfolio", icon: ImageIcon, text: "Portfolio" },
                 { href: "/services", icon: HardDrive, text: "Services" },
                 { href: "/contact", icon: Mail, text: "Contact" },
               ].map((item) => {
@@ -93,7 +105,7 @@ const SideNavBar = () => {
                             : "text-gray-600 dark:text-gray-400 hover:bg-sky-600/10 hover:text-sky-600"
                         }
                       `}
-                      onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                      onClick={() => setIsMobileMenuOpen(false)}
                     >
                       <Icon className="h-5 w-5 mr-3" />
                       <span>{item.text}</span>
@@ -104,8 +116,8 @@ const SideNavBar = () => {
 
               {/* Dropdown */}
               <li className="relative">
-                <Button
-                  className="flex items-center justify-between w-full px-4 py-3 rounded-md transition-colors text-gray-600 hover:bg-sky-600/10 hover:text-sky-600 dark:text-gray-400 hdark:over:bg-sky-600/10 dark:hover:text-sky-600"
+                <button
+                  className="flex items-center justify-between w-full px-4 py-3 rounded-md transition-colors text-gray-600 hover:bg-sky-600/10 hover:text-sky-600 dark:text-gray-400 dark:hover:bg-sky-600/10 dark:hover:text-sky-600"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 >
                   <div className="flex items-center">
@@ -117,7 +129,7 @@ const SideNavBar = () => {
                       isDropdownOpen ? "rotate-180" : ""
                     }`}
                   />
-                </Button>
+                </button>
                 {isDropdownOpen && (
                   <ul className="ml-8 mt-2 space-y-2 pl-2 border-l border-sky-600 dark:border-gray-700">
                     {["Skills", "Projects", "Blog", "Experiences"].map(
@@ -126,9 +138,7 @@ const SideNavBar = () => {
                           <Link
                             href={`/${item.toLowerCase()}`}
                             className="block px-3 py-2 transition-colors rounded-md text-gray-600 hover:bg-sky-600/10 hover:text-sky-600 dark:text-gray-400 dark:hover:bg-sky-600/10 dark:hover:text-sky-600"
-                            onClick={() =>
-                              setIsMobileMenuOpen(!isMobileMenuOpen)
-                            }
+                            onClick={() => setIsMobileMenuOpen(false)}
                           >
                             {item}
                           </Link>
@@ -141,22 +151,28 @@ const SideNavBar = () => {
             </ul>
           </nav>
 
-          {/* Social Links */}
-          <div className="flex justify-center space-x-4 py-4  absolute bottom-0 right-0 left-0 bg-transparent backdrop-blur-2xl border-gray-300 dark:border-gray-800">
+          {/* Social Links - Fixed at Bottom */}
+          <div className="flex justify-center space-x-4 pt-2 px-4 border-t border-gray-300 dark:border-gray-700 bg-ute-primary dark:bg-ute-secondary flex-shrink-0">
             <Link
               href="https://x.com/faloeUltimate/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="transition-colors rounded-full p-2 text-gray-600 hover:text-sky-600 hover:bg-sky-600/10 dark:text-gray-400 dark:hover:text-sky-600 dark:hover:bg-sky-600/10"
             >
               <Twitter className="h-5 w-5" />
             </Link>
             <Link
               href="https://web.facebook.com/faloeultimate/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="transition-colors rounded-full p-2 text-gray-600 hover:text-sky-600 hover:bg-sky-600/10 dark:text-gray-400 dark:hover:text-sky-600 dark:hover:bg-sky-600/10"
             >
               <Facebook className="h-5 w-5" />
             </Link>
             <Link
               href="https://www.instagram.com/ultimatefaloe/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="transition-colors rounded-full p-2 text-gray-600 hover:text-sky-600 hover:bg-sky-600/10 dark:text-gray-400 dark:hover:text-sky-600 dark:hover:bg-sky-600/10"
             >
               <Instagram className="h-5 w-5" />
@@ -169,6 +185,8 @@ const SideNavBar = () => {
             </Link>
             <Link
               href="https://www.linkedin.com/in/tunmise-falodun-1894b22a2/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="transition-colors rounded-full p-2 text-gray-600 hover:text-sky-600 hover:bg-sky-600/10 dark:text-gray-400 dark:hover:text-sky-600 dark:hover:bg-sky-600/10"
             >
               <Linkedin className="h-5 w-5" />

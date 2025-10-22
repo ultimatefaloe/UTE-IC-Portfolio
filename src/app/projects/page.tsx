@@ -1,3 +1,4 @@
+import ProjectPage from "@/components/projects/productpage";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,7 +7,9 @@ export const metadata: Metadata = {
 
 const  Projects = () => {
   return (
-    <h1>Projects</h1>
+    <>
+      <ProjectPage />
+    </>
   )
 };
 

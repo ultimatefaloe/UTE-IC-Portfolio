@@ -1,3 +1,4 @@
+import Experience from "@/components/experience/exp";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,7 +7,7 @@ export const metadata: Metadata = {
 
 const  Experence = () => {
   return (
-    <h1>Experence</h1>
+    <Experience />
   )
 };
 

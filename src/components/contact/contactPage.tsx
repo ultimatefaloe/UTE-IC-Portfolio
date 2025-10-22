@@ -95,7 +95,7 @@ export default function ContactPage() {
         <div className='text-center mb-16'>
           <div className='inline-block mb-4'>
             <span className='text-sky-400 font-semibold text-sm uppercase tracking-wider'>
-              Get In Touch type='submit'
+              Get In Touch
             </span>
           </div>
           <h1 className='text-5xl font-bold text-sky-900 dark:text-sky-100 mb-6'>

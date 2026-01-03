@@ -152,7 +152,7 @@ const SideNavBar = () => {
           </nav>
 
           {/* Social Links - Fixed at Bottom */}
-          <div className="flex justify-center space-x-4 pt-2 px-4 border-t border-gray-300 dark:border-gray-700 bg-ute-primary dark:bg-ute-secondary flex-shrink-0">
+          <div className="flex justify-center space-x-4 pt-2 px-4 border-t border-gray-300 dark:border-gray-700 bg-ute-primary dark:bg-ute-secondary shrink-0">
             <Link
               href="https://x.com/faloeUltimate/"
               target="_blank"

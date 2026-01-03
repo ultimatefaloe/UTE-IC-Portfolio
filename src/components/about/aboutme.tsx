@@ -43,6 +43,8 @@ export default function AboutMe() {
     'Collaborative problem-solving',
   ];
 
+  const cv_link: string = process.env.NEXT_PUBLIC_CV_LINK ?? "https://drive.google.com/file/d/1ZA3nVpSSHsCdS9rc4xL6XMoJPiNEkztX/view?usp=drive_link"
+
   return (
     <div className='min-h-screen py-20 px-6'>
       <div className='max-w-6xl mx-auto'>
@@ -63,8 +65,7 @@ export default function AboutMe() {
             </p>
             <div className='flex gap-4 pt-4'>
               <LinkButton
-                href='https://drive.google.com/file/d/1pPAbOx9n_bOimH9VzQxBDx6i7rprzwJV/view?usp=drive_link'
-                download
+                href={cv_link}
                 className='flex bg-sky-400 hover:bg-sky-500'
               >
                 <Download className='w-5 h-5' />
@@ -194,7 +195,7 @@ export default function AboutMe() {
             </LinkButton>
             <LinkButton
               className='flex'
-              href='https://drive.google.com/file/d/1pPAbOx9n_bOimH9VzQxBDx6i7rprzwJV/view?usp=drive_link'
+              href={cv_link}
               download
             >
               <Download className='w-5 h-5' />

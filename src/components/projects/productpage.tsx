@@ -21,102 +21,93 @@ export default function ProjectPage() {
     {
       title: 'MeuDeliver',
       description:
-        'A full delivery and logistics platform built with NestJS and React — featuring client, vendor, delivery, and admin systems. Includes real-time order tracking and a dynamic notification system.',
+        'A multi-role delivery and logistics platform built with NestJS and Next.js. Supports clients, vendors, delivery agents, and admins with order lifecycle management, shipment assignment, geo-based delivery matching, and abuse detection middleware.',
       technologies: [
         'NestJS',
-        'React',
-        'PostgreSQL',
-        'Socket.io',
+        'Next.js',
         'TypeScript',
+        'PostgreSQL',
+        'MongoDB',
+        'Upstash Redis',
+        'Socket.io',
       ],
-      liveUrl: 'https://example.com/meudeliver',
-      githubUrl: 'https://github.com/username/meudeliver',
-      date: '2025',
-      category: 'Full Stack',
+      liveUrl: 'https://meudeliver.vercel.app/',
+      githubUrl: '',
+      date: '2024 – 2025',
+      category: 'Full Stack / Logistics',
       featured: true,
     },
+
     {
       title: '59Minutes Print',
       description:
-        'A modern printing service MVP with Firebase authentication and backend integration for orders, products, and vendors.',
-      technologies: ['Node.js', 'Firebase', 'MongoDB', 'React', 'Express'],
-      liveUrl: 'https://example.com/59minutes',
-      githubUrl: 'https://github.com/username/59minutes',
+        'An on-demand printing service MVP with user, vendor, and admin authentication. Includes product management, vendor onboarding, order placement, Firebase-based login, and email notifications.',
+      technologies: [
+        'Node.js',
+        'Express',
+        'MongoDB',
+        'Firebase Auth',
+        'Resend',
+        'React',
+        'Tailwind CSS',
+      ],
+      liveUrl: 'https://59minutes-prints.vercel.app/',
+      githubUrl: '',
       date: '2024',
-      category: 'Full Stack',
+      category: 'Full Stack / E-commerce',
       featured: true,
     },
+
     {
       title: 'Ultimate AgroLinks',
       description:
-        'A digital agriculture marketplace connecting farmers and vendors, featuring product listing, vendor analytics, and secure payment modules.',
-      technologies: ['React', 'Node.js', 'Stripe', 'MongoDB', 'Redux'],
-      liveUrl: 'https://example.com/agrolinks',
-      githubUrl: 'https://github.com/username/agrolinks',
+        'An agriculture-focused digital marketplace connecting farmers, vendors, and buyers. Features product listings, vendor-specific dashboards, search & filtering, and scalable backend APIs.',
+      technologies: [
+        'Node.js',
+        'Express',
+        'MongoDB',
+        'React',
+        'Redux',
+        'REST APIs',
+      ],
+      liveUrl: 'https://ultimate-agrolinks.vercel.app/',
+      githubUrl: 'https://github.com/ultimatefaloe/ultimate-agrolinks',
       date: '2024',
-      category: 'E-Commerce',
+      category: 'Marketplace',
       featured: true,
     },
+
     {
-      title: 'Accessivo Web Project',
+      title: 'Kiddies Cake',
       description:
-        'A team-led initiative at Accessivo — improving internal communication and productivity through a scalable, modular frontend architecture.',
-      technologies: ['React', 'TypeScript', 'TailwindCSS', 'REST API'],
-      liveUrl: 'https://example.com/accessivo',
-      githubUrl: 'https://github.com/username/accessivo',
-      date: '2025',
-      category: 'Frontend',
-      featured: true,
-    },
-    {
-      title: 'E-Commerce Dashboard',
-      description:
-        'Admin dashboard for managing products, orders, and customer data with real-time analytics and reporting features.',
-      technologies: ['React', 'Chart.js', 'Node.js', 'PostgreSQL'],
-      liveUrl: 'https://example.com/dashboard',
-      githubUrl: 'https://github.com/username/dashboard',
-      date: '2024',
-      category: 'Dashboard',
-    },
-    {
-      title: 'Task Management System',
-      description:
-        'Collaborative task management tool with team workspaces, real-time updates, and project tracking capabilities.',
-      technologies: ['Vue.js', 'Firebase', 'Vuex', 'TailwindCSS'],
-      liveUrl: 'https://example.com/taskmanager',
-      githubUrl: 'https://github.com/username/taskmanager',
-      date: '2023',
-      category: 'Web App',
-    },
-    {
-      title: 'Weather Forecast App',
-      description:
-        'Real-time weather application with location-based forecasts, weather maps, and detailed meteorological data.',
-      technologies: ['React', 'OpenWeather API', 'Leaflet', 'Redux'],
-      liveUrl: 'https://example.com/weather',
-      githubUrl: 'https://github.com/username/weather',
+        'A simple business website for a kids cake brand, designed to showcase products, accept inquiries, and improve online presence with a clean, playful UI.',
+      technologies: ['Next.js', 'React', 'Tailwind CSS'],
+      liveUrl: 'https://kiddiescake.vercel.app/',
+      githubUrl: 'https://github.com/ultimatefaloe/kiddiescake',
       date: '2023',
       category: 'Frontend',
     },
+
     {
-      title: 'Social Media Analytics',
+      title: 'Vibe Dev',
       description:
-        'Analytics platform for tracking social media metrics, engagement rates, and audience insights across multiple platforms.',
-      technologies: ['Next.js', 'Node.js', 'PostgreSQL', 'D3.js'],
-      liveUrl: 'https://example.com/analytics',
-      githubUrl: 'https://github.com/username/analytics',
-      date: '2024',
-      category: 'Dashboard',
-    },
-    {
-      title: 'Recipe Sharing Platform',
-      description:
-        'Community-driven recipe platform where users can share, rate, and discover culinary creations from around the world.',
-      technologies: ['React', 'MongoDB', 'Express', 'Cloudinary'],
-      liveUrl: 'https://example.com/recipes',
-      githubUrl: 'https://github.com/username/recipes',
+        'A personal developer portfolio and brand website highlighting projects, services, and blog-ready architecture for tutorials and lessons.',
+      technologies: ['Next.js', 'React', 'Tailwind CSS'],
+      liveUrl: 'https://vibedev.vercel.app/',
+      githubUrl: 'https://github.com/ultimatefaloe/vibedev',
       date: '2023',
-      category: 'Web App',
+      category: 'Frontend / Portfolio',
+    },
+
+    {
+      title: 'Flirt UTE',
+      description:
+        'A concept social networking and interaction platform focused on clean UI, user engagement flows, and scalable architecture planning.',
+      technologies: ['Next.js', 'React', 'TypeScript'],
+      liveUrl: 'https://flirt-ute.vercel.app/',
+      githubUrl: 'https://github.com/ultimatefaloe/flirtUTE',
+      date: '2024',
+      category: 'Frontend / Concept',
     },
   ];
 
@@ -188,10 +179,10 @@ export default function ProjectPage() {
           {currentProjects.map((project, index) => (
             <div
               key={index}
-              className='group relative bg-gradient-to-br from-sky-50 to-sky-100 dark:from-sky-950/40 dark:to-gray-900/60 
-  rounded-2xl border border-sky-200 dark:border-sky-800 
-  hover:border-sky-500 transition-all duration-500 overflow-hidden 
-  hover:shadow-xl hover:shadow-sky-400/10 backdrop-blur-sm'
+              className='group relative bg-linear-to-br from-sky-50 to-sky-100 dark:from-sky-950/40 dark:to-gray-900/60 
+              rounded-2xl border border-sky-200 dark:border-sky-800 
+              hover:border-sky-500 transition-all duration-500 overflow-hidden 
+              hover:shadow-xl hover:shadow-sky-400/10 backdrop-blur-sm'
             >
               {/* Project Preview */}
               <div className='relative aspect-video bg-sky-900/80 overflow-hidden'>

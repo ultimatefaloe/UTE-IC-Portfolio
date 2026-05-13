@@ -1,8 +1,8 @@
 "use client";
-import React from "react";
-import { Layers, Database, Cloud, Code } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Layers } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Button } from "../UI/button";
+import { Button } from "../ui/button";
 
 const ServicesSection = () => {
   const router = useRouter()
@@ -11,36 +11,19 @@ const ServicesSection = () => {
     router.push("/services")
   }
 
- const services = [
-  {
-    id: 1,
-    icon: Code,
-    title: "Full-Stack Development",
-    description:
-      "Building responsive, scalable applications with Node.js, PHP, and React. From backend APIs to frontend UI, I deliver end-to-end solutions tailosky to business needs.",
-  },
-  {
-    id: 2,
-    icon: Layers,
-    title: "UI/UX Implementation",
-    description:
-      "Turning designs into clean, functional interfaces using Next.js and Tailwind CSS. Focused on performance, accessibility, and smooth user experiences.",
-  },
-  {
-    id: 3,
-    icon: Database,
-    title: "Database & API Integration",
-    description:
-      "Designing and optimizing databases (PostgreSQL, MySQL, MongoDB) and integrating RESTful APIs to power secure and reliable applications.",
-  },
-  {
-    id: 4,
-    icon: Cloud,
-    title: "DevOps & Deployment",
-    description:
-      "Deploying apps with CI/CD pipelines and cloud platforms like AWS and Vercel. Implementing monitoring, rate-limiting, and abuse detection to ensure reliability.",
-  },
-];
+  const [services, setServices] = useState<
+    { id: string; title: string; description: string }[]
+  >([]);
+
+  useEffect(() => {
+    const loadServices = async () => {
+      const response = await fetch("/api/services", { cache: "no-store" });
+      const data = await response.json();
+      setServices(data);
+    };
+
+    loadServices();
+  }, []);
 
 
   return (
@@ -97,8 +80,7 @@ const ServicesSection = () => {
           {/* Right Column - Services Grid */}
           <div className="lg:col-span-2">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              {services.map((service, index) => {
-                const IconComponent = service.icon;
+              {services.slice(0, 4).map((service, index) => {
                 return (
                   <div
                     key={service.id}
@@ -111,7 +93,7 @@ const ServicesSection = () => {
                     <div
                       className={`services__item__icon mb-8 inline-flex items-center justify-center w-20 h-20 border-2 border-sky-600 transition-all duration-300 hover:bg-sky-600/10`}
                     >
-                      <IconComponent className="w-8 h-8" />
+                      <Layers className="w-8 h-8" />
                     </div>
 
                     <h4

@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProjectCategory {
+  SAAS
+  FINTECH
+  LOGISTICS
+  MARKETPLACE
+  OTHER
+}
+
+enum SkillCategory {
+  BACKEND
+  FRONTEND
+  DEVOPS
+}
+
+enum SystemDesignType {
+  ARCHITECTURE
+  FLOW
+  API
+}
+
+model Project {
+  id                     String          @id @default(uuid())
+  title                  String
+  description            String
+  longDescription        String
+  techStack              String[]
+  category               ProjectCategory
+  liveUrl                String
+  githubUrl              String?
+  architectureDiagramUrl String?
+  featured               Boolean         @default(false)
+  createdAt              DateTime        @default(now())
+  updatedAt              DateTime        @updatedAt
+}
+
+model Experience {
+  id           String    @id @default(uuid())
+  company      String
+  role         String
+  description  String
+  achievements String[]
+  startDate    DateTime
+  endDate      DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Skill {
+  id        String        @id @default(uuid())
+  name      String
+  category  SkillCategory
+  level     Int
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model Blog {
+  id        String   @id @default(uuid())
+  title     String
+  slug      String   @unique
+  content   String
+  tags      String[]
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model SystemDesign {
+  id          String           @id @default(uuid())
+  title       String
+  description String
+  diagramUrl  String?
+  type        SystemDesignType
+  order       Int              @default(0)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model ContentBlock {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  title       String
+  subtitle    String?
+  description String?
+  body        String?
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

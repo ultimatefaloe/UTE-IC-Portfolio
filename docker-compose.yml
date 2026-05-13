@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+ portfolio_db:
+    image: postgis/postgis:16-3.4
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ultimate
+      POSTGRES_DB: portfolio_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - portfolioNetwork
+
+networks:
+  portfolioNetwork:
+    driver: bridge
+
+volumes:
+  db_data:

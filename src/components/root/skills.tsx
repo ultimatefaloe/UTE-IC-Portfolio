@@ -1,68 +1,41 @@
 'use client';
-import { ArrowRightIcon } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
-import {
-  FaNodeJs,
-  FaReact,
-  FaDocker,
-  FaAws,
-} from 'react-icons/fa';
-import {
-  SiTypescript,
-  SiNextdotjs,
-  SiNestjs,
-  SiPostgresql,
-} from 'react-icons/si';
-import LinkButton from '../UI/LinkButton';
-import BouncingCarousel from '../UI/bouncingCarosel';
+import { ArrowRightIcon, Code2 } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import LinkButton from '../ui/LinkButton';
+import BouncingCarousel from '../ui/bouncingCarosel';
 
-const techStack = [
-   { name: 'Next.js', icon: <SiNextdotjs className='dark:text-gray-900 text-white' /> },
-  { name: 'NestJS', icon: <SiNestjs className='text-red-600' /> },
-  { name: 'TypeScript', icon: <SiTypescript className='text-blue-600' /> },
-  { name: 'Node.js', icon: <FaNodeJs className='text-green-600' /> },
-  { name: 'React', icon: <FaReact className='text-cyan-400' /> },
-  { name: 'PostgreSQL', icon: <SiPostgresql className='text-blue-500' /> },
-  { name: 'Docker', icon: <FaDocker className='text-blue-400' /> },
-  { name: 'AWS', icon: <FaAws className='text-orange-400' /> },
-];
+type Skill = {
+  id: string;
+  name: string;
+  category: string;
+  level: number;
+};
 
 export default function SkillCarosel() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [direction, setDirection] = useState(1); // 1 = right, -1 = left
-  const [position, setPosition] = useState(0);
+  const [skills, setSkills] = useState<Skill[]>([]);
 
   useEffect(() => {
-    let animationFrame: number;
-
-    const animate = () => {
-      if (containerRef.current) {
-        const container = containerRef.current;
-        const maxScroll = container.scrollWidth - container.clientWidth;
-
-        setPosition(prev => {
-          let next = prev + direction * 2; // speed = 2px
-          if (next <= 0) {
-            setDirection(1); // bounce right
-            next = 0;
-          } else if (next >= maxScroll) {
-            setDirection(-1); // bounce left
-            next = maxScroll;
-          }
-          container.scrollLeft = next;
-          return next;
-        });
-      }
-      animationFrame = requestAnimationFrame(animate);
+    const loadSkills = async () => {
+      const response = await fetch('/api/skills', { cache: 'no-store' });
+      const data = await response.json();
+      setSkills(data);
     };
 
-    animationFrame = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationFrame);
-  }, [direction, position]);
+    loadSkills();
+  }, []);
+
+  const techStack = useMemo(
+    () =>
+      skills.map(skill => ({
+        name: skill.name,
+        icon: <Code2 className='text-sky-400' />,
+      })),
+    [skills]
+  );
 
   return (
     <>
-      <BouncingCarousel stack={techStack} />
+  <BouncingCarousel stack={techStack} />
 
       <div className='flex justify-center align-middle w-full'>
         <LinkButton

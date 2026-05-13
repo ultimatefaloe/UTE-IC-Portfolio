@@ -16,8 +16,8 @@ import {
   // Image as ImageIcon,
 } from "lucide-react";
 import Image from "next/image";
-import { Button } from "../UI/button";
-import ThemeToggle from "../UI/themeToggle";
+import { Button } from "../ui/button";
+import ThemeToggle from "../ui/themeToggle";
 
 const SideNavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -132,7 +132,7 @@ const SideNavBar = () => {
                 </button>
                 {isDropdownOpen && (
                   <ul className="ml-8 mt-2 space-y-2 pl-2 border-l border-sky-600 dark:border-gray-700">
-                    {["Skills", "Projects", "Blog", "Experiences"].map(
+                            {["Skills", "Projects", "Blog", "Experiences", "System-Design"].map(
                       (item) => (
                         <li key={item}>
                           <Link

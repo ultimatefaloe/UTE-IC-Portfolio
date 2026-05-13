@@ -1,49 +1,33 @@
 'use client';
 
-import React from 'react';
-import {
-  Download,
-  Code2,
-  Rocket,
-  Users,
-  BookOpen,
-  Sparkles,
-} from 'lucide-react';
-import LinkButton from '../UI/LinkButton';
+import React, { useEffect, useState } from 'react';
+import { Download, Code2, Sparkles } from 'lucide-react';
+import LinkButton from '../ui/LinkButton';
+
+type ContentBlock = {
+  title: string;
+  subtitle?: string | null;
+  description?: string | null;
+  body?: string | null;
+};
 
 export default function AboutMe() {
-  const highlights = [
-    {
-      icon: <Code2 className='w-6 h-6' />,
-      title: 'Full Stack Development',
-      description: 'Building end-to-end solutions from database to deployment',
-    },
-    {
-      icon: <Rocket className='w-6 h-6' />,
-      title: 'Performance Optimization',
-      description:
-        'Crafting efficient, scalable systems that handle real-world demands',
-    },
-    {
-      icon: <Users className='w-6 h-6' />,
-      title: 'Team Leadership',
-      description: 'Mentoring developers and driving collaborative innovation',
-    },
-    {
-      icon: <BookOpen className='w-6 h-6' />,
-      title: 'Knowledge Sharing',
-      description: 'Contributing to open-source and writing technical content',
-    },
-  ];
+  const [about, setAbout] = useState<ContentBlock | null>(null);
 
-  const values = [
-    'Clean, maintainable code',
-    'User-centric design',
-    'Continuous learning',
-    'Collaborative problem-solving',
-  ];
+  useEffect(() => {
+    const loadAbout = async () => {
+      const response = await fetch('/api/content/about', { cache: 'no-store' });
+      if (!response.ok) return;
+      const data = await response.json();
+      setAbout(data);
+    };
 
-  const cv_link: string = process.env.NEXT_PUBLIC_CV_LINK ?? "https://drive.google.com/file/d/1ZA3nVpSSHsCdS9rc4xL6XMoJPiNEkztX/view?usp=drive_link"
+    loadAbout();
+  }, []);
+
+  const cv_link: string =
+    process.env.NEXT_PUBLIC_CV_LINK ??
+    'https://drive.google.com/file/d/1ZA3nVpSSHsCdS9rc4xL6XMoJPiNEkztX/view?usp=drive_link';
 
   return (
     <div className='min-h-screen py-20 px-6'>
@@ -53,15 +37,14 @@ export default function AboutMe() {
           <div className='space-y-6'>
             <div className='inline-block'>
               <span className='text-sky-400 font-semibold text-sm uppercase tracking-wider'>
-                Full Stack Software Engineer
+                {about?.subtitle ?? 'Backend-focused Engineer'}
               </span>
             </div>
             <h1 className='text-5xl lg:text-6xl font-bold text-sky-900 dark:text-sky-100 leading-tight'>
-              {"Hi, I'm"} <span className='text-sky-400'>Tunmise Falodun</span>
+              {about?.title ?? "Backend-focused Software Engineer"}
             </h1>
             <p className='text-lg text-sky-900/80 dark:text-sky-100/80 leading-relaxed'>
-              Building scalable systems and beautiful digital experiences that
-              make a difference.
+              {about?.description ?? ''}
             </p>
             <div className='flex gap-4 pt-4'>
               <LinkButton
@@ -99,78 +82,8 @@ export default function AboutMe() {
             About Me
           </h2>
           <div className='space-y-6 text-lg text-sky-900/90 dark:text-sky-100/90 leading-relaxed'>
-            <p>
-            {`  I'm Tunmise Falodun, a Full Stack Software Engineer passionate
-              about building scalable systems and beautiful digital experiences.
-              Over the years, I've worked across backend, frontend, and
-              infrastructure development, leading projects from concept to
-              deployment.`}
-            </p>
-            <p>
-              {`I'm deeply driven by solving real problems through technology,
-              whether it's optimizing backend performance, crafting intuitive
-              UIs, or automating workflows for efficiency. Every line of code I
-              write is aimed at creating solutions that are not just functional,
-              but elegant and maintainable.`}
-            </p>
-            <p>
-            {`  Beyond coding, I'm an advocate for continuous learning and
-              collaboration. I enjoy mentoring junior developers, contributing
-              to open-source, and sharing lessons from my journey through
-              articles and tutorials. I believe the best solutions come from
-              diverse perspectives and open dialogue.`}
-            </p>
-            <p>
-              {`My long-term goal is to build tools and platforms that empower
-              people and businesses, while continuously refining my craft as a
-              developer and team leader. I'm always exploring emerging
-              technologies and methodologies to stay at the forefront of
-              innovation.`}
-            </p>
-          </div>
-        </div>
-
-        {/* Highlights Grid */}
-        <div className='mb-24'>
-          <h2 className='text-3xl font-bold text-sky-900 dark:text-sky-100 mb-12 text-center'>
-            What I Bring to the Table
-          </h2>
-          <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-6'>
-            {highlights.map((item, index) => (
-              <div
-                key={index}
-                className='group p-6 rounded-xl border border-gray-700 hover:border-sky-400 transition-all duration-300 hover:shadow-lg hover:shadow-sky-400/10 hover:transform hover:scale-105'
-              >
-                <div className='w-12 h-12 bg-sky-400/10 rounded-lg flex items-center justify-center text-sky-400 mb-4 group-hover:bg-sky-400/20 transition-colors'>
-                  {item.icon}
-                </div>
-                <h3 className='text-lg font-semibold text-sky-900 dark:text-sky-100 mb-2'>
-                  {item.title}
-                </h3>
-                <p className='text-sm text-sky-900/70 dark:text-sky-100/70'>
-                  {item.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Core Values */}
-        <div className='mb-24'>
-          <h2 className='text-3xl font-bold text-sky-900 dark:text-sky-100 mb-8'>
-            Core Values
-          </h2>
-          <div className='grid md:grid-cols-2 gap-4'>
-            {values.map((value, index) => (
-              <div
-                key={index}
-                className='flex items-center gap-3 p-4 rounded-lg bg-linear-to-r from-sky-400/5 to-transparent border-l-4 border-sky-400'
-              >
-                <div className='w-2 h-2 bg-sky-400 rounded-full'></div>
-                <span className='text-lg text-sky-900 dark:text-sky-100 font-medium'>
-                  {value}
-                </span>
-              </div>
+            {(about?.body ?? '').split('\n').map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
             ))}
           </div>
         </div>

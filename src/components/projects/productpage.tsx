@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ExternalLink,
   Github,
@@ -10,106 +10,39 @@ import {
   ChevronRight,
   Layers,
 } from 'lucide-react';
-import { Button } from '../UI/button';
+import { Button } from '../ui/button';
 import Link from 'next/link';
+
+type Project = {
+  id: string;
+  title: string;
+  description: string;
+  longDescription: string;
+  techStack: string[];
+  category: string;
+  liveUrl: string;
+  githubUrl?: string | null;
+  featured: boolean;
+  createdAt: string;
+};
 
 export default function ProjectPage() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
   const projectsPerPage = 8;
 
-  const projects = [
-    {
-      title: 'MeuDeliver',
-      description:
-        'A multi-role delivery and logistics platform built with NestJS and Next.js. Supports clients, vendors, delivery agents, and admins with order lifecycle management, shipment assignment, geo-based delivery matching, and abuse detection middleware.',
-      technologies: [
-        'NestJS',
-        'Next.js',
-        'TypeScript',
-        'PostgreSQL',
-        'MongoDB',
-        'Upstash Redis',
-        'Socket.io',
-      ],
-      liveUrl: 'https://meudeliver.vercel.app/',
-      githubUrl: '',
-      date: '2024 – 2025',
-      category: 'Full Stack / Logistics',
-      featured: true,
-    },
+  useEffect(() => {
+    const loadProjects = async () => {
+      setLoading(true);
+      const response = await fetch('/api/projects', { cache: 'no-store' });
+      const data = await response.json();
+      setProjects(data);
+      setLoading(false);
+    };
 
-    {
-      title: '59Minutes Print',
-      description:
-        'An on-demand printing service MVP with user, vendor, and admin authentication. Includes product management, vendor onboarding, order placement, Firebase-based login, and email notifications.',
-      technologies: [
-        'Node.js',
-        'Express',
-        'MongoDB',
-        'Firebase Auth',
-        'Resend',
-        'React',
-        'Tailwind CSS',
-      ],
-      liveUrl: 'https://59minutes-prints.vercel.app/',
-      githubUrl: '',
-      date: '2024',
-      category: 'Full Stack / E-commerce',
-      featured: true,
-    },
-
-    {
-      title: 'Ultimate AgroLinks',
-      description:
-        'An agriculture-focused digital marketplace connecting farmers, vendors, and buyers. Features product listings, vendor-specific dashboards, search & filtering, and scalable backend APIs.',
-      technologies: [
-        'Node.js',
-        'Express',
-        'MongoDB',
-        'React',
-        'Redux',
-        'REST APIs',
-      ],
-      liveUrl: 'https://ultimate-agrolinks.vercel.app/',
-      githubUrl: 'https://github.com/ultimatefaloe/ultimate-agrolinks',
-      date: '2024',
-      category: 'Marketplace',
-      featured: true,
-    },
-
-    {
-      title: 'Kiddies Cake',
-      description:
-        'A simple business website for a kids cake brand, designed to showcase products, accept inquiries, and improve online presence with a clean, playful UI.',
-      technologies: ['Next.js', 'React', 'Tailwind CSS'],
-      liveUrl: 'https://kiddiescake.vercel.app/',
-      githubUrl: 'https://github.com/ultimatefaloe/kiddiescake',
-      date: '2023',
-      category: 'Frontend',
-    },
-
-    {
-      title: 'Vibe Dev',
-      description:
-        'A personal developer portfolio and brand website highlighting projects, services, and blog-ready architecture for tutorials and lessons.',
-      technologies: ['Next.js', 'React', 'Tailwind CSS'],
-      liveUrl: 'https://vibedev.vercel.app/',
-      githubUrl: 'https://github.com/ultimatefaloe/vibedev',
-      date: '2023',
-      category: 'Frontend / Portfolio',
-    },
-
-    {
-      title: 'Flirt UTE',
-      description:
-        'A concept social networking and interaction platform focused on clean UI, user engagement flows, and scalable architecture planning.',
-      technologies: ['Next.js', 'React', 'TypeScript'],
-      liveUrl: 'https://flirt-ute.vercel.app/',
-      githubUrl: 'https://github.com/ultimatefaloe/flirtUTE',
-      date: '2024',
-      category: 'Frontend / Concept',
-    },
-  ];
+    loadProjects();
+  }, []);
 
   // Pagination logic
   const indexOfLastProject = currentPage * projectsPerPage;
@@ -176,7 +109,12 @@ export default function ProjectPage() {
 
         {/* Projects Grid */}
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12'>
-          {currentProjects.map((project, index) => (
+          {loading ? (
+            <div className='col-span-full text-center text-sky-100/70'>
+              Loading projects...
+            </div>
+          ) : (
+            currentProjects.map((project, index) => (
             <div
               key={index}
               className='group relative bg-linear-to-br from-sky-50 to-sky-100 dark:from-sky-950/40 dark:to-gray-900/60 
@@ -244,7 +182,7 @@ export default function ProjectPage() {
                 <div className='flex items-center gap-3 text-xs text-gray-600 dark:text-gray-400'>
                   <div className='flex items-center gap-1'>
                     <Calendar className='w-3 h-3' />
-                    <span>{project.date}</span>
+                    <span>{new Date(project.createdAt).getFullYear()}</span>
                   </div>
                   <div className='flex items-center gap-1'>
                     <Tag className='w-3 h-3' />
@@ -254,7 +192,7 @@ export default function ProjectPage() {
 
                 {/* Tech Stack */}
                 <div className='flex flex-wrap gap-1.5'>
-                  {project.technologies.slice(0, 3).map((tech, techIndex) => (
+                  {project.techStack.slice(0, 3).map((tech, techIndex) => (
                     <span
                       key={techIndex}
                       className='text-xs bg-sky-400/10 text-sky-500 px-2 py-1 rounded border border-sky-400/20'
@@ -262,15 +200,16 @@ export default function ProjectPage() {
                       {tech}
                     </span>
                   ))}
-                  {project.technologies.length > 3 && (
+                  {project.techStack.length > 3 && (
                     <span className='text-xs text-gray-600 dark:text-gray-400 px-2 py-1'>
-                      +{project.technologies.length - 3}
+                      +{project.techStack.length - 3}
                     </span>
                   )}
                 </div>
               </div>
             </div>
-          ))}
+            ))
+          )}
         </div>
 
         {/* Pagination */}

@@ -1,52 +1,44 @@
 'use client';
 
+import { useEffect, useMemo, useState } from 'react';
 import CircularProgress from './components/circularPercentage';
 import SkillList from './skillList';
 
-// 🧩 Technical Skills
-const technicalSkills = [
-  { name: 'JavaScript (ES6+)', percentage: 90 },
-  { name: 'TypeScript', percentage: 88 },
-  { name: 'Node.js', percentage: 86 },
-  { name: 'NestJS', percentage: 85 },
-  { name: 'Express.js', percentage: 83 },
-  { name: 'React.js', percentage: 82 },
-  { name: 'Next.js', percentage: 84 },
-  { name: 'PostgreSQL', percentage: 80 },
-  { name: 'MongoDB', percentage: 78 },
-  { name: 'MySQL', percentage: 75 },
-  { name: 'Prisma ORM', percentage: 76 },
-  { name: 'Docker', percentage: 72 },
-  { name: 'AWS (EC2, S3, Lambda)', percentage: 68 },
-  { name: 'Firebase', percentage: 70 },
-  { name: 'Redis (Upstash)', percentage: 65 },
-  { name: 'Tailwind CSS', percentage: 82 },
-  { name: 'Radix UI', percentage: 72 },
-  { name: 'Zustand', percentage: 70 },
-  { name: 'RESTful API Development', percentage: 90 },
-  { name: 'CI/CD Pipelines', percentage: 68 },
-  { name: 'Python', percentage: 55 },
-  { name: 'PHP', percentage: 45 },
-  { name: 'Laravel', percentage: 43 },
-  { name: 'Git & GitHub', percentage: 87 },
-  { name: 'Testing (Jest, Postman, Swagger)', percentage: 75 },
-  { name: 'Nginx & Server Management', percentage: 60 },
-  { name: 'System Design & Architecture', percentage: 77 },
-];
-
-const professionalSkills = [
-  { name: 'Leadership & Team Management', percentage: 95 },
-  { name: 'Communication', percentage: 90 },
-  { name: 'Problem Solving', percentage: 88 },
-  { name: 'Project Management (Agile/Scrum)', percentage: 85 },
-  { name: 'Collaboration & Mentorship', percentage: 83 },
-  { name: 'Adaptability & Continuous Learning', percentage: 80 },
-  { name: 'Creativity & Innovation', percentage: 78 },
-  { name: 'Time Management', percentage: 82 },
-  { name: 'Critical Thinking', percentage: 84 },
-];
+type Skill = {
+  id: string;
+  name: string;
+  category: string;
+  level: number;
+};
 
 const SkillType = () => {
+  const [skills, setSkills] = useState<Skill[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadSkills = async () => {
+      setLoading(true);
+      const response = await fetch('/api/skills', { cache: 'no-store' });
+      const data = await response.json();
+      setSkills(data);
+      setLoading(false);
+    };
+
+    loadSkills();
+  }, []);
+
+  const highlightedSkills = useMemo(
+    () => [...skills].sort((a, b) => b.level - a.level).slice(0, 9),
+    [skills]
+  );
+
+  const groupedSkills = useMemo(() => {
+    return skills.reduce<Record<string, Skill[]>>((acc, skill) => {
+      const key = skill.category || 'OTHER';
+      acc[key] = acc[key] ? [...acc[key], skill] : [skill];
+      return acc;
+    }, {});
+  }, [skills]);
   return (
     <div className='p-8'>
       <div className='max-w-7xl mx-auto'>
@@ -62,49 +54,55 @@ const SkillType = () => {
           </p>
         </div>
 
-        {/* Professional Skills */}
         <div className=' my-8'>
           <h2 className='text-3xl mt-4 font-bold mb-12 text-sky-900 dark:text-sky-100'>
-            Professional Skills
+            Highlighted Skills
           </h2>
-          <div className='grid grid-cols-3 gap-4 sm:grid-cols-4 sm:gap-2'>
-            {professionalSkills.map((skill, index) => (
-              <CircularProgress
-                key={index}
-                percentage={skill.percentage}
-                label={skill.name}
-              />
-            ))}
-          </div>
+          {loading ? (
+            <p className='text-sky-900/70 dark:text-sky-100/70'>Loading skills...</p>
+          ) : (
+            <div className='grid grid-cols-3 gap-4 sm:grid-cols-4 sm:gap-2'>
+              {highlightedSkills.map(skill => (
+                <CircularProgress
+                  key={skill.id}
+                  percentage={skill.level}
+                  label={skill.name}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         <SkillList />
 
-        {/* Technical Skills */}
-        <div className='mt-8'>
-          <h2 className='text-3xl font-bold mb-12 text-sky-900 dark:text-sky-100'>
-            Technical Skills
-          </h2>
-          <div className='space-y-8'>
-            {technicalSkills.map((skill, index) => (
-              <div key={index}>
-                <div className='flex justify-between mb-2'>
-                  <span className='text-sky-900 dark:text-sky-100 font-medium'>
-                    {skill.name}
-                  </span>
-                  <span className='text-sky-900 dark:text-sky-100'>
-                    {skill.percentage}%
-                  </span>
-                </div>
-                <div className='w-full h-2 bg-gray-700 rounded-full overflow-hidden'>
-                  <div
-                    className='h-full bg-sky-400 rounded-full transition-all duration-1000 ease-out'
-                    style={{ width: `${skill.percentage}%` }}
-                  />
-                </div>
+        <div className='mt-8 space-y-12'>
+          {Object.entries(groupedSkills).map(([category, items]) => (
+            <div key={category}>
+              <h2 className='text-3xl font-bold mb-6 text-sky-900 dark:text-sky-100'>
+                {category.charAt(0) + category.slice(1).toLowerCase()} Skills
+              </h2>
+              <div className='space-y-6'>
+                {items.map(skill => (
+                  <div key={skill.id}>
+                    <div className='flex justify-between mb-2'>
+                      <span className='text-sky-900 dark:text-sky-100 font-medium'>
+                        {skill.name}
+                      </span>
+                      <span className='text-sky-900 dark:text-sky-100'>
+                        {skill.level}%
+                      </span>
+                    </div>
+                    <div className='w-full h-2 bg-gray-700 rounded-full overflow-hidden'>
+                      <div
+                        className='h-full bg-sky-400 rounded-full transition-all duration-1000 ease-out'
+                        style={{ width: `${skill.level}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

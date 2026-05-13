@@ -2,6 +2,22 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+### CMS Setup (Prisma + PostgreSQL)
+
+1. Create a PostgreSQL database and copy the connection string.
+2. Create a local `.env` file (see `.env.example`) and set:
+	- `DATABASE_URL`
+	- `ADMIN_EMAIL`
+	- `ADMIN_PASSWORD`
+	- `ADMIN_SESSION_SECRET`
+3. Run Prisma migrations and seed starter content:
+	- `pnpm prisma migrate dev`
+	- `pnpm db:seed`
+
+### Admin Dashboard
+
+Visit `/admin/login` and sign in with the admin credentials from `.env`.
+
 First, run the development server:
 
 ```bash

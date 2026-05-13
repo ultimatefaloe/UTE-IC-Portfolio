@@ -12,10 +12,10 @@ import {
   CheckCircle2,
   Loader2,
 } from 'lucide-react';
-import { Button } from '../UI/button';
+import { Button } from '../ui/button';
 import Link from 'next/link';
-import { emailSend } from '@/api/emailjs';
 import { toast } from 'react-toastify';
+import { emailSend } from '@/lib/emailjs';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -48,7 +48,7 @@ export default function ContactPage() {
     {
       icon: <MapPin className='w-6 h-6' />,
       label: 'Location',
-      value: 'Ibadan, Nigeria',
+      value: 'Abuja, Nigeria',
       link: null,
     },
   ];

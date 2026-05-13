@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import { Button } from "../UI/button";
+import { Button } from "../ui/button";
 const testimonials = [
   {
     id: 1,

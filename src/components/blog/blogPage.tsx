@@ -1,139 +1,72 @@
 "use client";
 
-import React, { useState } from 'react';
-import { 
-  Calendar, 
-  Clock, 
-  ArrowRight, 
+import React, { useEffect, useMemo, useState } from 'react';
+import {
+  Calendar,
+  Clock,
+  ArrowRight,
   Search,
   TrendingUp,
   BookOpen,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
 } from 'lucide-react';
-import { Button } from '../UI/button';
-import Image from 'next/image';
+import { Button } from '../ui/button';
+
+type BlogPost = {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  tags: string[];
+  published: boolean;
+  createdAt: string;
+};
+
+const createExcerpt = (content: string) => {
+  const words = content.split(' ').slice(0, 28).join(' ');
+  return `${words}${content.split(' ').length > 28 ? '…' : ''}`;
+};
+
+const estimateReadTime = (content: string) => {
+  const words = content.split(' ').filter(Boolean).length;
+  return `${Math.max(1, Math.ceil(words / 200))} min read`;
+};
 
 export default function BlogPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
   const postsPerPage = 6;
 
-  const blogPosts = [
-    {
-      id: 1,
-      title: "Building Scalable APIs with NestJS: A Practical Guide",
-      excerpt: "Learn how to structure your NestJS application for maximum scalability and maintainability. This guide covers modules, services, and best practices.",
-      content: "Detailed walkthrough of building production-ready APIs...",
-      author: "Tunmise Falodun",
-      date: "2025-10-15",
-      readTime: "8 min read",
-      category: "Backend",
-      tags: ["NestJS", "TypeScript", "API Design"],
-      featured: true,
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80"
-    },
-    {
-      id: 2,
-      title: "React Performance Optimization: Tips from the Trenches",
-      excerpt: "Real-world strategies for optimizing React applications. From memo to useMemo, learn when and how to use each technique effectively.",
-      content: "Performance optimization techniques...",
-      author: "Tunmise Falodun",
-      date: "2025-10-10",
-      readTime: "6 min read",
-      category: "Frontend",
-      tags: ["React", "Performance", "JavaScript"],
-      featured: true,
-      image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80"
-    },
-    {
-      id: 3,
-      title: "Database Design Patterns for Modern Applications",
-      excerpt: "Exploring PostgreSQL optimization techniques and schema design patterns that scale with your application's growth.",
-      content: "Database design best practices...",
-      author: "Tunmise Falodun",
-      date: "2025-10-05",
-      readTime: "10 min read",
-      category: "Backend",
-      tags: ["PostgreSQL", "Database", "Architecture"],
-      featured: false,
-      image: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=800&q=80"
-    },
-    {
-      id: 4,
-      title: "Leading a Remote Development Team: Lessons Learned",
-      excerpt: "Insights from leading distributed teams across time zones. Communication strategies, tools, and maintaining team culture remotely.",
-      content: "Remote team leadership insights...",
-      author: "Tunmise Falodun",
-      date: "2025-09-28",
-      readTime: "7 min read",
-      category: "Leadership",
-      tags: ["Team Management", "Remote Work", "Leadership"],
-      featured: false,
-      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80"
-    },
-    {
-      id: 5,
-      title: "Docker and CI/CD: Streamlining Your Deployment Pipeline",
-      excerpt: "Step-by-step guide to containerizing your applications and setting up automated deployment pipelines with GitHub Actions.",
-      content: "DevOps automation guide...",
-      author: "Tunmise Falodun",
-      date: "2025-09-20",
-      readTime: "12 min read",
-      category: "DevOps",
-      tags: ["Docker", "CI/CD", "Automation"],
-      featured: true,
-      image: "https://images.unsplash.com/photo-1605745341112-85968b19335b?w=800&q=80"
-    },
-    {
-      id: 6,
-      title: "TypeScript: Beyond the Basics",
-      excerpt: "Advanced TypeScript patterns and techniques for building type-safe applications. Generics, utility types, and more.",
-      content: "Advanced TypeScript techniques...",
-      author: "Tunmise Falodun",
-      date: "2025-09-15",
-      readTime: "9 min read",
-      category: "Frontend",
-      tags: ["TypeScript", "JavaScript", "Web Development"],
-      featured: false,
-      image: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80"
-    },
-    {
-      id: 7,
-      title: "Building Real-Time Features with WebSockets",
-      excerpt: "Implementing real-time notifications and live updates in your web applications using WebSockets and Socket.io.",
-      content: "Real-time application development...",
-      author: "Tunmise Falodun",
-      date: "2025-09-08",
-      readTime: "11 min read",
-      category: "Backend",
-      tags: ["WebSockets", "Real-time", "Node.js"],
-      featured: false,
-      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80"
-    },
-    {
-      id: 8,
-      title: "Mentoring Junior Developers: A Guide for Team Leads",
-      excerpt: "Practical advice on mentoring junior developers, from code reviews to career guidance. Building the next generation of engineers.",
-      content: "Developer mentorship strategies...",
-      author: "Tunmise Falodun",
-      date: "2025-09-01",
-      readTime: "8 min read",
-      category: "Leadership",
-      tags: ["Mentorship", "Career Development", "Team Building"],
-      featured: false,
-      image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80"
-    }
-  ];
+  useEffect(() => {
+    const loadPosts = async () => {
+      setLoading(true);
+      const response = await fetch('/api/blog', { cache: 'no-store' });
+      const data = await response.json();
+      setBlogPosts(data);
+      setLoading(false);
+    };
 
-  const categories = ['All', 'Backend', 'Frontend', 'DevOps', 'Leadership'];
+    loadPosts();
+  }, []);
+
+  const categories = useMemo(() => {
+    const tagSet = new Set<string>();
+    blogPosts.forEach(post => post.tags.forEach(tag => tagSet.add(tag)));
+    return ['All', ...Array.from(tagSet)];
+  }, [blogPosts]);
 
   const filteredPosts = blogPosts.filter(post => {
-    const matchesCategory = selectedCategory === 'All' || post.category === selectedCategory;
-    const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         post.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+    const matchesCategory =
+      selectedCategory === 'All' || post.tags.includes(selectedCategory);
+    const excerpt = createExcerpt(post.content);
+    const matchesSearch =
+      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchesCategory && matchesSearch;
   });
 
@@ -147,7 +80,7 @@ export default function BlogPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const featuredPost = blogPosts.find(post => post.featured);
+  const featuredPost = blogPosts[0];
 
   return (
     <div className="min-h-screen py-20 px-6">
@@ -180,27 +113,27 @@ export default function BlogPage() {
             <div className="bg-linear-to-br from-gray-300/50 to-gray-350/50 dark:from-gray-800/50 dark:to-gray-850/50 rounded-2xl overflow-hidden border border-gray-700 hover:border-sky-400 transition-all duration-300 group">
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="aspect-video md:aspect-auto overflow-hidden">
-                  <Image 
-                    src={featuredPost.image} 
-                    alt={featuredPost.title}
-                    width={100}
-                    height={100}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+                  <div className="h-full w-full bg-linear-to-br from-sky-400/20 via-transparent to-transparent" />
                 </div>
                 <div className="p-8 flex flex-col justify-center">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="bg-sky-400 text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">
-                      {featuredPost.category}
+                      {featuredPost.tags[0] ?? 'Engineering'}
                     </span>
                     <div className="flex items-center gap-4 text-sm text-sky-900/70 dark:text-sky-100/70">
                       <div className="flex items-center gap-1">
                         <Calendar className="w-4 h-4" />
-                        <span>{new Date(featuredPost.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                        <span>
+                          {new Date(featuredPost.createdAt).toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric',
+                          })}
+                        </span>
                       </div>
                       <div className="flex items-center gap-1">
                         <Clock className="w-4 h-4" />
-                        <span>{featuredPost.readTime}</span>
+                        <span>{estimateReadTime(featuredPost.content)}</span>
                       </div>
                     </div>
                   </div>
@@ -208,7 +141,7 @@ export default function BlogPage() {
                     {featuredPost.title}
                   </h3>
                   <p className="text-sky-900/80 dark:text-sky-100/80 mb-6 leading-relaxed">
-                    {featuredPost.excerpt}
+                    {createExcerpt(featuredPost.content)}
                   </p>
                   <div className="flex flex-wrap gap-2 mb-6">
                     {featuredPost.tags.map((tag, index) => (
@@ -262,51 +195,63 @@ export default function BlogPage() {
           </div>
         </div>
 
-        {/* Blog Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {currentPosts.map((post) => (
-            <div
-              key={post.id}
-              className="bg-linear-to-br from-gray-300/50 to-gray-350/50 dark:from-gray-800/50 dark:to-gray-850/50 rounded-xl overflow-hidden border border-gray-700 hover:border-sky-400 transition-all duration-300 group hover:shadow-lg hover:shadow-sky-400/10"
-            >
-              <div className="aspect-video overflow-hidden">
-                <Image 
-                  src={post.image} 
-                  alt={post.title}
-                  width={100}
-                  height={100}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div className="p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-xs bg-sky-400/10 text-sky-400 px-2 py-1 rounded border border-sky-400/20">
-                    {post.category}
-                  </span>
-                  <div className="flex items-center gap-1 text-xs text-sky-900/70 dark:text-sky-100/70">
-                    <Clock className="w-3 h-3" />
-                    <span>{post.readTime}</span>
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold text-sky-900 dark:text-sky-100 mb-3 group-hover:text-sky-400 transition-colors line-clamp-2">
-                  {post.title}
-                </h3>
-                <p className="text-sm text-sky-900/80 dark:text-sky-100/80 mb-4 line-clamp-3 leading-relaxed">
-                  {post.excerpt}
-                </p>
-                <div className="flex items-center justify-between pt-4 border-t border-gray-700">
-                  <div className="flex items-center gap-1 text-xs text-sky-900/70 dark:text-sky-100/70">
-                    <Calendar className="w-3 h-3" />
-                    <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
-                  </div>
-                  <Button className="text-sm text-sky-400 font-semibold flex items-center gap-1 hover:gap-2 transition-all">
-                    <span>Read More</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
+        {/* Blog Posts Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          {loading ? (
+            <div className="col-span-full text-center text-sky-100/70">
+              Loading posts...
             </div>
-          ))}
+          ) : currentPosts.length === 0 ? (
+            <div className="col-span-full text-center text-sky-100/70">
+              No posts found.
+            </div>
+          ) : (
+            currentPosts.map((post) => (
+              <article key={post.id} className="group">
+                <div className="bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-700 hover:border-sky-400 transition-all duration-300">
+                  <div className="aspect-video overflow-hidden bg-linear-to-br from-sky-400/20 via-transparent to-transparent" />
+                  <div className="p-6">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="bg-sky-400/10 text-sky-400 text-xs font-semibold px-2 py-1 rounded-full">
+                        {post.tags[0] ?? 'Engineering'}
+                      </span>
+                      <span className="text-xs text-sky-900/60 dark:text-sky-100/60">
+                        <Clock className="w-3 h-3 inline mr-1" />
+                        {estimateReadTime(post.content)}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-bold text-sky-900 dark:text-sky-100 mb-3 group-hover:text-sky-400 transition-colors">
+                      {post.title}
+                    </h3>
+                    <p className="text-sky-900/80 dark:text-sky-100/80 mb-4 leading-relaxed">
+                      {createExcerpt(post.content)}
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {post.tags.map((tag, index) => (
+                        <span key={index} className="text-xs bg-gray-200 dark:bg-gray-700 text-sky-900 dark:text-sky-100 px-2 py-1 rounded-full">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-sky-900/60 dark:text-sky-100/60">
+                        <Calendar className="w-3 h-3 inline mr-1" />
+                        <span>
+                          {new Date(post.createdAt).toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                          })}
+                        </span>
+                      </span>
+                      <Button className="text-sky-400 font-semibold text-sm hover:text-sky-500 transition-colors inline-flex items-center gap-1">
+                        Read More <ArrowRight className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))
+          )}
         </div>
 
         {/* Pagination */}

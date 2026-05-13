@@ -1,63 +1,57 @@
 "use client";
 
-import React from 'react';
-import { Briefcase, Calendar, MapPin, ChevronRight, Award, TrendingUp } from 'lucide-react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Briefcase, Calendar, ChevronRight, Award, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
 
-export default function Experience() {
-  const experiences = [
-    {
-      company: "Accessivo",
-      location: "Remote",
-      position: "Frontend Team Lead",
-      period: "Aug 2025 – Present",
-      current: true,
-      type: "Leadership",
-      achievements: [
-        "Serve as the bridge between stakeholders and the frontend team, ensuring clear communication and delivery alignment.",
-        "Assign and track tasks, fostering accountability and timely feature releases.",
-        "Motivate and support team members through technical and operational challenges.",
-        "Report progress and maintain departmental alignment with company milestones."
-      ],
-      technologies: ["React", "TypeScript", "Team Management", "Agile"]
-    },
-    {
-      company: "MeuDelivery",
-      location: "Remote (Angola)",
-      position: "Backend Developer",
-      period: "May 2025 – Present",
-      current: true,
-      type: "Backend",
-      achievements: [
-        "Designed and developed scalable NestJS + PostgreSQL APIs supporting clients, vendors, delivery agents, and admins.",
-        "Implemented authentication, rate limiting, and in-app notifications, reducing system errors by 30%.",
-        "Integrated Swagger API documentation and enforced modular clean architecture.",
-        "Improved delivery tracking and order coordination systems, enhancing vendor satisfaction."
-      ],
-      technologies: ["NestJS", "PostgreSQL", "Swagger", "Authentication"]
-    },
-    {
-      company: "59Minutes Print",
-      location: "Abuja, Nigeria",
-      position: "Full Stack Engineer",
-      period: "Jul 2024 – Present",
-      current: true,
-      type: "Full Stack",
-      achievements: [
-        "Developed REST APIs for authentication, vendors, and order management using Node.js & MongoDB.",
-        "Integrated Firebase authentication and secure file uploads for product listings.",
-        "Built a real-time cart and order system with dynamic pricing and vendor verification.",
-        "Created admin management dashboards, optimizing service efficiency by 25%."
-      ],
-      technologies: ["Node.js", "MongoDB", "Firebase", "REST API"]
-    }
-  ];
+type ExperienceItem = {
+  id: string;
+  company: string;
+  role: string;
+  description: string;
+  achievements: string[];
+  startDate: string;
+  endDate?: string | null;
+};
 
-  const stats = [
-    { label: "Years of Experience", value: "3+", icon: <Award className="w-5 h-5" /> },
-    { label: "Projects Delivered", value: "15+", icon: <TrendingUp className="w-5 h-5" /> },
-    { label: "Companies Served", value: "3", icon: <Briefcase className="w-5 h-5" /> }
-  ];
+export default function Experience() {
+  const [experiences, setExperiences] = useState<ExperienceItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadExperiences = async () => {
+      setLoading(true);
+      const response = await fetch('/api/experience', { cache: 'no-store' });
+      const data = await response.json();
+      setExperiences(data);
+      setLoading(false);
+    };
+
+    loadExperiences();
+  }, []);
+
+  const stats = useMemo(
+    () => [
+      {
+        label: 'Years of Experience',
+        // value: experiences.length > 0 ? `${experiences.length}+` : '0',
+        value: experiences.length > 0 ? `4+` : '0',
+        icon: <Award className='w-5 h-5' />,
+      },
+      {
+        label: 'Projects Delivered',
+        value: '15+',
+        icon: <TrendingUp className='w-5 h-5' />,
+      },
+      {
+        label: 'Companies Served',
+        // value: `${new Set(experiences.map(exp => exp.company)).size}`,
+        value: '5',
+        icon: <Briefcase className='w-5 h-5' />,
+      },
+    ],
+    [experiences]
+  );
 
   return (
     <div className="min-h-screen py-20 px-6">
@@ -104,7 +98,10 @@ export default function Experience() {
 
           {/* Experience Cards */}
           <div className="space-y-12">
-            {experiences.map((exp, index) => (
+            {loading ? (
+              <div className='text-center text-sky-100/70'>Loading experience...</div>
+            ) : (
+              experiences.map((exp, index) => (
               <div 
                 key={index}
                 className={`relative flex flex-col md:flex-row gap-8 ${
@@ -113,7 +110,7 @@ export default function Experience() {
               >
                 {/* Timeline Dot */}
                 <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-sky-400 rounded-full border-4 border-gray-900 z-10">
-                  {exp.current && (
+                  {!exp.endDate && (
                     <span className="absolute inset-0 rounded-full bg-sky-400 animate-ping opacity-75"></span>
                   )}
                 </div>
@@ -122,7 +119,7 @@ export default function Experience() {
                 <div className="md:w-[calc(50%-2rem)] group">
                   <div className="relative dark:bg-gray-800 bg-gray-100 rounded-xl p-6 border border-gray-700 hover:border-sky-400 transition-all duration-300 hover:shadow-lg hover:shadow-sky-400/10">
                     {/* Current Badge */}
-                    {exp.current && (
+                    {!exp.endDate && (
                       <div className="absolute -top-3 -right-3">
                         <span className="inline-flex items-center gap-1 bg-sky-400 text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">
                           <span className="w-2 h-2 bg-gray-900 rounded-full animate-pulse"></span>
@@ -139,11 +136,11 @@ export default function Experience() {
                             {exp.company}
                           </h3>
                           <p className="text-lg text-sky-400 font-semibold mt-1">
-                            {exp.position}
+                            {exp.role}
                           </p>
                         </div>
                         <span className="text-xs bg-sky-400/10 text-sky-400 px-3 py-1 rounded-full font-medium">
-                          {exp.type}
+                          {exp.endDate ? 'Completed' : 'Current'}
                         </span>
                       </div>
                       
@@ -151,17 +148,28 @@ export default function Experience() {
                       <div className="flex flex-wrap gap-4 text-sm text-sky-900/70 dark:text-sky-100/70 mt-3">
                         <div className="flex items-center gap-1">
                           <Calendar className="w-4 h-4" />
-                          <span>{exp.period}</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <MapPin className="w-4 h-4" />
-                          <span>{exp.location}</span>
+                          <span>
+                            {new Date(exp.startDate).toLocaleDateString('en-US', {
+                              month: 'short',
+                              year: 'numeric',
+                            })}{' '}
+                            –{' '}
+                            {exp.endDate
+                              ? new Date(exp.endDate).toLocaleDateString('en-US', {
+                                  month: 'short',
+                                  year: 'numeric',
+                                })
+                              : 'Present'}
+                          </span>
                         </div>
                       </div>
                     </div>
 
                     {/* Achievements */}
                     <div className="mb-4">
+                      <p className="text-sm text-sky-900/80 dark:text-sky-100/80 mb-4">
+                        {exp.description}
+                      </p>
                       <ul className="space-y-3">
                         {exp.achievements.map((achievement, achIndex) => (
                           <li 
@@ -174,25 +182,14 @@ export default function Experience() {
                         ))}
                       </ul>
                     </div>
-
-                    {/* Technologies */}
-                    <div className="flex flex-wrap gap-2 pt-4 border-t border-gray-700">
-                      {exp.technologies.map((tech, techIndex) => (
-                        <span 
-                          key={techIndex}
-                          className="text-xs dark:bg-gray-700 bg-gray-200 text-sky-900 dark:text-sky-100 px-3 py-1 rounded-full border border-gray-600 hover:border-sky-400 transition-colors"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
                   </div>
                 </div>
 
                 {/* Spacer for timeline */}
                 <div className="hidden md:block md:w-[calc(50%-2rem)]"></div>
               </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
 

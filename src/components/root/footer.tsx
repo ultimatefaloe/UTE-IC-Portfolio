@@ -9,7 +9,7 @@ import {
   Send,
 } from "lucide-react";
 import Image from "next/image";
-import { Button } from "../UI/button";
+import { Button } from "../ui/button";
 
 const Footer = () => {
 

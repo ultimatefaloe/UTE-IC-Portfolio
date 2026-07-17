@@ -8,9 +8,10 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-sky-400/20 text-sky-200 border-sky-400/30",
-        secondary: "bg-gray-700 text-gray-100 border-gray-600",
-        outline: "text-sky-100 border-sky-400/40",
+        default: "bg-ute-gold/20 text-ute-gold border-ute-gold/30",
+        outline: "text-ute-text border-ute-border",
+        gold: "bg-ute-gold text-ute-bg",
+        electric: "bg-ute-electric/10 text-ute-electric border-ute-electric/30",
       },
     },
     defaultVariants: {

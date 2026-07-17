@@ -172,9 +172,9 @@ export default function ResourceManager<T extends Record<string, unknown>>({
     <div className="space-y-6">
       <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
         <div>
-          <h2 className="text-2xl font-semibold text-sky-100">{title}</h2>
+          <h2 className="font-playfair text-2xl font-bold text-ute-text">{title}</h2>
           {description && (
-            <p className="text-sm text-sky-100/60">{description}</p>
+            <p className="text-sm text-ute-text-muted">{description}</p>
           )}
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
@@ -193,7 +193,7 @@ export default function ResourceManager<T extends Record<string, unknown>>({
             <div className="space-y-4">
               {fields.map(field => (
                 <label key={field.name} className="space-y-2 text-sm">
-                  <span className="text-sky-100/80">{field.label}</span>
+                  <span className="text-ute-text-muted">{field.label}</span>
                   {field.type === "textarea" && (
                     <Textarea
                       value={String(formState[field.name] ?? "")}
@@ -253,7 +253,7 @@ export default function ResourceManager<T extends Record<string, unknown>>({
                           }))
                         }
                       />
-                      <span className="text-xs text-sky-100/60">
+                      <span className="text-xs text-ute-text-muted">
                         {field.helper}
                       </span>
                     </div>
@@ -278,7 +278,7 @@ export default function ResourceManager<T extends Record<string, unknown>>({
                     </Select>
                   )}
                   {field.helper && field.type !== "checkbox" && (
-                    <p className="text-xs text-sky-100/50">{field.helper}</p>
+                    <p className="text-xs text-ute-text-muted">{field.helper}</p>
                   )}
                 </label>
               ))}
@@ -290,7 +290,7 @@ export default function ResourceManager<T extends Record<string, unknown>>({
         </Dialog>
       </div>
 
-      <div className="rounded-xl border border-gray-800 bg-gray-900/60">
+      <div className="rounded-xl border border-ute-border bg-ute-surface/60">
         <Table>
           <TableHeader>
             <TableRow>

@@ -1,27 +1,33 @@
 import { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
-import Main from '@/components/root/main';
+import { Playfair_Display, DM_Sans, JetBrains_Mono } from 'next/font/google';
 import { Bounce, ToastContainer } from 'react-toastify';
 import './globals.css';
 
-// Load Google fonts
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const playfair = Playfair_Display({
+  variable: '--font-playfair',
   subsets: ['latin'],
+  weight: ['400', '600', '700', '900'],
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const dmSans = DM_Sans({
+  variable: '--font-dm-sans',
   subsets: ['latin'],
+  weight: ['400', '500', '600'],
 });
 
-// ✅ Proper Metadata setup for title and favicon
+const jetbrainsMono = JetBrains_Mono({
+  variable: '--font-mono',
+  subsets: ['latin'],
+  weight: ['400', '500'],
+});
+
 export const metadata: Metadata = {
   title: {
-    default: 'UTE-IC Portfolio',
-    template: '%s | UTE-IC',
+    default: 'Tunmise Falodun — Full-Stack Engineer & Entrepreneur',
+    template: '%s | Tunmise Falodun',
   },
-  description: "Tunmise Falodun's Portfolio",
+  description:
+    'Senior full-stack engineer and founder of Ultimate IntelliForge. Building scalable systems across fintech, SaaS, logistics, and streaming.',
   icons: {
     icon: '/favicon.png',
     shortcut: '/favicon.png',
@@ -29,20 +35,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='en'>
-      {/* ✅ No manual <head> tag needed here */}
-      <body
-        className={` bg-background text-foreground ${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Main>{children}</Main>
+    <html lang="en" className={`${playfair.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
+      <body>
+        {children}
         <ToastContainer
-          position='top-center'
+          position="top-center"
           autoClose={3000}
           hideProgressBar={false}
           newestOnTop={false}
@@ -51,7 +50,7 @@ export default function RootLayout({
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme='dark'
+          theme="dark"
           transition={Bounce}
         />
       </body>

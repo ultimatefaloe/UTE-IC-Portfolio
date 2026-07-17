@@ -1,121 +1,79 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { Layers } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { Button } from "../ui/button";
+'use client';
 
-const ServicesSection = () => {
-  const router = useRouter()
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { Code2, Server, Cloud, Users, Smartphone, Zap } from 'lucide-react';
+import SectionLabel from '@/components/ui/section-label';
+import { fadeUp, staggerContainer } from '@/lib/animations';
 
-  const serviceHandler = () =>{
-    router.push("/services")
-  }
+const defaultServices = [
+  { icon: Code2, title: 'Full-Stack Development', desc: 'End-to-end web applications from UI to API to database, built to scale.' },
+  { icon: Server, title: 'System Architecture', desc: 'Designing systems that are secure, maintainable, and built for growth.' },
+  { icon: Cloud, title: 'DevOps & Cloud', desc: 'CI/CD pipelines, containerisation, AWS deployments, and infrastructure as code.' },
+  { icon: Users, title: 'Technical Consulting', desc: 'Engineering strategy, code reviews, and technical leadership for your team.' },
+  { icon: Smartphone, title: 'Mobile Development', desc: 'Cross-platform mobile apps with React Native for iOS and Android.' },
+  { icon: Zap, title: 'API Integration', desc: 'Payment gateways, maps, storage, third-party services — wired together cleanly.' },
+];
 
-  const [services, setServices] = useState<
-    { id: string; title: string; description: string }[]
-  >([]);
+interface Service { id: string; title: string; description: string; }
+
+export default function ServicesSection() {
+  const [services, setServices] = useState<Service[]>([]);
 
   useEffect(() => {
-    const loadServices = async () => {
-      const response = await fetch("/api/services", { cache: "no-store" });
-      const data = await response.json();
-      setServices(data);
-    };
-
-    loadServices();
+    fetch('/api/services')
+      .then((r) => r.json())
+      .then((data) => Array.isArray(data) && setServices(data))
+      .catch(() => {});
   }, []);
 
-
   return (
-    <section
-      className="py-20 md:py-28 relative overflow-hidden">
-     
-      <div className="container mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
-          {/* Left Column - Services Title */}
-          <div className="lg:col-span-1">
-            <div className="services__title">
-              <div className="section-title mb-8">
-                <span
-                  className="inline-block text-sm font-medium tracking-widest uppercase mb-4 text-gray-500 dark:text-gray-300"
-                >
-                SERVICES
-                </span>
-
-                <h2
-                  className="text-4xl md:text-5xl font-bold leading-tight mb-6 text-gray-900 dark:text-white"
-                >
-                  WHAT I DO?
-                </h2>
-
-                {/* Cyan accent line */}
-                <div className={`w-16 h-1 mb-8 bg-sky-600`}></div>
-              </div>
-
-              <p
-                className="text-lg leading-relaxed mb-12 text-gray-600 dark:text-gray-300"
-              >
-                If you work with me, you’ll get a developer who not only writes clean code but also ensures your product is deployed, secure, and user-ready end to end
-              </p>
-
-              {/* Styled button with corner brackets */}
-              <div className="relative inline-block">
-                <Button
-                  className="relative cursor-pointer px-8 py-4 font-semibold text-sm tracking-wider uppercase transition-all duration-300 hover:text-sky-600 hover:bg-sky-600/10 text-gray-900 dark:text-white"
-                onClick={serviceHandler}
-                >
-                  VIEW ALL SERVICES
-                  {/* Corner brackets */}
-                  <div
-                    className="absolute top-0 left-0 w-4 h-4 border-l-2 border-t-2 transition-colors duration-300 border-gray-900 dark:border-white"
-                  ></div>
-                  <div
-                    className="absolute bottom-0 right-0 w-4 h-4 border-r-2 border-b-2 transition-colors duration-300 border-gray-900 dark:border-white"
-                  ></div>
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column - Services Grid */}
-          <div className="lg:col-span-2">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              {services.slice(0, 4).map((service, index) => {
-                return (
-                  <div
-                    key={service.id}
-                    className="services__item group transition-all duration-500 hover:transform hover:-translate-y-1"
-                    style={{
-                      animationDelay: `${index * 0.1}s`,
-                    }}
-                  >
-                    {/* Icon with border */}
-                    <div
-                      className={`services__item__icon mb-8 inline-flex items-center justify-center w-20 h-20 border-2 border-sky-600 transition-all duration-300 hover:bg-sky-600/10`}
-                    >
-                      <Layers className="w-8 h-8" />
-                    </div>
-
-                    <h4
-                      className="text-2xl font-bold mb-6 transition-colors duration-300 text-gray-900 group-hover:text-sky-600 dark:text-white dark:group-hover:text-sky-600"
-                    >
-                      {service.title}
-                    </h4>
-
-                    <p
-                      className="text-base leading-relaxed text-gray-600 dark:text-gray-300"
-                    >
-                      {service.description}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+    <section className="py-24 lg:py-32 bg-ute-bg">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="flex items-end justify-between mb-16">
+          <SectionLabel label="What I Offer" title="Services" />
+          <Link
+            href="/services"
+            className="hidden md:inline-flex text-sm text-ute-text-muted hover:text-ute-gold transition-colors gap-1 items-center"
+          >
+            View all <span>→</span>
+          </Link>
         </div>
+
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          {(services.length > 0
+            ? services.slice(0, 6).map((s, i) => ({
+                icon: defaultServices[i % defaultServices.length].icon,
+                title: s.title,
+                desc: s.description,
+              }))
+            : defaultServices
+          ).map((service, i) => {
+            const Icon = service.icon;
+            return (
+              <motion.div
+                key={service.title}
+                variants={fadeUp}
+                custom={i}
+                className="group p-6 rounded-xl bg-ute-surface border border-ute-border hover:border-ute-gold/40 transition-all duration-300 hover:bg-ute-surface-hi"
+              >
+                <div className="w-10 h-10 rounded-lg bg-ute-gold/10 flex items-center justify-center mb-4 group-hover:bg-ute-gold/20 transition-colors">
+                  <Icon className="w-5 h-5 text-ute-gold" />
+                </div>
+                <h3 className="font-playfair text-lg font-bold text-ute-text mb-2">{service.title}</h3>
+                <p className="text-sm text-ute-text-muted leading-relaxed">{service.desc}</p>
+              </motion.div>
+            );
+          })}
+        </motion.div>
       </div>
     </section>
   );
-};
-
-export default ServicesSection;
+}

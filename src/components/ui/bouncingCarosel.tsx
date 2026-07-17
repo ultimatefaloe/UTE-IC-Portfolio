@@ -1,71 +1,58 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
-interface StackList {
+interface StackItem {
   icon: React.ReactNode;
-  name: string
+  name: string;
 }
 
 interface Props {
-  stack: StackList[];
+  stack: StackItem[];
 }
 
-const BouncingCarousel: React.FC<Props> = ({ stack }) => {
+export default function BouncingCarousel({ stack }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [direction, setDirection] = useState(1); // 1 = right, -1 = left
+  const [direction, setDirection] = useState(1);
   const [position, setPosition] = useState(0);
 
   useEffect(() => {
-    let animationFrame: number;
-
+    let animId: number;
     const animate = () => {
       if (containerRef.current) {
         const container = containerRef.current;
         const maxScroll = container.scrollWidth - container.clientWidth;
-
-        setPosition(prev => {
-          let next = prev + direction * 2; // speed = 2px
-          if (next <= 0) {
-            setDirection(1); // bounce right
-            next = 0;
-          } else if (next >= maxScroll) {
-            setDirection(-1); // bounce left
-            next = maxScroll;
-          }
+        setPosition((prev) => {
+          let next = prev + direction * 1.5;
+          if (next <= 0) { setDirection(1); next = 0; }
+          else if (next >= maxScroll) { setDirection(-1); next = maxScroll; }
           container.scrollLeft = next;
           return next;
         });
       }
-      animationFrame = requestAnimationFrame(animate);
+      animId = requestAnimationFrame(animate);
     };
-
-    animationFrame = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationFrame);
+    animId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animId);
   }, [direction, position]);
 
   return (
-    <div className="flex justify-center align-middle bg-transparent">
-      <div className='relative flex justify-center sm:w-3xl py-4 overflow-hidden bg-transparent'>
+    <div
+      ref={containerRef}
+      className="flex gap-4 overflow-x-hidden"
+      style={{ scrollbarWidth: 'none' }}
+    >
+      {[...stack, ...stack].map((tech, i) => (
         <div
-          ref={containerRef}
-          className='flex gap-6 px-6 overflow-x-hidden scrollbar-hide'
+          key={i}
+          className="flex flex-col items-center justify-center min-w-[90px] p-4 rounded-lg bg-ute-surface-hi border border-ute-border hover:border-ute-gold/50 transition-colors group shrink-0"
         >
-          {stack.map((tech, i) => (
-            <div
-              key={i}
-              className='flex flex-col items-center justify-center min-w-[80px] p-4 rounded-lg shadow-md bg-sky-900 dark:bg-sky-100'
-            >
-              <div className='text-4xl mb-2'>{tech.icon}</div>
-              <span className='text-sm text-gray-100 dark:text-gray-900'>
-                {tech.name}
-              </span>
-            </div>
-          ))}
+          <div className="text-3xl mb-2">{tech.icon}</div>
+          <span className="font-mono text-[10px] text-ute-text-muted group-hover:text-ute-gold transition-colors text-center">
+            {tech.name}
+          </span>
         </div>
-      </div>
-      </div>
+      ))}
+    </div>
   );
 }
-
-export default BouncingCarousel

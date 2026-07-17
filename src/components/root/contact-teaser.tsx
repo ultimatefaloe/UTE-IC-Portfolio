@@ -42,10 +42,10 @@ export default function ContactTeaser() {
             Send a Message <span>→</span>
           </Link>
           <a
-            href="mailto:ultimatefaloe@gmail.com"
+            href="mailto:ultimatefaloe@outlook.com"
             className="text-sm text-ute-text-muted hover:text-ute-text transition-colors"
           >
-            ultimatefaloe@gmail.com
+            ultimatefaloe@outlook.com
           </a>
         </motion.div>
       </div>

@@ -63,8 +63,8 @@ export default function Footer() {
               })}
             </div>
             <p className="mt-6 text-sm text-ute-text-muted">
-              <a href="mailto:ultimatefaloe@gmail.com" className="hover:text-ute-gold transition-colors">
-                ultimatefaloe@gmail.com
+              <a href="mailto:ultimatefaloe@outlook.com" className="hover:text-ute-gold transition-colors">
+                ultimatefaloe@outlook.com
               </a>
             </p>
           </div>

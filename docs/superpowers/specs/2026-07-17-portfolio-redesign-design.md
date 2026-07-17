@@ -1,7 +1,7 @@
 # Portfolio Redesign — Design Spec
 
 **Date:** 2026-07-17
-**Owner:** Tunmise Falodun (ultimatefaloe@gmail.com)
+**Owner:** Tunmise Falodun (ultimatefaloe@outlook.com)
 **Scope:** Full redesign of ultimatefaloe.vercel.app — all public pages + admin dashboard
 
 ---

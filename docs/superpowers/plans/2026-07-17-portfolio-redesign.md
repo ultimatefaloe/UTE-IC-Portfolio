@@ -655,8 +655,8 @@ export default function Footer() {
               })}
             </div>
             <p className="mt-6 text-sm text-[#8B8B9A]">
-              <a href="mailto:ultimatefaloe@gmail.com" className="hover:text-[#C9A84C] transition-colors">
-                ultimatefaloe@gmail.com
+              <a href="mailto:ultimatefaloe@outlook.com" className="hover:text-[#C9A84C] transition-colors">
+                ultimatefaloe@outlook.com
               </a>
             </p>
           </div>
@@ -1790,10 +1790,10 @@ export default function ContactTeaser() {
             Send a Message <span>→</span>
           </Link>
           <a
-            href="mailto:ultimatefaloe@gmail.com"
+            href="mailto:ultimatefaloe@outlook.com"
             className="text-sm text-[#8B8B9A] hover:text-[#F0EDE8] transition-colors"
           >
-            ultimatefaloe@gmail.com
+            ultimatefaloe@outlook.com
           </a>
         </motion.div>
       </div>
@@ -1993,7 +1993,7 @@ export default function AboutMe() {
                 {[
                   { label: 'Location', value: 'Nigeria (Remote Worldwide)' },
                   { label: 'Availability', value: 'Open to contracts' },
-                  { label: 'Email', value: 'ultimatefaloe@gmail.com' },
+                  { label: 'Email', value: 'ultimatefaloe@outlook.com' },
                   { label: 'Experience', value: '4+ Years' },
                 ].map(({ label, value }) => (
                   <div key={label} className="flex flex-col gap-0.5">
@@ -3036,7 +3036,7 @@ export default function ContactPage() {
                 <h3 className="font-playfair text-xl font-bold text-[#F0EDE8] mb-4">Direct Contact</h3>
                 <div className="space-y-3">
                   {[
-                    { label: 'Email', value: 'ultimatefaloe@gmail.com', href: 'mailto:ultimatefaloe@gmail.com' },
+                    { label: 'Email', value: 'ultimatefaloe@outlook.com', href: 'mailto:ultimatefaloe@outlook.com' },
                     { label: 'Location', value: 'Nigeria (Available Worldwide)' },
                     { label: 'Availability', value: 'Open to contracts & collaborations' },
                   ].map(({ label, value, href }) => (

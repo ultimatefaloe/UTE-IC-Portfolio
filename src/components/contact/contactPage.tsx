@@ -115,7 +115,7 @@ export default function ContactPage() {
                 <h3 className="font-playfair text-xl font-bold text-ute-text mb-4">Direct Contact</h3>
                 <div className="space-y-3">
                   {[
-                    { label: 'Email', value: 'ultimatefaloe@gmail.com', href: 'mailto:ultimatefaloe@gmail.com' },
+                    { label: 'Email', value: 'ultimatefaloe@outlook.com', href: 'mailto:ultimatefaloe@outlook.com' },
                     { label: 'Location', value: 'Nigeria (Available Worldwide)' },
                     { label: 'Availability', value: 'Open to contracts & collaborations' },
                   ].map(({ label, value, href }) => (

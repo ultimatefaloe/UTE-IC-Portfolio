@@ -1,16 +1,6 @@
 import Link from 'next/link';
 import { Twitter, Linkedin, Instagram, Facebook, Github } from 'lucide-react';
-
-const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/skills', label: 'Skills' },
-  { href: '/experiences', label: 'Experience' },
-  { href: '/services', label: 'Services' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/contact', label: 'Contact' },
-];
+import { navLinks } from '@/config/nav';
 
 const socials = [
   { href: 'https://x.com/faloeUltimate/', icon: Twitter, label: 'Twitter' },

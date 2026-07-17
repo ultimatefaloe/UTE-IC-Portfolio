@@ -21,7 +21,7 @@ export default function SectionLabel({ label, title, subtitle, center }: Section
         custom={0}
         className="block font-mono text-xs tracking-[0.25em] uppercase text-[#C9A84C] mb-3"
       >
-        // {label}
+        {'// '}{label}
       </motion.span>
       <motion.h2
         variants={fadeUp}
@@ -34,7 +34,7 @@ export default function SectionLabel({ label, title, subtitle, center }: Section
         <motion.p
           variants={fadeUp}
           custom={2}
-          className="mt-4 text-[#8B8B9A] text-lg max-w-2xl"
+          className="mt-4 text-ute-text-muted text-lg max-w-2xl"
           style={center ? { margin: '1rem auto 0' } : {}}
         >
           {subtitle}

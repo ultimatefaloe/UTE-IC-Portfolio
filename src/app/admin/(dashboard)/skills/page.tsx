@@ -23,6 +23,9 @@ export default function AdminSkillsPage() {
             { label: "Backend", value: "BACKEND" },
             { label: "Frontend", value: "FRONTEND" },
             { label: "DevOps", value: "DEVOPS" },
+            { label: "Database", value: "DATABASE" },
+            { label: "Mobile", value: "MOBILE" },
+            { label: "Other", value: "OTHER" },
           ],
         },
         {

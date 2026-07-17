@@ -17,12 +17,14 @@ interface Experience {
 
 export default function ExperiencePage() {
   const [experiences, setExperiences] = useState<Experience[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('/api/experience')
       .then((r) => r.json())
       .then((data) => Array.isArray(data) && setExperiences(data))
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
 
   return (
@@ -39,7 +41,15 @@ export default function ExperiencePage() {
             <div className="absolute left-6 top-0 bottom-0 w-px bg-ute-border" />
 
             <div className="space-y-12">
-              {experiences.map((exp, i) => (
+              {loading ? (
+                <div className="pl-16 space-y-4">
+                  {[...Array(3)].map((_, i) => (
+                    <div key={i} className="h-40 rounded-xl bg-ute-surface border border-ute-border animate-pulse" />
+                  ))}
+                </div>
+              ) : experiences.length === 0 ? (
+                <p className="text-ute-text-muted pl-16">Experience entries will appear here once added via the admin panel.</p>
+              ) : experiences.map((exp, i) => (
                 <motion.div
                   key={exp.id}
                   variants={fadeUp}
@@ -59,18 +69,17 @@ export default function ExperiencePage() {
                     <h3 className="font-playfair text-2xl font-bold text-ute-text">{exp.company}</h3>
                     <p className="text-ute-gold text-sm mt-1 mb-4">{exp.role}</p>
                     <p className="text-ute-text-muted leading-relaxed mb-5">{exp.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {exp.techStack.map((t) => (
-                        <span key={t} className="font-mono text-[10px] px-2 py-0.5 rounded border border-ute-border text-ute-text-muted">{t}</span>
-                      ))}
-                    </div>
+                    {(exp.techStack ?? []).length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {(exp.techStack ?? []).map((t) => (
+                          <span key={t} className="font-mono text-[10px] px-2 py-0.5 rounded border border-ute-border text-ute-text-muted">{t}</span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               ))}
 
-              {experiences.length === 0 && (
-                <p className="text-ute-text-muted pl-16">Experience entries will appear here once added via the admin panel.</p>
-              )}
             </div>
           </div>
         </div>

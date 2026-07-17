@@ -25,6 +25,8 @@ export async function POST(request: NextRequest) {
       title: data.title,
       slug: data.slug,
       content: data.content,
+      excerpt: data.excerpt ?? null,
+      category: data.category ?? null,
       tags: parseStringArray(data.tags),
       published: Boolean(data.published),
     },

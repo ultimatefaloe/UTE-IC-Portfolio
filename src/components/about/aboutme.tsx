@@ -7,11 +7,36 @@ import SectionLabel from '@/components/ui/section-label';
 import { fadeUp, slideInRight } from '@/lib/animations';
 
 const milestones = [
-  { year: '2021', label: 'Started Software Engineering', desc: 'Began journey into full-stack development.' },
-  { year: '2022', label: '59Minutes — Printing Platform', desc: 'Built a printing delivery service for Abuja with Next.js and Paystack.' },
-  { year: '2023', label: 'Watergroove — Investment Platform', desc: 'Full-stack investment platform with Prisma, PostgreSQL, and Neon DB.' },
-  { year: '2024', label: 'Founded Ultimate IntelliForge', desc: 'Established my software company focused on scalable digital solutions.' },
-  { year: '2025', label: 'Global Contracts', desc: 'Simultaneously shipping MeuDeliver (Angola), CA Notices (US), and TinnieStudio (Canada).' },
+  {
+    year: 'Jul 2024',
+    label: 'Joined Industry',
+    desc: 'Started first two engineering roles simultaneously: backend developer at the University of Ilorin Recruitment Portal and full-stack engineer at 59Minutes Print, Abuja.',
+  },
+  {
+    year: 'May 2025',
+    label: 'International Contracts Begin',
+    desc: 'Shipped scalable REST APIs for MeuDelivery (Angola, Remote) — authentication, order tracking, multi-party flows, and Swagger-documented clean architecture.',
+  },
+  {
+    year: 'Aug 2025',
+    label: 'Front-End Team Lead — Accessivo',
+    desc: 'Promoted to team lead at Accessivo (Ilorin), bridging product and engineering: assigning tasks, mentoring the team, and championing code quality across frontend delivery.',
+  },
+  {
+    year: 'Oct 2025',
+    label: 'Founded FashionKet',
+    desc: 'Launched FashionKet under Ultimate IntelliForge — a multi-vendor e-commerce platform for emerging fashion brands and SMEs across Nigeria.',
+  },
+  {
+    year: 'Dec 2025',
+    label: 'Water Groove — Fintech Platform',
+    desc: 'Architected a fintech investment platform with ledger-based transactions, cron-driven ROI automation, Auth0 integration, and balance snapshots reducing query load by ~40%.',
+  },
+  {
+    year: 'Mar 2026',
+    label: 'TinnieStudio & Acefre',
+    desc: 'Joined TinnieStudio (Ontario, Canada) to build media streaming infrastructure with RabbitMQ, FFmpeg, and HLS delivery; co-founded Acefre — a trust-based task marketplace.',
+  },
 ];
 
 const personalProjects = [
@@ -113,7 +138,7 @@ export default function AboutMe() {
                 {[
                   { label: 'Location', value: 'Nigeria (Remote Worldwide)' },
                   { label: 'Availability', value: 'Open to contracts' },
-                  { label: 'Email', value: 'ultimatefaloe@gmail.com' },
+                  { label: 'Email', value: 'ultimatefaloe@outlook.com' },
                   { label: 'Experience', value: '4+ Years' },
                 ].map(({ label, value }) => (
                   <div key={label} className="flex flex-col gap-0.5">
@@ -125,7 +150,7 @@ export default function AboutMe() {
 
               <div className="flex flex-col gap-3">
                 <a
-                  href="/cv/tunmise-falodun-cv.pdf"
+                  href="https://drive.google.com/file/d/14jTgXihW3nFfo0VaBxctXApYr_ua2-zs/view?usp=sharing"
                   download
                   className="flex items-center justify-center gap-2 px-4 py-3 rounded border border-ute-gold text-ute-gold text-sm hover:bg-ute-gold/10 transition-colors"
                 >

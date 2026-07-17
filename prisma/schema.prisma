@@ -12,6 +12,10 @@ enum ProjectCategory {
   FINTECH
   LOGISTICS
   MARKETPLACE
+  STREAMING
+  CONTRACTS
+  PERSONAL
+  PROTOTYPES
   OTHER
 }
 
@@ -19,6 +23,9 @@ enum SkillCategory {
   BACKEND
   FRONTEND
   DEVOPS
+  DATABASE
+  MOBILE
+  OTHER
 }
 
 enum SystemDesignType {
@@ -48,6 +55,9 @@ model Experience {
   role         String
   description  String
   achievements String[]
+  techStack    String[]  @default([])
+  location     String    @default("")
+  period       String    @default("")
   startDate    DateTime
   endDate      DateTime?
   createdAt    DateTime  @default(now())
@@ -68,6 +78,8 @@ model Blog {
   title     String
   slug      String   @unique
   content   String
+  excerpt   String?
+  category  String?
   tags      String[]
   published Boolean  @default(false)
   createdAt DateTime @default(now())
@@ -87,6 +99,7 @@ model SystemDesign {
   title       String
   description String
   diagramUrl  String?
+  tags        String[]         @default([])
   type        SystemDesignType
   order       Int              @default(0)
   createdAt   DateTime         @default(now())

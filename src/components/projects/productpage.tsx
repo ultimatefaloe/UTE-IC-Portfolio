@@ -19,35 +19,29 @@ interface Project {
   featured: boolean;
 }
 
-const CATEGORIES = ['All', 'Contracts', 'Personal', 'Prototypes'];
-
-const PROTOTYPE_PROJECTS: Project[] = [
-  { id: 'p1', title: 'CyberGuard Blog', description: 'Cybersecurity blog platform', techStack: ['Next.js'], category: 'Prototypes', liveUrl: 'https://cyberguard-blog.vercel.app/', featured: false },
-  { id: 'p2', title: 'Agrolink', description: 'Agricultural supply chain platform', techStack: ['Next.js'], category: 'Prototypes', liveUrl: 'https://ultimate-agrolinks.vercel.app/', featured: false },
-  { id: 'p3', title: 'Flirt UTE', description: 'Social connection app prototype', techStack: ['Next.js'], category: 'Prototypes', liveUrl: 'https://flirt-ute.vercel.app/', featured: false },
-  { id: 'p4', title: 'VibeeDev', description: 'Developer community platform', techStack: ['Next.js'], category: 'Prototypes', liveUrl: 'https://vibeedev.vercel.app/', featured: false },
-  { id: 'p5', title: 'KiddiesCake', description: 'Custom cakes ordering platform', techStack: ['Next.js'], category: 'Prototypes', liveUrl: 'https://kiddiescake.vercel.app/', featured: false },
-  { id: 'p6', title: 'Liduct Hair', description: 'Hair products e-commerce', techStack: ['Next.js'], category: 'Prototypes', liveUrl: 'https://liducthair.vercel.app/', featured: false },
-  { id: 'p7', title: 'EventApp', description: 'Events management platform', techStack: ['Next.js'], category: 'Prototypes', liveUrl: 'https://event-app-orpin.vercel.app/', featured: false },
-];
+function toDisplayCategory(raw: string): string {
+  return raw.charAt(0).toUpperCase() + raw.slice(1).toLowerCase();
+}
 
 export default function ProductPage() {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('All');
   const [selected, setSelected] = useState<Project | null>(null);
 
   useEffect(() => {
     fetch('/api/projects')
       .then((r) => r.json())
-      .then((data) => {
-        if (Array.isArray(data)) setProjects([...data, ...PROTOTYPE_PROJECTS]);
-      })
-      .catch(() => setProjects(PROTOTYPE_PROJECTS));
+      .then((data) => Array.isArray(data) && setProjects(data))
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
+
+  const categories = ['All', ...Array.from(new Set(projects.map((p) => toDisplayCategory(p.category))))];
 
   const filtered = projects.filter((p) => {
     if (activeTab === 'All') return true;
-    return p.category === activeTab.toUpperCase() || p.category === activeTab;
+    return toDisplayCategory(p.category) === activeTab;
   });
 
   return (
@@ -61,7 +55,7 @@ export default function ProductPage() {
       <div className="sticky top-16 z-20 bg-ute-bg/90 backdrop-blur border-b border-ute-border">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="flex gap-1 py-3 overflow-x-auto">
-            {CATEGORIES.map((cat) => (
+            {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveTab(cat)}
@@ -80,51 +74,65 @@ export default function ProductPage() {
 
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            <AnimatePresence mode="popLayout">
-              {filtered.map((project, i) => (
-                <motion.div
-                  key={project.id}
-                  layout
-                  variants={fadeUp}
-                  custom={i % 6}
-                  initial="hidden"
-                  animate="visible"
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  className="group p-6 rounded-xl bg-ute-surface border border-ute-border hover:border-ute-gold/40 transition-all cursor-pointer"
-                  onClick={() => setSelected(project)}
-                >
-                  {project.liveUrl && (
-                    <div className="relative aspect-video rounded-lg overflow-hidden mb-4 bg-ute-surface-hi">
-                      <iframe
-                        src={project.liveUrl}
-                        className="w-[200%] h-[200%] scale-50 origin-top-left border-0 pointer-events-none"
-                        loading="lazy"
-                        title={project.title}
-                      />
-                    </div>
-                  )}
-                  <h3 className="font-playfair text-lg font-bold text-ute-text group-hover:text-ute-gold transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-sm text-ute-text-muted mt-2 line-clamp-2">{project.description}</p>
-                  <div className="flex flex-wrap gap-1.5 mt-3">
-                    {project.techStack.slice(0, 3).map((t) => (
-                      <span key={t} className="font-mono text-[10px] px-2 py-0.5 rounded border border-ute-border text-ute-text-muted">{t}</span>
-                    ))}
-                    {project.techStack.length > 3 && (
-                      <span className="font-mono text-[10px] text-ute-text-muted">+{project.techStack.length - 3}</span>
-                    )}
-                  </div>
-                </motion.div>
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="h-64 rounded-xl bg-ute-surface border border-ute-border animate-pulse" />
               ))}
-            </AnimatePresence>
-          </motion.div>
+            </div>
+          ) : filtered.length === 0 ? (
+            <div className="py-20 text-center">
+              <p className="text-ute-text-muted">No projects in this category yet.</p>
+            </div>
+          ) : (
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              animate="visible"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              <AnimatePresence mode="popLayout">
+                {filtered.map((project, i) => (
+                  <motion.div
+                    key={project.id}
+                    layout
+                    variants={fadeUp}
+                    custom={i % 6}
+                    initial="hidden"
+                    animate="visible"
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    className="group p-6 rounded-xl bg-ute-surface border border-ute-border hover:border-ute-gold/40 transition-all cursor-pointer"
+                    onClick={() => setSelected(project)}
+                  >
+                    {project.liveUrl && (
+                      <div className="relative aspect-video rounded-lg overflow-hidden mb-4 bg-ute-surface-hi">
+                        <iframe
+                          src={project.liveUrl}
+                          className="w-[200%] h-[200%] scale-50 origin-top-left border-0 pointer-events-none"
+                          loading="lazy"
+                          title={project.title}
+                        />
+                      </div>
+                    )}
+                    <h3 className="font-playfair text-lg font-bold text-ute-text group-hover:text-ute-gold transition-colors">
+                      {project.title}
+                    </h3>
+                    <p className="text-sm text-ute-text-muted mt-2 line-clamp-2">{project.description}</p>
+                    {(project.techStack ?? []).length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mt-3">
+                        {(project.techStack ?? []).slice(0, 3).map((t) => (
+                          <span key={t} className="font-mono text-[10px] px-2 py-0.5 rounded border border-ute-border text-ute-text-muted">{t}</span>
+                        ))}
+                        {(project.techStack ?? []).length > 3 && (
+                          <span className="font-mono text-[10px] text-ute-text-muted">+{(project.techStack ?? []).length - 3}</span>
+                        )}
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          )}
         </div>
       </section>
 
@@ -153,11 +161,13 @@ export default function ProductPage() {
               <p className="text-ute-text-muted leading-relaxed mb-6">
                 {selected.longDescription || selected.description}
               </p>
-              <div className="flex flex-wrap gap-2 mb-6">
-                {selected.techStack.map((t) => (
-                  <span key={t} className="font-mono text-xs px-2 py-1 rounded border border-ute-border text-ute-text-muted">{t}</span>
-                ))}
-              </div>
+              {(selected.techStack ?? []).length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {(selected.techStack ?? []).map((t) => (
+                    <span key={t} className="font-mono text-xs px-2 py-1 rounded border border-ute-border text-ute-text-muted">{t}</span>
+                  ))}
+                </div>
+              )}
               <div className="flex gap-4">
                 {selected.liveUrl && (
                   <Link href={selected.liveUrl} target="_blank" rel="noopener noreferrer"

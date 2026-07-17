@@ -5,8 +5,11 @@ import { prisma } from "@/lib/prisma";
 import { getAdminSession } from "@/lib/admin-auth";
 import { parseStringArray } from "@/lib/api-utils";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const featuredOnly = request.nextUrl.searchParams.get("featured") === "true";
+
   const projects = await prisma.project.findMany({
+    where: featuredOnly ? { featured: true } : {},
     orderBy: { createdAt: "desc" },
   });
 

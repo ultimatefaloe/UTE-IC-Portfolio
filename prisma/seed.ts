@@ -13,213 +13,400 @@ async function main() {
   await prisma.service.deleteMany();
   await prisma.contentBlock.deleteMany();
 
+  // ── Content blocks ────────────────────────────────────────────────────────────
   await prisma.contentBlock.createMany({
     data: [
       {
         key: "hero",
-        title: "Backend-Focused Software Engineer",
-        subtitle: "Backend Systems • SaaS Platforms • Distributed Services",
+        title: "Full-Stack Engineer & Technology Entrepreneur",
+        subtitle: "Backend Systems · SaaS Platforms · Distributed Services",
         description:
-          "I build scalable backend systems, SaaS platforms, and distributed applications for startups and production environments.",
-        body: "Explore case studies",
+          "I build scalable full-stack systems, SaaS platforms, and distributed applications for startups and production environments across Africa and beyond.",
+        body: "Explore my work",
       },
       {
         key: "about",
-        title: "Backend-Focused Software Engineer",
+        title: "Full-Stack Engineer & Technology Entrepreneur",
         subtitle: "Engineering for startups and scale-ups",
         description:
-          "I am a backend-focused Software Engineer building production-grade systems across logistics, fintech, SaaS, and marketplace platforms.",
+          "I am a full-stack software engineer and technology entrepreneur building production-grade systems across logistics, fintech, SaaS, and marketplace platforms.",
         body:
-          "I specialize in designing scalable APIs, distributed architectures, and real-time systems that power real-world applications.\n\nMy work spans multiple live production systems including logistics platforms with geo-based dispatching, fintech-style transaction systems, SaaS products with multi-service architecture, and marketplace systems with complex workflows.",
+          "I specialize in designing scalable APIs, distributed architectures, and real-time systems that power real-world applications.\n\nMy work spans multiple live production systems including media streaming platforms, logistics platforms with geo-based dispatching, fintech-style transaction systems, SaaS products with multi-service architecture, and marketplace systems with complex workflows.",
       },
     ],
   });
 
+  // ── Projects ──────────────────────────────────────────────────────────────────
   await prisma.project.createMany({
     data: [
       {
-        title: "Meudeliver — Real-Time Logistics & Delivery System",
+        title: "TinnieStudio — Media Streaming Platform",
         description:
-          "A scalable logistics platform designed for real-time delivery tracking, geo-based dispatching, and order lifecycle management.",
+          "Scalable media streaming platform with adaptive video delivery, creator management, and HLS streaming pipeline.",
         longDescription:
-          "Built to handle distributed delivery workflows with real-time state synchronization across users, vendors, and delivery agents.",
-        techStack: [
-          "NestJS",
-          "PostgreSQL",
-          "Redis",
-          "WebSockets",
-          "Docker",
-        ],
+          "Architected and developed backend infrastructure for a scalable media streaming platform. Built an asynchronous media processing pipeline using RabbitMQ, FFmpeg, and cloud object storage for automated transcoding and HLS streaming. Implemented secure direct-to-cloud upload workflows with presigned URLs and CDN-based streaming delivery.",
+        techStack: ["Next.js", "SpringBoot", "PostgreSQL", "Redis", "RabbitMQ", "FFmpeg", "AWS S3", "Docker"],
+        category: ProjectCategory.STREAMING,
+        liveUrl: "https://tinniestudio.com",
+        githubUrl: null,
+        featured: true,
+      },
+      {
+        title: "MeuDelivery — Multi-Role Logistics Platform",
+        description:
+          "Multi-role e-commerce and logistics platform supporting clients, vendors, delivery agents, and admins with real-time order tracking.",
+        longDescription:
+          "Designed and developed scalable REST APIs for clients, vendors, delivery agents, and admins using NestJS and PostgreSQL. Implemented authentication, role-based access control, order tracking, and in-app notification systems. Built modular services for cart management, product browsing, and multi-party order flows.",
+        techStack: ["Next.js", "NestJS", "PostgreSQL", "Prisma", "Docker", "MapBox", "AWS S3"],
         category: ProjectCategory.LOGISTICS,
-        liveUrl: "https://meudeliver.vercel.app/",
+        liveUrl: "https://meudeliver.com",
         githubUrl: null,
-        architectureDiagramUrl: null,
         featured: true,
       },
       {
-        title: "Accessivo — Fintech & Account Management System",
+        title: "California Notices — Legal Notice Platform",
         description:
-          "A backend-driven financial system simulating banking operations including transactions, account management, and secure authentication flows.",
+          "US-based platform enabling landlords and agents to file legal notices with PDF generation, document conversion, and Stripe billing.",
         longDescription:
-          "Designed with financial-grade consistency and secure transaction flow principles.",
-        techStack: [
-          "NestJS",
-          "PostgreSQL",
-          "JWT",
-          "Event-driven workflows",
-        ],
-        category: ProjectCategory.FINTECH,
-        liveUrl: "https://accessivo.vercel.app/",
+          "Built a fintech-adjacent legal notice generation platform for the California market. Handled PDF editing, document conversion workers, Stripe billing integration, and role-based access for agents and landlords.",
+        techStack: ["Next.js", "NestJS", "Stripe", "AWS", "PostgreSQL", "Prisma"],
+        category: ProjectCategory.CONTRACTS,
+        liveUrl: "https://canotices.com",
         githubUrl: null,
-        architectureDiagramUrl: null,
         featured: true,
       },
       {
-        title: "FashionKet — Marketplace Backend System",
+        title: "FashionKet — Multi-Vendor Fashion Marketplace",
         description:
-          "A scalable marketplace system supporting product listings, vendor management, and order workflows.",
+          "Multi-vendor e-commerce platform for emerging fashion brands and SMEs with vendor management, catalogue, and payment integration.",
         longDescription:
-          "Designed to support vendor-product architecture, cart pipelines, and modular APIs for rapid scale.",
-        techStack: ["Node.js", "PostgreSQL", "Redis", "Search Index"],
+          "Founded and led development of FashionKet. Designed platform architecture including vendor management, product catalogue, order processing, and payment integration. Built and maintained scalable backend services, REST APIs, cloud databases, and infrastructure.",
+        techStack: ["Next.js", "NestJS", "PostgreSQL", "Redis", "Stripe", "Docker"],
         category: ProjectCategory.MARKETPLACE,
-        liveUrl: "https://fashionket.vercel.app/",
+        liveUrl: "https://fashionket.com",
         githubUrl: null,
-        architectureDiagramUrl: null,
         featured: false,
       },
       {
-        title: "TinnieStudio — SaaS Content Platform",
+        title: "Acefre — Trust-Based Service Marketplace",
         description:
-          "A multi-module SaaS system designed for managing content workflows, users, and administrative operations.",
+          "Service marketplace connecting users with verified runners for everyday task fulfilment, with escrow payments and trust mechanisms.",
         longDescription:
-          "Built with modular services, admin tooling, and workflow automation for content operations.",
-        techStack: ["Next.js", "NestJS", "PostgreSQL", "Queue Workers"],
-        category: ProjectCategory.SAAS,
-        liveUrl: "https://tinniestudio.vercel.app/",
+          "Led end-to-end development of Acefre. Implemented task creation, runner assignment, escrow payments, dispute resolution, wallet systems, and user trust mechanisms. Integrated PWA capabilities, SEO, analytics, and performance optimisation.",
+        techStack: ["Next.js", "React", "TypeScript", "NestJS", "PostgreSQL", "PWA"],
+        category: ProjectCategory.PERSONAL,
+        liveUrl: "https://acefre.com",
         githubUrl: null,
-        architectureDiagramUrl: null,
+        featured: false,
+      },
+      {
+        title: "Water Groove — Fintech Investment Platform",
+        description:
+          "Fintech-grade investment platform with tier-based investments, ROI automation, ledger transactions, and admin-controlled financial workflows.",
+        longDescription:
+          "Designed a fintech-grade investment platform using Next.js and Prisma ORM. Architected a ledger-based transaction system reducing schema complexity and cutting runtime aggregation queries by ~60%. Built cron-driven ROI automation with database locking and idempotency.",
+        techStack: ["Next.js", "Prisma", "PostgreSQL", "Auth0", "NestJS"],
+        category: ProjectCategory.FINTECH,
+        liveUrl: "https://watergroove.com",
+        githubUrl: null,
+        featured: false,
+      },
+      {
+        title: "59Minutes Print — On-Demand Printing Platform",
+        description:
+          "On-demand printing and delivery service for Abuja with REST APIs, Firebase Auth, vendor management, and real-time order tracking.",
+        longDescription:
+          "Built and maintained REST APIs for authentication, products, orders, and vendors using Node.js, Express, and MongoDB. Integrated Firebase Auth, secure file uploads, and vendor-based product logic. Designed cart and order systems with real-time pricing and status tracking.",
+        techStack: ["Node.js", "Express", "MongoDB", "Firebase Auth", "Next.js"],
+        category: ProjectCategory.SAAS,
+        liveUrl: "https://59minutesprint.com",
+        githubUrl: null,
         featured: false,
       },
     ],
   });
 
+  // ── Experience ────────────────────────────────────────────────────────────────
   await prisma.experience.createMany({
     data: [
       {
-        company: "Accessivo",
-        role: "Backend Engineer",
+        company: "TinnieStudio",
+        role: "Full Stack Engineer",
+        period: "Mar 2026 – Present",
+        location: "Ontario, Canada (Remote)",
         description:
-          "Led backend architecture for fintech workflows and secure account systems.",
+          "Architected and developed backend infrastructure for a scalable media streaming platform with adaptive video delivery and creator management.",
         achievements: [
-          "Designed transaction processing pipeline with audit logging.",
-          "Implemented secure auth and role-based access control.",
-          "Built monitoring dashboards for operational visibility.",
+          "Built an asynchronous media processing pipeline using RabbitMQ, FFmpeg, and cloud object storage for automated transcoding and HLS streaming.",
+          "Implemented secure direct-to-cloud upload workflows with presigned URLs and CDN-based streaming delivery.",
+          "Designed modular backend systems for authentication, subscriptions, content management, playback tracking, analytics, and admin moderation.",
+          "Applied Clean Architecture and event-driven design principles to ensure scalability, maintainability, and production readiness.",
         ],
+        techStack: ["SpringBoot", "Next.js", "PostgreSQL", "Redis", "RabbitMQ", "FFmpeg", "AWS S3", "Docker"],
+        startDate: new Date("2026-03-01"),
+      },
+      {
+        company: "Acefre – Ultimate IntelliForge",
+        role: "Full Stack Engineer (Founder)",
+        period: "Mar 2026 – Present",
+        location: "Minna, Nigeria",
+        description:
+          "Led end-to-end development of Acefre, a trust-based service marketplace connecting users with verified runners for everyday task fulfilment.",
+        achievements: [
+          "Defined product architecture, technical strategy, and engineering roadmap across frontend and backend systems.",
+          "Built frontend architecture using Next.js, React, TypeScript with reusable DAL layers, BFF architecture, and scalable state management.",
+          "Implemented task creation, runner assignment, escrow payments, dispute resolution, wallet systems, and user trust mechanisms.",
+          "Integrated PWA capabilities, SEO, analytics, and performance optimisation across web and mobile form factors.",
+        ],
+        techStack: ["Next.js", "React", "TypeScript", "NestJS", "PostgreSQL", "Prisma", "PWA"],
+        startDate: new Date("2026-03-01"),
+      },
+      {
+        company: "FashionKet – Ultimate IntelliForge",
+        role: "Full Stack Engineer (Founder)",
+        period: "Oct 2025 – Present",
+        location: "Abuja, Nigeria",
+        description:
+          "Founded and led development of FashionKet, a multi-vendor e-commerce platform for emerging fashion brands and SMEs.",
+        achievements: [
+          "Designed platform architecture including vendor management, product catalogue, order processing, and payment integration.",
+          "Built and maintained scalable backend services, REST APIs, cloud databases, and infrastructure.",
+          "Developed data-driven analytics and performance monitoring solutions for marketplace operations.",
+          "Managed platform security, performance optimisation, vendor onboarding tools, and deployment processes.",
+        ],
+        techStack: ["Next.js", "NestJS", "PostgreSQL", "Redis", "Stripe", "Docker", "Prisma"],
+        startDate: new Date("2025-10-01"),
+      },
+      {
+        company: "Accessivo",
+        role: "Front-End Team Lead",
+        period: "Aug 2025 – Present",
+        location: "Ilorin, Nigeria",
+        description:
+          "Bridged communication between the frontend engineering team and product stakeholders, ensuring aligned delivery goals.",
+        achievements: [
+          "Assigned and managed tasks, monitored progress, and ensured timely delivery of high-quality frontend features.",
+          "Championed continuous learning, best practices, and code quality standards across the team.",
+        ],
+        techStack: ["React", "TypeScript", "Next.js", "Tailwind CSS"],
         startDate: new Date("2025-08-01"),
       },
       {
         company: "MeuDelivery",
-        role: "Backend Developer",
+        role: "Full Stack Engineer",
+        period: "May 2025 – Present",
+        location: "Angola (Remote)",
         description:
-          "Built logistics APIs for dispatch, tracking, and vendor coordination.",
+          "Designed and developed scalable REST APIs for clients, vendors, delivery agents, and admins using NestJS and PostgreSQL.",
         achievements: [
-          "Developed real-time tracking and delivery coordination services.",
-          "Optimized dispatch algorithms for geo-based routing.",
-          "Documented APIs and enforced modular architecture.",
+          "Implemented authentication, role-based access control, order tracking, and in-app notification systems.",
+          "Built modular services for cart management, product browsing, and multi-party order flows using Prisma ORM.",
+          "Integrated Swagger for API documentation and maintained clean architecture standards.",
         ],
+        techStack: ["NestJS", "PostgreSQL", "Prisma", "Docker", "MapBox", "Swagger"],
         startDate: new Date("2025-05-01"),
+      },
+      {
+        company: "Water Groove",
+        role: "Full Stack Engineer",
+        period: "Dec 2025 – Feb 2026",
+        location: "Abuja, Nigeria",
+        description:
+          "Designed a fintech-grade investment platform using Next.js and Prisma ORM, supporting tier-based investments, ROI automation, and admin-controlled financial workflows.",
+        achievements: [
+          "Architected a ledger-based transaction system with enum-driven models, reducing schema complexity and cutting runtime aggregation queries by ~60%.",
+          "Built cron-driven ROI automation with database locking and idempotency, ensuring 100% consistency in monthly payout calculations.",
+          "Introduced balance snapshot models to optimise financial queries, improving dashboard load times by ~40% under concurrent usage.",
+          "Integrated Auth0 for secure role-based authentication and collaborated on admin tooling for transaction approvals, monitoring, and compliance reporting.",
+        ],
+        techStack: ["Next.js", "Prisma", "PostgreSQL", "Auth0", "NestJS"],
+        startDate: new Date("2025-12-01"),
+        endDate: new Date("2026-02-28"),
+      },
+      {
+        company: "59Minutes Print",
+        role: "Full Stack Engineer",
+        period: "Jul 2024 – Mar 2026",
+        location: "Abuja, Nigeria",
+        description:
+          "Built and maintained REST APIs for authentication, products, orders, and vendors using Node.js, Express, and MongoDB.",
+        achievements: [
+          "Integrated Firebase Auth, secure file uploads, and vendor-based product logic.",
+          "Designed cart and order systems with real-time pricing and status tracking.",
+          "Implemented admin tools for managing users, orders, and product listings with role-based access control.",
+        ],
+        techStack: ["Node.js", "Express", "MongoDB", "Firebase Auth", "Next.js"],
+        startDate: new Date("2024-07-01"),
+        endDate: new Date("2026-03-31"),
+      },
+      {
+        company: "University of Ilorin",
+        role: "Software Engineer (Backend)",
+        period: "Jul 2024 – Jul 2025",
+        location: "Abuja, Nigeria",
+        description:
+          "Contributed backend development to the University of Ilorin Recruitment Portal, responsible for server-side logic, API development, and database management.",
+        achievements: [
+          "Developed server-side logic and REST APIs for the recruitment portal.",
+          "Ensured system performance, security, and scalability throughout the recruitment portal lifecycle.",
+        ],
+        techStack: ["Node.js", "PostgreSQL", "REST APIs"],
+        startDate: new Date("2024-07-01"),
+        endDate: new Date("2025-07-31"),
       },
     ],
   });
 
+  // ── Skills ─────────────────────────────────────────────────────────────────────
   await prisma.skill.createMany({
     data: [
-      { name: "NestJS", category: SkillCategory.BACKEND, level: 88 },
-      { name: "PostgreSQL", category: SkillCategory.BACKEND, level: 85 },
-      { name: "Redis", category: SkillCategory.BACKEND, level: 78 },
-      { name: "TypeScript", category: SkillCategory.BACKEND, level: 86 },
-      { name: "Next.js", category: SkillCategory.FRONTEND, level: 80 },
-      { name: "React", category: SkillCategory.FRONTEND, level: 78 },
-      { name: "Tailwind CSS", category: SkillCategory.FRONTEND, level: 76 },
-      { name: "Docker", category: SkillCategory.DEVOPS, level: 74 },
-      { name: "AWS", category: SkillCategory.DEVOPS, level: 70 },
+      // Frontend
+      { name: "Next.js", category: SkillCategory.FRONTEND, level: 90 },
+      { name: "React", category: SkillCategory.FRONTEND, level: 88 },
+      { name: "TypeScript", category: SkillCategory.FRONTEND, level: 87 },
+      { name: "Tailwind CSS", category: SkillCategory.FRONTEND, level: 85 },
+      { name: "Framer Motion", category: SkillCategory.FRONTEND, level: 75 },
+      // Backend
+      { name: "NestJS", category: SkillCategory.BACKEND, level: 90 },
+      { name: "Node.js", category: SkillCategory.BACKEND, level: 88 },
+      { name: "Express.js", category: SkillCategory.BACKEND, level: 85 },
+      { name: "SpringBoot", category: SkillCategory.BACKEND, level: 72 },
+      { name: "Prisma ORM", category: SkillCategory.BACKEND, level: 88 },
+      { name: "REST APIs", category: SkillCategory.BACKEND, level: 92 },
+      // Database
+      { name: "PostgreSQL", category: SkillCategory.DATABASE, level: 87 },
+      { name: "MongoDB", category: SkillCategory.DATABASE, level: 80 },
+      { name: "Redis", category: SkillCategory.DATABASE, level: 78 },
+      { name: "MySQL", category: SkillCategory.DATABASE, level: 75 },
+      // DevOps
+      { name: "Docker", category: SkillCategory.DEVOPS, level: 78 },
+      { name: "AWS", category: SkillCategory.DEVOPS, level: 72 },
+      { name: "CI/CD", category: SkillCategory.DEVOPS, level: 70 },
+      { name: "Linux", category: SkillCategory.DEVOPS, level: 74 },
+      // Mobile
+      { name: "React Native", category: SkillCategory.MOBILE, level: 70 },
+      // Other
+      { name: "Git", category: SkillCategory.OTHER, level: 90 },
+      { name: "RabbitMQ", category: SkillCategory.OTHER, level: 68 },
+      { name: "GraphQL", category: SkillCategory.OTHER, level: 65 },
     ],
   });
 
+  // ── Blog posts ────────────────────────────────────────────────────────────────
   await prisma.blog.createMany({
     data: [
       {
         title: "Designing Scalable Backend APIs for Founding Teams",
         slug: "scalable-backend-apis-founding-teams",
+        excerpt: "How to architect REST APIs that grow with your startup — from MVP to production scale.",
+        category: "Architecture",
         content:
-          "In this article, I break down how to design backend APIs that scale with startup growth. We cover modular service design, database evolution, and real-time orchestration patterns.",
-        tags: ["Backend", "Architecture", "Startups"],
+          "In this article, I break down how to design backend APIs that scale with startup growth. We cover modular service design, database schema evolution, caching strategies, and real-time orchestration patterns. The key insight: design for the next 10x, not the next 100x.",
+        tags: ["Backend", "Architecture", "Startups", "APIs"],
         published: true,
       },
       {
-        title: "System Design Notes: Logistics Dispatching",
-        slug: "system-design-logistics-dispatching",
+        title: "Event-Driven Architecture with RabbitMQ and NestJS",
+        slug: "event-driven-rabbitmq-nestjs",
+        excerpt: "Building reliable asynchronous workflows with message queues in a NestJS monorepo.",
+        category: "Backend",
         content:
-          "Dispatching systems require careful modeling of geo-coordinates, job queues, and real-time state updates. Here is a breakdown of the approach used in Meudeliver.",
-        tags: ["System Design", "Logistics"],
+          "Event-driven design decouples services and improves resilience. In this post, I walk through how I implemented RabbitMQ-based message queues in the TinnieStudio media pipeline — handling video transcoding jobs, retry logic, dead-letter queues, and consumer scalability.",
+        tags: ["RabbitMQ", "NestJS", "Backend", "Event-Driven"],
+        published: true,
+      },
+      {
+        title: "Building a Fintech Ledger with Prisma and PostgreSQL",
+        slug: "fintech-ledger-prisma-postgresql",
+        excerpt: "A practical guide to designing immutable transaction ledgers with Prisma ORM and PostgreSQL.",
+        category: "Fintech",
+        content:
+          "Fintech systems require strict data integrity. I share patterns from building the Water Groove investment platform: enum-driven transaction types, idempotency keys, database locking for ROI automation, and balance snapshot models that improved dashboard load times by ~40%.",
+        tags: ["Fintech", "PostgreSQL", "Prisma", "Database"],
+        published: true,
+      },
+      {
+        title: "From Code to Company: Lessons from Building FashionKet and Acefre",
+        slug: "building-fashionket-acefre-founder-lessons",
+        excerpt: "What I learned founding two software products while working full-time as a contractor.",
+        category: "Entrepreneurship",
+        content:
+          "Running two startups while shipping contracts across Angola, the US, and Canada taught me a lot about prioritisation, architecture decisions under pressure, and building teams. This is a candid look at what worked, what didn't, and how I balance execution with vision.",
+        tags: ["Entrepreneurship", "Startups", "Founder", "Africa"],
         published: true,
       },
     ],
   });
 
+  // ── Services ──────────────────────────────────────────────────────────────────
   await prisma.service.createMany({
     data: [
       {
+        title: "Full-Stack Web Development",
+        description:
+          "End-to-end web applications from pixel-perfect UI to production-grade API and database — built to scale from day one.",
+      },
+      {
         title: "Backend Architecture & API Design",
         description:
-          "Designing resilient backend systems, REST APIs, and event-driven services for fast-moving teams.",
+          "Designing resilient backend systems, REST APIs, and event-driven services using NestJS, Node.js, and PostgreSQL.",
       },
       {
         title: "SaaS Platform Engineering",
         description:
-          "Building multi-tenant SaaS platforms with secure auth, billing-ready data models, and scalable workflows.",
+          "Building multi-tenant SaaS platforms with secure authentication, billing-ready data models, and scalable module architecture.",
       },
       {
         title: "System Design Consulting",
         description:
-          "Architecture reviews, scalability planning, and infrastructure roadmaps for founder-led teams.",
+          "Architecture reviews, scalability planning, and infrastructure roadmaps tailored for founder-led and early-stage engineering teams.",
       },
       {
-        title: "Infrastructure & DevOps Enablement",
+        title: "DevOps & Cloud Infrastructure",
         description:
-          "Dockerized environments, CI/CD pipelines, and production monitoring for backend services.",
+          "Dockerized environments, CI/CD pipelines, AWS deployments, and production monitoring for backend services.",
+      },
+      {
+        title: "Mobile App Development",
+        description:
+          "Cross-platform mobile applications with React Native — PWA-first for web, native builds for iOS and Android.",
       },
     ],
   });
 
+  // ── System Design ─────────────────────────────────────────────────────────────
   await prisma.systemDesign.createMany({
     data: [
       {
-        title: "Meudeliver Architecture Diagram",
+        title: "Media Streaming Pipeline — TinnieStudio",
         description:
-          "Service breakdown for real-time logistics orchestration, dispatching, and delivery tracking.",
+          "Asynchronous video transcoding pipeline: upload → S3 presigned URL → RabbitMQ job → FFmpeg worker → HLS segments → CDN delivery.",
+        tags: ["Streaming", "RabbitMQ", "FFmpeg", "AWS S3", "HLS"],
         type: SystemDesignType.ARCHITECTURE,
         order: 1,
       },
       {
-        title: "Accessivo Transaction Flow",
+        title: "Multi-Role Logistics System — MeuDelivery",
         description:
-          "Ledger-style flow ensuring consistency across account balances, approvals, and audit logs.",
+          "Service breakdown for multi-role order lifecycle management across clients, vendors, delivery agents, and admin.",
+        tags: ["Logistics", "NestJS", "Real-Time", "MapBox"],
         type: SystemDesignType.FLOW,
         order: 2,
       },
       {
-        title: "API Structure & Gateway Design",
+        title: "Fintech Ledger & ROI Automation — Water Groove",
         description:
-          "API gateway layout, service boundaries, and authentication strategy.",
-        type: SystemDesignType.API,
+          "Ledger-style transaction flow ensuring consistency across account balances, tier investments, cron-based ROI payouts, and audit logs.",
+        tags: ["Fintech", "PostgreSQL", "Cron Jobs", "Auth0"],
+        type: SystemDesignType.FLOW,
         order: 3,
       },
       {
-        title: "Backend Architecture Breakdown",
+        title: "API Gateway & Service Boundaries",
         description:
-          "Infrastructure layout for microservices, data stores, and observability tooling.",
-        type: SystemDesignType.ARCHITECTURE,
+          "API gateway layout, service boundary design, authentication strategy, and RBAC enforcement across microservices.",
+        tags: ["API Design", "NestJS", "Auth", "RBAC"],
+        type: SystemDesignType.API,
         order: 4,
       },
     ],

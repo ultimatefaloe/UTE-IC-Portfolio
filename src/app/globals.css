@@ -1,62 +1,66 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
-/* Declare custom theme variant */
 @custom-variant dark (&:is(.dark *));
 
-/* Inline theme tokens for Tailwind to reference */
 @theme inline {
-  --color-ute-primary: #f7fafc; /* gray-900 */
-  --color-ute-secondary: #1a202c; /* gray-100 */
-  --color-ute-accent: #f7fafc; /* gray-100 */
-  --color-ute-neutral: #1a202c; /* gray-900 */
+  /* Brand palette */
+  --color-ute-bg:            #0A0A0F;
+  --color-ute-surface:       #111118;
+  --color-ute-surface-hi:    #1A1A24;
+  --color-ute-gold:          #C9A84C;
+  --color-ute-gold-muted:    #8B6914;
+  --color-ute-electric:      #00D4FF;
+  --color-ute-electric-dim:  #0099BB;
+  --color-ute-text:          #F0EDE8;
+  --color-ute-text-muted:    #8B8B9A;
+  --color-ute-border:        #2A2A38;
 
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-inter: 'Inter', sans-serif;
-  --font-josefin: 'Josefin Sans', sans-serif;
+  /* Legacy aliases (keep for any admin components that still reference these) */
+  --color-ute-primary:   #0A0A0F;
+  --color-ute-secondary: #111118;
+  --color-ute-accent:    #C9A84C;
+  --color-ute-neutral:   #F0EDE8;
+
+  --color-background: var(--color-ute-bg);
+  --color-foreground: var(--color-ute-text);
+
+  --font-playfair: 'Playfair Display', serif;
+  --font-dm-sans:  'DM Sans', sans-serif;
+  --font-mono:     'JetBrains Mono', monospace;
+
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
-  --radius-lg: 0.625rem;
-  --radius-xl: 0.75rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
 }
 
-/* Base theme (light) */
 :root {
-  --background: oklch(0.98 0.02 220); /* very light sky */
-  --foreground: oklch(0.18 0.05 220); /* near-black navy */
-  --card: oklch(1 0 0);
-  --border: oklch(0.89 0.03 210);
-  --ring: oklch(0.7 0.1 210);
+  --background: #0A0A0F;
+  --foreground: #F0EDE8;
 }
 
-/* Dark theme overrides */
-.dark {
-  --background: oklch(0.18 0.03 220); /* deep sky-900 navy */
-  --foreground: oklch(0.95 0.02 220); /* bright off-white */
-  --card: oklch(0.23 0.04 220);
-  --border: oklch(0.35 0.03 220);
-  --ring: oklch(0.65 0.1 220);
-}
-
-/* Apply global styles */
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground antialiased transition-colors duration-500;
+    @apply bg-[#0A0A0F] text-[#F0EDE8] antialiased;
+    font-family: var(--font-dm-sans), sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-playfair), serif;
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-mono), monospace;
   }
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-ute-secondary);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-ute-secondary);
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-ute-accent);
-}
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0A0A0F; }
+::-webkit-scrollbar-thumb { background: #2A2A38; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #C9A84C; }

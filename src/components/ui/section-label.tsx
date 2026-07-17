@@ -1,3 +1,5 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { fadeUp } from '@/lib/animations';
 
@@ -19,14 +21,14 @@ export default function SectionLabel({ label, title, subtitle, center }: Section
       <motion.span
         variants={fadeUp}
         custom={0}
-        className="block font-mono text-xs tracking-[0.25em] uppercase text-[#C9A84C] mb-3"
+        className="block font-mono text-xs tracking-[0.25em] uppercase text-ute-gold mb-3"
       >
         {'// '}{label}
       </motion.span>
       <motion.h2
         variants={fadeUp}
         custom={1}
-        className="font-playfair text-3xl md:text-4xl lg:text-5xl font-bold text-[#F0EDE8]"
+        className="font-playfair text-3xl md:text-4xl lg:text-5xl font-bold text-ute-text"
       >
         {title}
       </motion.h2>

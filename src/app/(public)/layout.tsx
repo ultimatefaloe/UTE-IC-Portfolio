@@ -1,19 +1,14 @@
-import SideNavBar from '@/components/root/sidebar';
-import Main from '@/components/root/main';
+import Navbar from '@/components/root/navbar';
 import Footer from '@/components/root/footer';
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <SideNavBar />
-      <div className='lg:ml-64'>
-        <Main>{children}</Main>
-        <Footer />
-      </div>
+      <Navbar />
+      <main className="min-h-screen">
+        {children}
+      </main>
+      <Footer />
     </>
   );
 }

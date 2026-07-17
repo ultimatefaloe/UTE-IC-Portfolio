@@ -1,203 +1,95 @@
-"use client";
-import Link from "next/link";
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  Youtube,
-  Dribbble,
-  Send,
-} from "lucide-react";
-import Image from "next/image";
-import { Button } from "../ui/button";
+import Link from 'next/link';
+import { Twitter, Linkedin, Instagram, Facebook, Github } from 'lucide-react';
 
-const Footer = () => {
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/skills', label: 'Skills' },
+  { href: '/experiences', label: 'Experience' },
+  { href: '/services', label: 'Services' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/contact', label: 'Contact' },
+];
 
+const socials = [
+  { href: 'https://x.com/faloeUltimate/', icon: Twitter, label: 'Twitter' },
+  { href: 'https://www.linkedin.com/in/tunmise-falodun-1894b22a2/', icon: Linkedin, label: 'LinkedIn' },
+  { href: 'https://www.instagram.com/ultimatefaloe/', icon: Instagram, label: 'Instagram' },
+  { href: 'https://web.facebook.com/faloeultimate/', icon: Facebook, label: 'Facebook' },
+  { href: 'https://github.com/ultimatefaloe', icon: Github, label: 'GitHub' },
+];
+
+export default function Footer() {
   return (
-    <footer
-      className="py-12 transition-colors duration-300 bg-ute-primary text-ute-neutral dark:bg-ute-secondary dark:text-ute-accent"
-    >
-      <div className="container mx-auto px-4">
-        {/* Top Section */}
-        <div className="mb-12 flex flex-col md:flex-row justify-between items-center">
-          {/* Logo */}
-          <div className="mb-6 md:mb-0">
-            <Link href="/">
-              <Image
-                src="/images/logo.png"
-                alt="Company Logo"
-                width={100}
-                height={100}
-                className=""
-              />
-            </Link>
-          </div>
-
-          {/* Social Links */}
-          <div className="flex space-x-4">
-            <Link
-              href="#"
-              className="p-2 rounded-full transition-colors hover:bg-primary hover:text-sky-600"
-            >
-              <Facebook className="h-5 w-5" />
-            </Link>
-            <Link
-              href="#"
-              className="p-2 rounded-full transition-colors hover:bg-primary hover:text-sky-600"
-            >
-              <Twitter className="h-5 w-5" />
-            </Link>
-            <Link
-              href="#"
-              className="p-2 rounded-full transition-colors hover:bg-primary hover:text-sky-600"
-            >
-              <Dribbble className="h-5 w-5" />
-            </Link>
-            <Link
-              href="#"
-              className="p-2 rounded-full transition-colors hover:bg-primary hover:text-sky-600"
-            >
-              <Instagram className="h-5 w-5" />
-            </Link>
-            <Link
-              href="#"
-              className="p-2 rounded-full transition-colors hover:bg-primary hover:text-sky-600"
-            >
-              <Youtube className="h-5 w-5" />
-            </Link>
-          </div>
-        </div>
-
-        {/* Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-          {/* About */}
+    <footer className="bg-ute-surface border-t border-ute-border py-16">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+          {/* Brand */}
           <div>
-            <h5 className="text-xl font-bold mb-4 text-sky-600">About Us</h5>
-            <p className="text-gray-500 dark:text-gray-400 mb-4">
-              Formed in 2006, Videoprah is an award-winning, full-service
-              production company specializing in storytelling and branding.
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-9 h-9 rounded-sm bg-ute-gold flex items-center justify-center">
+                <span className="font-playfair font-bold text-ute-bg text-sm">TF</span>
+              </div>
+              <span className="font-playfair font-bold text-ute-text">Tunmise Falodun</span>
+            </div>
+            <p className="text-ute-text-muted text-sm leading-relaxed">
+              Building systems that scale. Full-stack engineer and founder of Ultimate IntelliForge.
             </p>
-            <Link
-              href="#"
-              className="text-primary hover:text-primary/80 flex items-center font-medium transition-colors"
-            >
-              Read more <span className="ml-2">→</span>
-            </Link>
           </div>
 
-          {/* Who We Are */}
+          {/* Nav */}
           <div>
-            <h5 className="text-xl font-bold mb-4 text-sky-600">Who We Are</h5>
+            <h5 className="font-mono text-xs tracking-[0.2em] uppercase text-ute-gold mb-4">Navigation</h5>
             <ul className="space-y-2">
-              <li>
-                <Link
-                  href="/team"
-                  className="text-gray-500 dark:text-gray-400 hover:text-primary transition-colors"
-                >
-                  Team
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-gray-500 dark:text-gray-400 hover:text-primary transition-colors"
-                >
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-gray-500 dark:text-gray-400 hover:text-primary transition-colors"
-                >
-                  Contact Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-gray-500 dark:text-gray-400 hover:text-primary transition-colors"
-                >
-                  Locations
-                </Link>
-              </li>
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-sm text-ute-text-muted hover:text-ute-text transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Our Work */}
+          {/* Socials */}
           <div>
-            <h5 className="text-xl font-bold mb-4 text-sky-600">Our Work</h5>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  href="#"
-                  className="text-gray-500 dark:text-gray-400 hover:text-primary transition-colors"
-                >
-                  Features
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-gray-500 dark:text-gray-400 hover:text-primary transition-colors"
-                >
-                  Latest
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-gray-500 dark:text-gray-400 hover:text-primary transition-colors"
-                >
-                  Browse Archive
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-gray-500 dark:text-gray-400 hover:text-primary transition-colors"
-                >
-                  Video for Web
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Newsletter */}
-          <div>
-            <h5 className="text-xl font-bold mb-4 text-sky-600">Newsletter</h5>
-            <p className="text-gray-500 dark:text-gray-400 mb-4">
-              Stay updated with the latest news, projects, and exclusive
-              insights.
+            <h5 className="font-mono text-xs tracking-[0.2em] uppercase text-ute-gold mb-4">Connect</h5>
+            <div className="flex gap-3 flex-wrap">
+              {socials.map((s) => {
+                const Icon = s.icon;
+                return (
+                  <Link
+                    key={s.href}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    className="w-9 h-9 rounded border border-ute-border flex items-center justify-center text-ute-text-muted hover:border-ute-gold hover:text-ute-gold transition-colors"
+                  >
+                    <Icon className="w-4 h-4" />
+                  </Link>
+                );
+              })}
+            </div>
+            <p className="mt-6 text-sm text-ute-text-muted">
+              <a href="mailto:ultimatefaloe@gmail.com" className="hover:text-ute-gold transition-colors">
+                ultimatefaloe@gmail.com
+              </a>
             </p>
-            <form className="flex">
-              <input
-                type="email"
-                placeholder="Your Email"
-                className="px-4 py-2 w-full rounded-l-md focus:outline-none border focus:border-sky-600 bg-white text-gray-900  border-gray-300 dark:bg-gray-800 dark:text-gray-100  dark:border-gray-700"
-              />
-              <Button
-                type="submit"
-                className="bg-primary hover:bg-primary/90 px-4 py-2 rounded-r-md text-sky-600 transition-colors flex items-center"
-              >
-                <Send className="h-5 w-5" />
-              </Button>
-            </form>
           </div>
         </div>
 
-        {/* Bottom */}
-        <div className="border-t border-sky-600 pt-8 text-center">
-          <p className="text-gray-500 dark:text-gray-400">
-            Copyright &copy; {new Date().getFullYear()} All rights reserved | 
-            <Link href="#"> {" "}
-               UTE-IC
-            </Link>
+        <div className="border-t border-ute-border pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-ute-text-muted">
+            &copy; {new Date().getFullYear()} Tunmise Falodun. All rights reserved.
+          </p>
+          <p className="text-xs text-ute-text-muted">
+            Built by Tunmise Falodun —{' '}
+            <span className="text-ute-gold">Ultimate IntelliForge</span>
           </p>
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

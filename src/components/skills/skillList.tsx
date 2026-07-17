@@ -1,44 +1,77 @@
 'use client';
-import { useEffect, useMemo, useState } from 'react';
-import { Code2 } from 'lucide-react';
-import BouncingCarousel from '../ui/bouncingCarosel';
 
-type Skill = {
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import SectionLabel from '@/components/ui/section-label';
+import SkillType from './skillType';
+import { staggerContainer } from '@/lib/animations';
+
+interface Skill {
   id: string;
   name: string;
+  proficiency: number;
   category: string;
-  level: number;
-};
+}
 
-const SkillList = () => {
+const CATEGORIES = ['Frontend', 'Backend', 'DevOps', 'Database', 'Mobile', 'Other'];
+
+export default function SkillList() {
   const [skills, setSkills] = useState<Skill[]>([]);
+  const [activeCategory, setActiveCategory] = useState('Frontend');
 
   useEffect(() => {
-    const loadSkills = async () => {
-      const response = await fetch('/api/skills', { cache: 'no-store' });
-      const data = await response.json();
-      setSkills(data);
-    };
-
-    loadSkills();
+    fetch('/api/skills')
+      .then((r) => r.json())
+      .then((data) => Array.isArray(data) && setSkills(data))
+      .catch(() => {});
   }, []);
 
-  const stacks = useMemo(() => {
-    const items = skills.map(skill => ({
-      name: skill.name,
-      icon: <Code2 className='text-sky-400' />,
-    }));
-    const midpoint = Math.ceil(items.length / 2);
-    return [items.slice(0, midpoint), items.slice(midpoint)];
-  }, [skills]);
+  const filtered = skills.filter((s) => s.category === activeCategory);
 
   return (
-    <div className='rounded-2xl shadow-md shadow-gray-400 dark:shadow-gray-800 bg-white dark:bg-sky-950 p-6 md:p-8 space-y-6 transition-colors duration-300'>
-      {stacks.map((stack, index) => (
-        <BouncingCarousel key={index} stack={stack} />
-      ))}
+    <div className="min-h-screen bg-ute-bg">
+      <section className="pt-32 pb-16 bg-ute-surface border-b border-ute-border">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <SectionLabel label="Expertise" title="Skills & Technologies" />
+        </div>
+      </section>
+
+      <div className="sticky top-16 z-20 bg-ute-bg/90 backdrop-blur border-b border-ute-border">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="flex gap-1 py-3 overflow-x-auto">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-4 py-1.5 rounded font-mono text-xs whitespace-nowrap transition-all ${
+                  activeCategory === cat
+                    ? 'bg-ute-gold text-ute-bg font-medium'
+                    : 'text-ute-text-muted hover:text-ute-text'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <section className="py-16">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <motion.div
+            key={activeCategory}
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+          >
+            {filtered.length > 0 ? (
+              <SkillType skills={filtered} />
+            ) : (
+              <p className="text-ute-text-muted text-sm">No skills added for this category yet.</p>
+            )}
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
-};
-
-export default SkillList;
+}

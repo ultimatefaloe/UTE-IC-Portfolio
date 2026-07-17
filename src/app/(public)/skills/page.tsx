@@ -1,16 +1,10 @@
-import SkillType from "@/components/skills/skillType";
-import { Metadata } from "next";
+import SkillList from '@/components/skills/skillList';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Skills"
-}
-
-const  Skills = () => {
-  return (
-   <>
-    <SkillType />
-   </>
-  )
+  title: 'Skills — Tunmise Falodun',
 };
 
-export default Skills;
+export default function SkillsPage() {
+  return <SkillList />;
+}

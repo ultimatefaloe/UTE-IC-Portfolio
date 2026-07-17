@@ -1,50 +1,29 @@
-'use client';
-
-interface Props {
+interface CircularPercentageProps {
   percentage: number;
-  label: string;
+  size?: number;
+  strokeWidth?: number;
 }
 
-const CircularProgress: React.FC<Props> = ({ percentage, label }) => {
-  const radius = 45;
+export default function CircularPercentage({ percentage, size = 80, strokeWidth = 6 }: CircularPercentageProps) {
+  const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (percentage / 100) * circumference;
 
   return (
-    <div className='flex flex-col items-center'>
-      <div className='relative w-32 h-32'>
-        <svg className='transform -rotate-90 w-32 h-32'>
-          <circle
-            cx='64'
-            cy='64'
-            r={radius}
-            stroke='currentColor'
-            strokeWidth='8'
-            fill='none'
-            className='text-gray-700'
-          />
-          <circle
-            cx='64'
-            cy='64'
-            r={radius}
-            stroke='currentColor'
-            strokeWidth='8'
-            fill='none'
-            strokeDasharray={circumference}
-            strokeDashoffset={offset}
-            className='text-sky-400 transition-all duration-1000 ease-out'
-            strokeLinecap='round'
-          />
-        </svg>
-        <div className='absolute inset-0 flex items-center justify-center'>
-          <span className='text-xl font-semibold text-sky-900 dark:text-sky-100'>
-            {percentage}%
-          </span>
-        </div>
-      </div>
-      <p className='mt-3 text-sm text-sky-900 dark:text-sky-100'>{label}</p>
-    </div>
+    <svg width={size} height={size} className="-rotate-90">
+      <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="#2A2A38" strokeWidth={strokeWidth} />
+      <circle
+        cx={size / 2}
+        cy={size / 2}
+        r={radius}
+        fill="none"
+        stroke="#C9A84C"
+        strokeWidth={strokeWidth}
+        strokeDasharray={circumference}
+        strokeDashoffset={offset}
+        strokeLinecap="round"
+        className="transition-all duration-1000"
+      />
+    </svg>
   );
-};
-
-export default CircularProgress;
+}

@@ -1,93 +1,77 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { Layers, Route, Network } from "lucide-react";
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import SectionLabel from '@/components/ui/section-label';
+import { fadeUp, staggerContainer } from '@/lib/animations';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Image from "next/image";
-
-type SystemDesign = {
+interface SystemDesign {
   id: string;
   title: string;
   description: string;
-  diagramUrl?: string | null;
-  type: "ARCHITECTURE" | "FLOW" | "API";
-  order: number;
-};
-
-const typeIcon = {
-  ARCHITECTURE: Layers,
-  FLOW: Route,
-  API: Network,
-};
+  diagramUrl?: string;
+  tags: string[];
+}
 
 export default function SystemDesignPage() {
   const [items, setItems] = useState<SystemDesign[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadItems = async () => {
-      setLoading(true);
-      const response = await fetch("/api/system-design", { cache: "no-store" });
-      const data = await response.json();
-      setItems(data);
-      setLoading(false);
-    };
-
-    loadItems();
+    fetch('/api/system-design')
+      .then((r) => r.json())
+      .then((data) => Array.isArray(data) && setItems(data))
+      .catch(() => {});
   }, []);
 
   return (
-    <div className="min-h-screen py-20 px-6">
-      <div className="max-w-6xl mx-auto space-y-12">
-        <header className="text-center space-y-4">
-          <p className="text-sm uppercase tracking-widest text-sky-400">
-            System Design
-          </p>
-          <h1 className="text-4xl md:text-5xl font-bold text-sky-900 dark:text-sky-100">
-            Architecture Deep Dives
-          </h1>
-          <p className="text-sky-900/80 dark:text-sky-100/80">
-            Explore core backend flows, infrastructure patterns, and delivery pipelines that power the portfolio projects.
-          </p>
-        </header>
+    <div className="min-h-screen bg-ute-bg">
+      <section className="pt-32 pb-16 bg-ute-surface border-b border-ute-border">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <SectionLabel label="Architecture" title="System Design" subtitle="Breakdowns of systems, architectures, and engineering decisions." />
+        </div>
+      </section>
 
-        {loading ? (
-          <p className="text-center text-sky-100/70">Loading system design notes...</p>
-        ) : (
-          <div className="grid gap-6 md:grid-cols-2">
-            {items.map(item => {
-              const Icon = typeIcon[item.type] ?? Layers;
-              return (
-                <Card key={item.id}>
-                  <CardHeader className="flex flex-row items-center gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-400/10 text-sky-400">
-                      <Icon className="h-6 w-6" />
+      <section className="py-16">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          {items.length === 0 ? (
+            <p className="text-ute-text-muted">System design entries will appear here once added via the admin panel.</p>
+          ) : (
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              animate="visible"
+              className="grid grid-cols-1 md:grid-cols-2 gap-8"
+            >
+              {items.map((item, i) => (
+                <motion.div
+                  key={item.id}
+                  variants={fadeUp}
+                  custom={i}
+                  className="rounded-xl bg-ute-surface border border-ute-border hover:border-ute-gold/40 transition-all overflow-hidden"
+                >
+                  {item.diagramUrl && (
+                    <div className="relative aspect-video bg-ute-surface-hi">
+                      <Image src={item.diagramUrl} alt={item.title} fill className="object-contain p-4" />
                     </div>
-                    <div>
-                      <CardTitle>{item.title}</CardTitle>
-                      <p className="text-xs uppercase tracking-widest text-sky-100/50">
-                        {item.type}
-                      </p>
+                  )}
+                  <div className="p-6">
+                    <h3 className="font-playfair text-xl font-bold text-ute-text mb-2">{item.title}</h3>
+                    <p className="text-sm text-ute-text-muted leading-relaxed mb-4">{item.description}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {item.tags.map((tag) => (
+                        <span key={tag} className="font-mono text-[10px] px-2 py-0.5 rounded border border-ute-gold/30 text-ute-gold">
+                          {tag}
+                        </span>
+                      ))}
                     </div>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <p className="text-sm text-sky-100/70">{item.description}</p>
-                    {item.diagramUrl && (
-                      <Image
-                        src={item.diagramUrl}
-                        alt={item.title}
-                        className="w-full rounded-lg border border-gray-800"
-                        loading="lazy"
-                      />
-                    )}
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        )}
-      </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </div>
+      </section>
     </div>
   );
 }

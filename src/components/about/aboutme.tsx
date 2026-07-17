@@ -1,122 +1,204 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { Download, Code2, Sparkles } from 'lucide-react';
-import LinkButton from '../ui/LinkButton';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
+import SectionLabel from '@/components/ui/section-label';
+import { fadeUp, slideInRight } from '@/lib/animations';
 
-type ContentBlock = {
-  title: string;
-  subtitle?: string | null;
-  description?: string | null;
-  body?: string | null;
-};
+const milestones = [
+  { year: '2021', label: 'Started Software Engineering', desc: 'Began journey into full-stack development.' },
+  { year: '2022', label: '59Minutes — Printing Platform', desc: 'Built a printing delivery service for Abuja with Next.js and Paystack.' },
+  { year: '2023', label: 'Watergroove — Investment Platform', desc: 'Full-stack investment platform with Prisma, PostgreSQL, and Neon DB.' },
+  { year: '2024', label: 'Founded Ultimate IntelliForge', desc: 'Established my software company focused on scalable digital solutions.' },
+  { year: '2025', label: 'Global Contracts', desc: 'Simultaneously shipping MeuDeliver (Angola), CA Notices (US), and TinnieStudio (Canada).' },
+];
+
+const personalProjects = [
+  { name: 'Fashionket', url: 'https://fashionket.com', desc: 'Fashion marketplace platform (CEO & CTO)' },
+  { name: 'Acefre', url: 'https://acefre.com', desc: 'Technology product (CEO & CTO)' },
+];
 
 export default function AboutMe() {
-  const [about, setAbout] = useState<ContentBlock | null>(null);
-
-  useEffect(() => {
-    const loadAbout = async () => {
-      const response = await fetch('/api/content/about', { cache: 'no-store' });
-      if (!response.ok) return;
-      const data = await response.json();
-      setAbout(data);
-    };
-
-    loadAbout();
-  }, []);
-
-  const cv_link: string =
-    process.env.NEXT_PUBLIC_CV_LINK ??
-    'https://drive.google.com/file/d/1ZA3nVpSSHsCdS9rc4xL6XMoJPiNEkztX/view?usp=drive_link';
-
   return (
-    <div className='min-h-screen py-20 px-6'>
-      <div className='max-w-6xl mx-auto'>
-        {/* Hero Section */}
-        <div className='grid lg:grid-cols-2 gap-12 items-center mb-24'>
-          <div className='space-y-6'>
-            <div className='inline-block'>
-              <span className='text-sky-400 font-semibold text-sm uppercase tracking-wider'>
-                {about?.subtitle ?? 'Backend-focused Engineer'}
-              </span>
-            </div>
-            <h1 className='text-5xl lg:text-6xl font-bold text-sky-900 dark:text-sky-100 leading-tight'>
-              {about?.title ?? "Backend-focused Software Engineer"}
-            </h1>
-            <p className='text-lg text-sky-900/80 dark:text-sky-100/80 leading-relaxed'>
-              {about?.description ?? ''}
-            </p>
-            <div className='flex gap-4 pt-4'>
-              <LinkButton
-                href={cv_link}
-                className='flex bg-sky-400 hover:bg-sky-500'
-              >
-                <Download className='w-5 h-5' />
-                Download Resume
-              </LinkButton>
-              <LinkButton href='/projects' className='flex'>
-                View Projects
-              </LinkButton>
-            </div>
-          </div>
+    <div className="min-h-screen bg-ute-bg">
+      {/* Hero banner */}
+      <section className="relative py-32 bg-ute-surface border-b border-ute-border overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute right-0 top-0 w-96 h-96 bg-ute-gold/5 blur-[80px] rounded-full" />
+        </div>
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10 pt-8">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="font-mono text-xs tracking-[0.25em] uppercase text-ute-gold block mb-4"
+          >
+            {'// About Me'}
+          </motion.span>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="font-playfair text-5xl md:text-6xl font-bold text-ute-text"
+          >
+            Tunmise Falodun
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="mt-4 text-xl text-ute-gold"
+          >
+            Software Engineer · Full-Stack Developer · Technology Entrepreneur
+          </motion.p>
+        </div>
+      </section>
 
-          {/* Profile Image Placeholder */}
-          <div className='relative'>
-            <div className='relative w-full aspect-square max-w-md mx-auto'>
-              <div className='absolute inset-0 bg-linear-to-br from-sky-400/20 to-cyan-500/20 rounded-2xl transform rotate-6'></div>
-              <div className='relative bg-linear-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center'>
-                <div className='w-full h-full bg-linear-to-br from-sky-400/10 to-cyan-500/10 flex items-center justify-center'>
-                  <Code2 className='w-32 h-32 text-sky-400/30' />
-                </div>
+      {/* Main content */}
+      <section className="py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
+            {/* Bio */}
+            <div className="lg:col-span-2 space-y-6 text-ute-text-muted leading-relaxed">
+              <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+                <p>
+                  I&apos;m a <span className="text-ute-text">software engineer, full-stack developer, and technology entrepreneur</span> with a passion
+                  for building software that solves real-world problems. Over the past four years, I have worked across multiple industries
+                  — fintech, logistics, e-commerce, and SaaS — designing and developing scalable applications that improve business
+                  processes and user experiences.
+                </p>
+              </motion.div>
+              <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1}>
+                <p>
+                  My strongest expertise lies in backend engineering, where I specialise in building secure, scalable systems using{' '}
+                  <span className="text-ute-gold">Node.js, NestJS, Express.js, PHP, Laravel, SpringBoot, PostgreSQL, MySQL, and MongoDB</span>.
+                  On the frontend, I work with <span className="text-ute-gold">React, Next.js, TypeScript, and Tailwind CSS</span>, and
+                  build cross-platform mobile apps with <span className="text-ute-gold">React Native</span>.
+                </p>
+              </motion.div>
+              <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2}>
+                <p>
+                  Beyond engineering, I founded <span className="text-ute-text">Ultimate IntelliForge</span> — a software engineering and
+                  technology company dedicated to developing innovative digital solutions for startups, businesses, and organisations.
+                  My vision is to create an ecosystem that combines software development, technical consulting, developer education, and
+                  research.
+                </p>
+              </motion.div>
+              <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={3}>
+                <p>
+                  I am also exploring <span className="text-ute-gold">Go, Java, and Rust</span> to broaden my perspective and strengthen
+                  my ability to build high-performance systems. My goal is to become a globally recognised software engineer,
+                  technology leader, and entrepreneur — contributing to the growth of the African technology ecosystem.
+                </p>
+              </motion.div>
+            </div>
+
+            {/* Sidebar */}
+            <motion.aside
+              variants={slideInRight}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="space-y-6"
+            >
+              <div className="relative w-48 h-48 mx-auto mb-6">
+                <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-ute-gold" />
+                <div className="absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-ute-gold" />
+                <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-ute-gold" />
+                <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-ute-gold" />
+                <Image src="/images/Profile.jpg" alt="Tunmise Falodun" fill className="object-cover rounded-lg" />
               </div>
-              <div className='absolute -bottom-4 -right-4 w-24 h-24 bg-sky-400 rounded-full blur-3xl opacity-30'></div>
-              <div className='absolute -top-4 -left-4 w-32 h-32 bg-cyan-500 rounded-full blur-3xl opacity-20'></div>
+
+              <div className="p-5 rounded-xl bg-ute-surface border border-ute-border space-y-3">
+                {[
+                  { label: 'Location', value: 'Nigeria (Remote Worldwide)' },
+                  { label: 'Availability', value: 'Open to contracts' },
+                  { label: 'Email', value: 'ultimatefaloe@gmail.com' },
+                  { label: 'Experience', value: '4+ Years' },
+                ].map(({ label, value }) => (
+                  <div key={label} className="flex flex-col gap-0.5">
+                    <span className="font-mono text-[10px] tracking-widest uppercase text-ute-gold">{label}</span>
+                    <span className="text-sm text-ute-text">{value}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <a
+                  href="/cv/tunmise-falodun-cv.pdf"
+                  download
+                  className="flex items-center justify-center gap-2 px-4 py-3 rounded border border-ute-gold text-ute-gold text-sm hover:bg-ute-gold/10 transition-colors"
+                >
+                  Download CV
+                </a>
+                <Link
+                  href="/contact"
+                  className="flex items-center justify-center gap-2 px-4 py-3 rounded bg-ute-gold text-ute-bg text-sm font-medium hover:bg-ute-gold-muted transition-colors"
+                >
+                  Hire Me
+                </Link>
+              </div>
+            </motion.aside>
+          </div>
+        </div>
+      </section>
+
+      {/* Journey timeline */}
+      <section className="py-24 bg-ute-surface">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <SectionLabel label="My Journey" title="Career Milestones" />
+          <div className="relative mt-12">
+            <div className="absolute left-4 top-0 bottom-0 w-px bg-ute-border" />
+            <div className="space-y-8">
+              {milestones.map((m, i) => (
+                <motion.div
+                  key={m.year}
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  custom={i}
+                  className="pl-12 relative"
+                >
+                  <div className="absolute left-4 top-2 w-2 h-2 rounded-full bg-ute-gold -translate-x-1/2 ring-2 ring-ute-surface" />
+                  <span className="font-mono text-xs text-ute-gold">{m.year}</span>
+                  <h4 className="font-playfair text-lg font-bold text-ute-text mt-1">{m.label}</h4>
+                  <p className="text-sm text-ute-text-muted mt-1">{m.desc}</p>
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>
+      </section>
 
-        {/* About Section */}
-        <div className='mb-24'>
-          <h2 className='text-3xl font-bold text-sky-900 dark:text-sky-100 mb-8 flex items-center gap-3'>
-            <Sparkles className='w-8 h-8 text-sky-400' />
-            About Me
-          </h2>
-          <div className='space-y-6 text-lg text-sky-900/90 dark:text-sky-100/90 leading-relaxed'>
-            {(about?.body ?? '').split('\n').map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
+      {/* Personal projects */}
+      <section className="py-24 bg-ute-bg">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <SectionLabel label="Founder Work" title="Personal Ventures" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+            {personalProjects.map((p, i) => (
+              <motion.a
+                key={p.name}
+                href={p.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                custom={i}
+                className="p-6 rounded-xl bg-ute-surface border border-ute-border hover:border-ute-gold/50 transition-all group"
+              >
+                <h3 className="font-playfair text-xl font-bold text-ute-text group-hover:text-ute-gold transition-colors">{p.name}</h3>
+                <p className="text-sm text-ute-text-muted mt-2">{p.desc}</p>
+                <span className="inline-flex items-center gap-1 text-xs text-ute-electric mt-4">
+                  Visit site →
+                </span>
+              </motion.a>
             ))}
           </div>
         </div>
-
-        {/* CTA Section */}
-        <div className='text-center py-16 px-6 rounded-2xl bg-linear-to-br from-gray-400/10 to-cyan-500/10 border border-gray-400/20'>
-          <h2 className='text-3xl font-bold text-sky-900 dark:text-sky-100 mb-4'>
-            {"Let's Build Something Amazing Together"}
-          </h2>
-          <p className='text-lg text-sky-900/80 dark:text-sky-100/80 mb-8 max-w-2xl mx-auto'>
-            {`Whether you're looking to collaborate on a project, need technical
-            consultation, or just want to connect. I'm always open to new
-            opportunities.`}
-          </p>
-          <div className='flex gap-4 justify-center flex-wrap'>
-            <LinkButton
-              href='/contact'
-              prefetch='auto'
-              className='flex bg-sky-400 hover:bg-sky-500'
-            >
-              Get In Touch
-            </LinkButton>
-            <LinkButton
-              className='flex'
-              href={cv_link}
-              download
-            >
-              <Download className='w-5 h-5' />
-              Resume
-            </LinkButton>
-          </div>
-        </div>
-      </div>
+      </section>
     </div>
   );
 }

@@ -1,80 +1,73 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { Layers } from 'lucide-react';
-import { Button } from '../ui/button';
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { Code2, Server, Cloud, Users, Smartphone, Zap } from 'lucide-react';
+import SectionLabel from '@/components/ui/section-label';
+import { fadeUp, staggerContainer } from '@/lib/animations';
 
-type Service = {
+const icons = [Code2, Server, Cloud, Users, Smartphone, Zap];
+
+interface Service {
   id: string;
   title: string;
   description: string;
-};
+}
 
-export default function ServicesPage() {
+export default function ServicePage() {
   const [services, setServices] = useState<Service[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadServices = async () => {
-      setLoading(true);
-      const response = await fetch('/api/services', { cache: 'no-store' });
-      const data = await response.json();
-      setServices(data);
-      setLoading(false);
-    };
-
-    loadServices();
+    fetch('/api/services')
+      .then((r) => r.json())
+      .then((data) => Array.isArray(data) && setServices(data))
+      .catch(() => {});
   }, []);
 
   return (
-    <div className='min-h-screen py-20 px-6'>
-      <div className='max-w-7xl mx-auto'>
-        <div className='text-center mb-16'>
-          <div className='inline-block mb-4'>
-            <span className='text-sky-400 font-semibold text-sm uppercase tracking-wider'>
-              What I Offer
-            </span>
-          </div>
-          <h1 className='text-5xl font-bold text-sky-900 dark:text-sky-100 mb-6'>
-            Services
-          </h1>
-          <p className='text-lg text-sky-900/80 dark:text-sky-100/80 max-w-3xl mx-auto leading-relaxed'>
-            Product-focused engineering support for startups, scale-ups, and founding teams.
-          </p>
+    <div className="min-h-screen bg-ute-bg">
+      <section className="pt-32 pb-16 bg-ute-surface border-b border-ute-border">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <SectionLabel label="What I Offer" title="Services" subtitle="Engineering services tailored to startups, businesses, and technology teams." />
         </div>
+      </section>
 
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
-          {loading ? (
-            <div className='col-span-full text-center text-sky-100/70'>
-              Loading services...
-            </div>
-          ) : (
-            services.map(service => (
-              <div
-                key={service.id}
-                className='group relative overflow-hidden rounded-2xl border border-gray-700 bg-linear-to-br from-gray-300 to-gray-350 p-8 shadow-md transition-all duration-500 hover:border-sky-400 hover:shadow-2xl hover:shadow-sky-400/10 dark:from-gray-900 dark:to-gray-950'
-              >
-                <div className='flex items-start gap-4 mb-6'>
-                  <div className='p-4 bg-sky-400/10 rounded-xl text-sky-400 group-hover:bg-sky-400 group-hover:text-gray-900 transition-all duration-300 shadow-inner'>
-                    <Layers className='w-8 h-8' />
+      <section className="py-16">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            {services.map((service, i) => {
+              const Icon = icons[i % icons.length];
+              return (
+                <motion.div
+                  key={service.id}
+                  variants={fadeUp}
+                  custom={i}
+                  className="group p-8 rounded-xl bg-ute-surface border border-ute-border hover:border-ute-gold/50 transition-all hover:bg-ute-surface-hi"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-ute-gold/10 flex items-center justify-center mb-6 group-hover:bg-ute-gold/20 transition-colors">
+                    <Icon className="w-6 h-6 text-ute-gold" />
                   </div>
-                  <div className='flex-1'>
-                    <h3 className='text-2xl font-extrabold text-sky-900 dark:text-sky-100 mb-2 group-hover:text-sky-400 transition-colors'>
-                      {service.title}
-                    </h3>
-                    <p className='text-sky-900/80 dark:text-sky-100/80 leading-relaxed'>
-                      {service.description}
-                    </p>
-                  </div>
-                </div>
-                <Button className='w-full bg-sky-400/10 hover:bg-sky-400 text-sky-400 hover:text-gray-900 font-semibold py-3 rounded-xl transition-all duration-300'>
-                  Start a Conversation
-                </Button>
-              </div>
-            ))
-          )}
+                  <h3 className="font-playfair text-xl font-bold text-ute-text mb-3">{service.title}</h3>
+                  <p className="text-ute-text-muted leading-relaxed mb-6">{service.description}</p>
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-2 text-sm text-ute-electric hover:gap-4 transition-all"
+                  >
+                    Request this service →
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </motion.div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
